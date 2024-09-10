@@ -1,12 +1,18 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:trim_pro/feature/audio_editing/presentation/cut_screen.dart';
 import 'package:trim_pro/feature/home/presentation/home_screen.dart';
 part 'app_router.gr.dart';
 
 
 @AutoRouterConfig()
 class AppRouter extends _$AppRouter {
+
+  static const String homeScreen = '/home_screen';
+  static const String cutScreen = '/cut_screen';
+
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: Home.page,path: '/home_screen',initial: true),
+    AutoRoute(page: Home.page,path: homeScreen,initial: true),
+    AutoRoute(page: Cut.page,path: cutScreen),
   ];
 }

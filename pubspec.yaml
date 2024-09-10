@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   auto_route: ^7.2.0
   ffmpeg_kit_flutter: ^6.0.3
+  file_picker: ^8.1.2
 
 
 dev_dependencies:

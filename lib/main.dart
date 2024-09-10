@@ -1,11 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/core/router/app_router.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  runZonedGuarded(()  {
+    runApp(MyApp()
+    );
+  }, (error, stack) {
+    print("error : $error");
+    print("error : $stack");
+  });
 }
-
 class MyApp extends StatelessWidget {
    MyApp({super.key});
 
