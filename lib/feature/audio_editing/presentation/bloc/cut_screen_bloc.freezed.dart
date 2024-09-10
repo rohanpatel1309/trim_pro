@@ -1,0 +1,693 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'cut_screen_bloc.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+/// @nodoc
+mixin _$CutScreenEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() pickFile,
+    required TResult Function() setTime,
+    required TResult Function() cutAudio,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? pickFile,
+    TResult? Function()? setTime,
+    TResult? Function()? cutAudio,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? pickFile,
+    TResult Function()? setTime,
+    TResult Function()? cutAudio,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_PickFile value) pickFile,
+    required TResult Function(_SetTime value) setTime,
+    required TResult Function(_CutAudio value) cutAudio,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_PickFile value)? pickFile,
+    TResult? Function(_SetTime value)? setTime,
+    TResult? Function(_CutAudio value)? cutAudio,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_PickFile value)? pickFile,
+    TResult Function(_SetTime value)? setTime,
+    TResult Function(_CutAudio value)? cutAudio,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CutScreenEventCopyWith<$Res> {
+  factory $CutScreenEventCopyWith(
+          CutScreenEvent value, $Res Function(CutScreenEvent) then) =
+      _$CutScreenEventCopyWithImpl<$Res, CutScreenEvent>;
+}
+
+/// @nodoc
+class _$CutScreenEventCopyWithImpl<$Res, $Val extends CutScreenEvent>
+    implements $CutScreenEventCopyWith<$Res> {
+  _$CutScreenEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$StartedImplCopyWith<$Res> {
+  factory _$$StartedImplCopyWith(
+          _$StartedImpl value, $Res Function(_$StartedImpl) then) =
+      __$$StartedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$StartedImplCopyWithImpl<$Res>
+    extends _$CutScreenEventCopyWithImpl<$Res, _$StartedImpl>
+    implements _$$StartedImplCopyWith<$Res> {
+  __$$StartedImplCopyWithImpl(
+      _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$StartedImpl implements _Started {
+  const _$StartedImpl();
+
+  @override
+  String toString() {
+    return 'CutScreenEvent.started()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$StartedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() pickFile,
+    required TResult Function() setTime,
+    required TResult Function() cutAudio,
+  }) {
+    return started();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? pickFile,
+    TResult? Function()? setTime,
+    TResult? Function()? cutAudio,
+  }) {
+    return started?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? pickFile,
+    TResult Function()? setTime,
+    TResult Function()? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (started != null) {
+      return started();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_PickFile value) pickFile,
+    required TResult Function(_SetTime value) setTime,
+    required TResult Function(_CutAudio value) cutAudio,
+  }) {
+    return started(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_PickFile value)? pickFile,
+    TResult? Function(_SetTime value)? setTime,
+    TResult? Function(_CutAudio value)? cutAudio,
+  }) {
+    return started?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_PickFile value)? pickFile,
+    TResult Function(_SetTime value)? setTime,
+    TResult Function(_CutAudio value)? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (started != null) {
+      return started(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Started implements CutScreenEvent {
+  const factory _Started() = _$StartedImpl;
+}
+
+/// @nodoc
+abstract class _$$PickFileImplCopyWith<$Res> {
+  factory _$$PickFileImplCopyWith(
+          _$PickFileImpl value, $Res Function(_$PickFileImpl) then) =
+      __$$PickFileImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PickFileImplCopyWithImpl<$Res>
+    extends _$CutScreenEventCopyWithImpl<$Res, _$PickFileImpl>
+    implements _$$PickFileImplCopyWith<$Res> {
+  __$$PickFileImplCopyWithImpl(
+      _$PickFileImpl _value, $Res Function(_$PickFileImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$PickFileImpl implements _PickFile {
+  const _$PickFileImpl();
+
+  @override
+  String toString() {
+    return 'CutScreenEvent.pickFile()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PickFileImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() pickFile,
+    required TResult Function() setTime,
+    required TResult Function() cutAudio,
+  }) {
+    return pickFile();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? pickFile,
+    TResult? Function()? setTime,
+    TResult? Function()? cutAudio,
+  }) {
+    return pickFile?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? pickFile,
+    TResult Function()? setTime,
+    TResult Function()? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (pickFile != null) {
+      return pickFile();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_PickFile value) pickFile,
+    required TResult Function(_SetTime value) setTime,
+    required TResult Function(_CutAudio value) cutAudio,
+  }) {
+    return pickFile(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_PickFile value)? pickFile,
+    TResult? Function(_SetTime value)? setTime,
+    TResult? Function(_CutAudio value)? cutAudio,
+  }) {
+    return pickFile?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_PickFile value)? pickFile,
+    TResult Function(_SetTime value)? setTime,
+    TResult Function(_CutAudio value)? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (pickFile != null) {
+      return pickFile(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PickFile implements CutScreenEvent {
+  const factory _PickFile() = _$PickFileImpl;
+}
+
+/// @nodoc
+abstract class _$$SetTimeImplCopyWith<$Res> {
+  factory _$$SetTimeImplCopyWith(
+          _$SetTimeImpl value, $Res Function(_$SetTimeImpl) then) =
+      __$$SetTimeImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SetTimeImplCopyWithImpl<$Res>
+    extends _$CutScreenEventCopyWithImpl<$Res, _$SetTimeImpl>
+    implements _$$SetTimeImplCopyWith<$Res> {
+  __$$SetTimeImplCopyWithImpl(
+      _$SetTimeImpl _value, $Res Function(_$SetTimeImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SetTimeImpl implements _SetTime {
+  const _$SetTimeImpl();
+
+  @override
+  String toString() {
+    return 'CutScreenEvent.setTime()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SetTimeImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() pickFile,
+    required TResult Function() setTime,
+    required TResult Function() cutAudio,
+  }) {
+    return setTime();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? pickFile,
+    TResult? Function()? setTime,
+    TResult? Function()? cutAudio,
+  }) {
+    return setTime?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? pickFile,
+    TResult Function()? setTime,
+    TResult Function()? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (setTime != null) {
+      return setTime();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_PickFile value) pickFile,
+    required TResult Function(_SetTime value) setTime,
+    required TResult Function(_CutAudio value) cutAudio,
+  }) {
+    return setTime(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_PickFile value)? pickFile,
+    TResult? Function(_SetTime value)? setTime,
+    TResult? Function(_CutAudio value)? cutAudio,
+  }) {
+    return setTime?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_PickFile value)? pickFile,
+    TResult Function(_SetTime value)? setTime,
+    TResult Function(_CutAudio value)? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (setTime != null) {
+      return setTime(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetTime implements CutScreenEvent {
+  const factory _SetTime() = _$SetTimeImpl;
+}
+
+/// @nodoc
+abstract class _$$CutAudioImplCopyWith<$Res> {
+  factory _$$CutAudioImplCopyWith(
+          _$CutAudioImpl value, $Res Function(_$CutAudioImpl) then) =
+      __$$CutAudioImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CutAudioImplCopyWithImpl<$Res>
+    extends _$CutScreenEventCopyWithImpl<$Res, _$CutAudioImpl>
+    implements _$$CutAudioImplCopyWith<$Res> {
+  __$$CutAudioImplCopyWithImpl(
+      _$CutAudioImpl _value, $Res Function(_$CutAudioImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$CutAudioImpl implements _CutAudio {
+  const _$CutAudioImpl();
+
+  @override
+  String toString() {
+    return 'CutScreenEvent.cutAudio()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$CutAudioImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() pickFile,
+    required TResult Function() setTime,
+    required TResult Function() cutAudio,
+  }) {
+    return cutAudio();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? pickFile,
+    TResult? Function()? setTime,
+    TResult? Function()? cutAudio,
+  }) {
+    return cutAudio?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? pickFile,
+    TResult Function()? setTime,
+    TResult Function()? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (cutAudio != null) {
+      return cutAudio();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_PickFile value) pickFile,
+    required TResult Function(_SetTime value) setTime,
+    required TResult Function(_CutAudio value) cutAudio,
+  }) {
+    return cutAudio(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_PickFile value)? pickFile,
+    TResult? Function(_SetTime value)? setTime,
+    TResult? Function(_CutAudio value)? cutAudio,
+  }) {
+    return cutAudio?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_PickFile value)? pickFile,
+    TResult Function(_SetTime value)? setTime,
+    TResult Function(_CutAudio value)? cutAudio,
+    required TResult orElse(),
+  }) {
+    if (cutAudio != null) {
+      return cutAudio(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CutAudio implements CutScreenEvent {
+  const factory _CutAudio() = _$CutAudioImpl;
+}
+
+/// @nodoc
+mixin _$CutScreenState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CutScreenStateCopyWith<$Res> {
+  factory $CutScreenStateCopyWith(
+          CutScreenState value, $Res Function(CutScreenState) then) =
+      _$CutScreenStateCopyWithImpl<$Res, CutScreenState>;
+}
+
+/// @nodoc
+class _$CutScreenStateCopyWithImpl<$Res, $Val extends CutScreenState>
+    implements $CutScreenStateCopyWith<$Res> {
+  _$CutScreenStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$CutScreenStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
+
+  @override
+  String toString() {
+    return 'CutScreenState.initial()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Initial implements CutScreenState {
+  const factory _Initial() = _$InitialImpl;
+}

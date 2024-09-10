@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:trim_pro/feature/audio_editing/presentation/cut_screen.dart';
-import 'package:trim_pro/feature/home/presentation/home_screen.dart';
+import 'package:trim_pro/feature/audio_editing/presentation/pages/cut_screen.dart';
+import 'package:trim_pro/feature/home/presentation/pages/home_screen.dart';
 part 'app_router.gr.dart';
 
 

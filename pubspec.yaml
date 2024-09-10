@@ -39,6 +39,12 @@ dependencies:
   auto_route: ^7.2.0
   ffmpeg_kit_flutter: ^6.0.3
   file_picker: ^8.1.2
+  permission_handler: ^11.3.1
+  fluttertoast: ^8.2.8
+  flutter_bloc: ^8.1.6
+  freezed_annotation: ^2.4.4
+  get_it: ^7.7.0
+  injectable: ^2.4.4
 
 
 dev_dependencies:
@@ -46,6 +52,9 @@ dev_dependencies:
     sdk: flutter
   auto_route_generator: ^7.1.1
   build_runner: ^2.4.4
+  freezed: ^2.5.2
+  injectable_generator: ^2.6.2
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

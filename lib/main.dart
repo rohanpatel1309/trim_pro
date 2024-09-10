@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trim_pro/core/dependecy_injection/injection.dart';
 import 'package:trim_pro/core/router/app_router.dart';
 
 void main() async {
   runZonedGuarded(()  {
+    configureDependencies();
     runApp(MyApp()
     );
   }, (error, stack) {

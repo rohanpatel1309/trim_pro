@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:trim_pro/core/router/app_router.dart';
-import 'package:trim_pro/feature/home/widget/common_button.dart';
+import 'package:trim_pro/feature/home/presentation/widgets/common_button.dart';
 
 @RoutePage(name: 'Home')
 class HomeScreen extends StatelessWidget {
