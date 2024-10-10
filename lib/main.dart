@@ -92,33 +92,35 @@ class _AudioMergeScreenState extends State<AudioMergeScreen> {
 
     // Build the FFmpeg command to cut and merge audio (excluding segments)
     List<String> commands = [];
-
+    int index = 0;
     // 1. First segment from the start of the audio to the start of the first time range
     if (timeRanges[0].startController.text != '00:00:00') {
-      print('-y -i "$audioFileName" -ss 00:00:00 -to ${timeRanges[0].startController.text} -c copy "${tempDir.path}/part0.mp3"');
+      print('-y -i "$audioFileName" -ss 00:00:00 -to ${timeRanges[0].startController.text} -c copy "${tempDir.path}/part$index.mp3"');
       commands.add(
-          '-y -i "$audioFileName" -ss 00:00:00 -to ${timeRanges[0].startController.text} -c copy "${tempDir.path}/part0.mp3"'
+          '-y -i "$audioFileName" -ss 00:00:00 -to ${timeRanges[0].startController.text} -c copy "${tempDir.path}/part$index.mp3"'
       );
+      index++;
+
     }
 
     // 2. Create commands for the parts between time ranges
     for (int i = 0; i < timeRanges.length - 1; i++) {
       String end = timeRanges[i].endController.text;
       String nextStart = timeRanges[i + 1].startController.text;
-
-      print('-y -i "$audioFileName" -ss $end -to $nextStart -c copy "${tempDir.path}/part${i + 1}.mp3"');
+      print('-y -i "$audioFileName" -ss $end -to $nextStart -c copy "${tempDir.path}/part$index.mp3"');
 
       // Add segment from the current time range's end to the next time range's start
       commands.add(
-          '-y -i "$audioFileName" -ss $end -to $nextStart -c copy "${tempDir.path}/part${i + 1}.mp3"'
+          '-y -i "$audioFileName" -ss $end -to $nextStart -c copy "${tempDir.path}/part$index.mp3"'
       );
+      index++;
     }
 
     // 3. Last segment from the end of the last time range to the end of the audio
     String lastEnd = timeRanges.last.endController.text;
-    print( '-y -i "$audioFileName" -ss $lastEnd -to $audioDuration -c copy "${tempDir.path}/part${timeRanges.length}.mp3"');
+    print( '-y -i "$audioFileName" -ss $lastEnd -to $audioDuration -c copy "${tempDir.path}/part$index.mp3"');
     commands.add(
-        '-y -i "$audioFileName" -ss $lastEnd -to $audioDuration -c copy "${tempDir.path}/part${timeRanges.length}.mp3"'
+        '-y -i "$audioFileName" -ss $lastEnd -to $audioDuration -c copy "${tempDir.path}/part$index.mp3"'
     );
 
     // Execute the commands to cut audio segments
@@ -136,9 +138,8 @@ class _AudioMergeScreenState extends State<AudioMergeScreen> {
     }
 
     // 4. Concatenate the audio parts that are left after removing the specified segments
-    String concatCommand = 'concat:' +
-        List.generate(commands.length, (index) => '"${tempDir.path}/part$index.mp3"')
-            .join('|');
+    String concatCommand = 'concat:${List.generate(commands.length, (index) => '"${tempDir.path}/part$index.mp3"')
+            .join('|')}';
     final concatSession = await FFmpegKit.execute('-y -i $concatCommand -c copy "$tempOutputPath"');  // Execute the concat command
     final concatReturnCode = await concatSession.getReturnCode();  // Get the return code for the concat command
 
@@ -201,7 +202,7 @@ class _AudioMergeScreenState extends State<AudioMergeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (audioFileName != null) ...[
-                Text("Selected File: $audioFileName", style: TextStyle(fontSize: screenWidth * 0.05)),
+                Text("File: ${audioFileName?.split("/").last}", style: TextStyle(fontSize: screenWidth * 0.05)),
                 SizedBox(height: 20),
               ],
               ElevatedButton(
