@@ -13,6 +13,7 @@ class CommonButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
+
         padding: EdgeInsets.symmetric(horizontal: 5.w),
         height: 90.h,
         width: 90.h,

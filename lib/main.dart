@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   /// create an instance of `AppRouter`
   final _appRouter = AppRouter();
 
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

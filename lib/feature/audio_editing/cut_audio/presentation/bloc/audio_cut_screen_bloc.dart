@@ -4,9 +4,9 @@ import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:injectable/injectable.dart';
 
 
-part 'cut_screen_event.dart';
-part 'cut_screen_state.dart';
-part 'cut_screen_bloc.freezed.dart';
+part 'audio_cut_screen_event.dart';
+part 'audio_cut_screen_state.dart';
+part 'audio_cut_screen_bloc.freezed.dart';
 
 @injectable
 class CutScreenBloc extends Bloc<CutScreenEvent, CutScreenState> {

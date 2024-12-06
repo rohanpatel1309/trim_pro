@@ -9,27 +9,6 @@
 
 part of 'app_router.dart';
 
-abstract class _$AppRouter extends RootStackRouter {
-  // ignore: unused_element
-  _$AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, PageFactory> pagesMap = {
-    Cut.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const CutScreen(),
-      );
-    },
-    Home.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HomeScreen(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [CutScreen]
 class Cut extends PageRouteInfo<void> {
@@ -41,7 +20,12 @@ class Cut extends PageRouteInfo<void> {
 
   static const String name = 'Cut';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CutScreen();
+    },
+  );
 }
 
 /// generated route for
@@ -55,5 +39,10 @@ class Home extends PageRouteInfo<void> {
 
   static const String name = 'Home';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomeScreen();
+    },
+  );
 }

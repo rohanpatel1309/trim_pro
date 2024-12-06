@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:trim_pro/feature/audio_editing/presentation/pages/cut_screen.dart';
+import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/pages/audio_cut_screen.dart';
 import 'package:trim_pro/feature/home/presentation/pages/home_screen.dart';
 part 'app_router.gr.dart';
 
 
 @AutoRouterConfig()
-class AppRouter extends _$AppRouter {
+class AppRouter extends RootStackRouter {
 
   static const String homeScreen = '/home_screen';
   static const String cutScreen = '/cut_screen';

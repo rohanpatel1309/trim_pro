@@ -26,6 +26,26 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ListView(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      children:  [
+        const AudioEditingWidget(),
+        SizedBox(height: 30.h,),
+        const VideoEditingWidget(),
+
+      ],
+    );
+  }
+}
+
+/// Audio Editing
+class AudioEditingWidget extends StatelessWidget {
+  const AudioEditingWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -44,7 +64,7 @@ class ScreenChildren extends StatelessWidget {
         SizedBox(
           height: 10.h,
         ),
-         Wrap(
+        Wrap(
           children: [
             CommonButton(
               icon: CupertinoIcons.scissors_alt,
@@ -81,3 +101,68 @@ class ScreenChildren extends StatelessWidget {
     );
   }
 }
+
+/// Video Editing
+class VideoEditingWidget extends StatelessWidget {
+  const VideoEditingWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.audiotrack,
+              size: 20.h,
+              color: Colors.white,
+            ),
+            Text(
+              "Video Editing",
+              style: TextStyle(fontSize: 20.sp, color: Colors.white,fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10.h,
+        ),
+        Wrap(
+          children: [
+            CommonButton(
+              icon: CupertinoIcons.scissors_alt,
+              text: "Cut",
+              onTap: () => context.router.pushNamed(AppRouter.cutScreen),
+            ),
+            CommonButton(
+              icon: Icons.merge,
+              text: "Merge",
+              onTap: (){},
+
+            ),
+            CommonButton(
+              icon: Icons.all_inclusive,
+              text: "Cut & Merge",
+              onTap: (){},
+
+            ),
+            CommonButton(
+              icon: Icons.call_split,
+              text: "Split",
+              onTap: (){},
+
+            ),
+            CommonButton(
+              icon: Icons.input,
+              text: "Insert",
+              onTap: (){},
+
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+

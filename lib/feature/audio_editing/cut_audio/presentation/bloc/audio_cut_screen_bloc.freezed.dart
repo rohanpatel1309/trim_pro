@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'cut_screen_bloc.dart';
+part of 'audio_cut_screen_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -84,6 +84,9 @@ class _$CutScreenEventCopyWithImpl<$Res, $Val extends CutScreenEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of CutScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -100,6 +103,9 @@ class __$$StartedImplCopyWithImpl<$Res>
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CutScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -214,6 +220,9 @@ class __$$PickFileImplCopyWithImpl<$Res>
   __$$PickFileImplCopyWithImpl(
       _$PickFileImpl _value, $Res Function(_$PickFileImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CutScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -328,6 +337,9 @@ class __$$SetTimeImplCopyWithImpl<$Res>
   __$$SetTimeImplCopyWithImpl(
       _$SetTimeImpl _value, $Res Function(_$SetTimeImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CutScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -442,6 +454,9 @@ class __$$CutAudioImplCopyWithImpl<$Res>
   __$$CutAudioImplCopyWithImpl(
       _$CutAudioImpl _value, $Res Function(_$CutAudioImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CutScreenEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -594,6 +609,9 @@ class _$CutScreenStateCopyWithImpl<$Res, $Val extends CutScreenState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of CutScreenState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -610,6 +628,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CutScreenState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
