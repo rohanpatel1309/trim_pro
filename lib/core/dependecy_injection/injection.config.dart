@@ -11,7 +11,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart'
-    as _i119;
+    as _i24;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -24,7 +24,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i119.CutScreenBloc>(() => _i119.CutScreenBloc());
+    gh.factory<_i24.CutScreenBloc>(() => _i24.CutScreenBloc());
     return this;
   }
 }

@@ -6,7 +6,7 @@ import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:trim_pro/core/router/app_router.dart';
 import 'package:trim_pro/feature/home/presentation/widgets/common_button.dart';
 
-@RoutePage(name: 'Home')
+@RoutePage(name: 'home')
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -69,7 +69,7 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: CupertinoIcons.scissors_alt,
               text: "Cut",
-              onTap: () => context.router.pushNamed(AppRouter.cutScreen),
+              onTap: () => context.router.pushNamed(AppRouter.audioCutScreen),
             ),
             CommonButton(
               icon: Icons.merge,
@@ -133,7 +133,7 @@ class VideoEditingWidget extends StatelessWidget {
             CommonButton(
               icon: CupertinoIcons.scissors_alt,
               text: "Cut",
-              onTap: () => context.router.pushNamed(AppRouter.cutScreen),
+              onTap: () => context.router.pushNamed(AppRouter.audioCutScreen),
             ),
             CommonButton(
               icon: Icons.merge,
