@@ -1,9 +1,9 @@
 part of 'audio_cut_screen_bloc.dart';
 
 @freezed
-class CutScreenEvent with _$CutScreenEvent {
-  const factory CutScreenEvent.started() = _Started;
-  const factory CutScreenEvent.pickFile() = _PickFile;
-  const factory CutScreenEvent.setTime() = _SetTime;
-  const factory CutScreenEvent.cutAudio() = _CutAudio;
+class AudioCutScreenEvent with _$AudioCutScreenEvent {
+  const factory AudioCutScreenEvent.started() = _Started;
+  const factory AudioCutScreenEvent.pickFile() = _PickFile;
+  const factory AudioCutScreenEvent.setTime() = _SetTime;
+  const factory AudioCutScreenEvent.cutAudio() = _CutAudio;
 }

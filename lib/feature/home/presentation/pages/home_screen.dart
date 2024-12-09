@@ -28,11 +28,12 @@ class ScreenChildren extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
-      children:  [
+      children: [
         const AudioEditingWidget(),
-        SizedBox(height: 30.h,),
+        SizedBox(
+          height: 30.h,
+        ),
         const VideoEditingWidget(),
-
       ],
     );
   }
@@ -57,7 +58,10 @@ class AudioEditingWidget extends StatelessWidget {
             ),
             Text(
               "Audio Editing",
-              style: TextStyle(fontSize: 20.sp, color: Colors.white,fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  fontSize: 20.sp,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -74,26 +78,22 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.merge,
               text: "Merge",
-              onTap: (){},
-
+              onTap: () => context.router.pushNamed(AppRouter.audioMergeScreen),
             ),
             CommonButton(
               icon: Icons.all_inclusive,
               text: "Cut & Merge",
-              onTap: (){},
-
+              onTap: () => context.router.pushNamed(AppRouter.audioCutMergeScreen),
             ),
             CommonButton(
               icon: Icons.call_split,
               text: "Split",
-              onTap: (){},
-
+              onTap: () {},
             ),
             CommonButton(
               icon: Icons.input,
               text: "Insert",
-              onTap: (){},
-
+              onTap: () {},
             ),
           ],
         ),
@@ -121,7 +121,10 @@ class VideoEditingWidget extends StatelessWidget {
             ),
             Text(
               "Video Editing",
-              style: TextStyle(fontSize: 20.sp, color: Colors.white,fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  fontSize: 20.sp,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -133,31 +136,28 @@ class VideoEditingWidget extends StatelessWidget {
             CommonButton(
               icon: CupertinoIcons.scissors_alt,
               text: "Cut",
-              onTap: () => context.router.pushNamed(AppRouter.audioCutScreen),
+              onTap: () {},
             ),
             CommonButton(
               icon: Icons.merge,
               text: "Merge",
-              onTap: (){},
-
+              onTap: () {},
             ),
             CommonButton(
               icon: Icons.all_inclusive,
               text: "Cut & Merge",
-              onTap: (){},
-
+              onTap: () =>
+                  context.router.pushNamed(AppRouter.audioCutMergeScreen),
             ),
             CommonButton(
               icon: Icons.call_split,
               text: "Split",
-              onTap: (){},
-
+              onTap: () {},
             ),
             CommonButton(
               icon: Icons.input,
               text: "Insert",
-              onTap: (){},
-
+              onTap: () {},
             ),
           ],
         ),
@@ -165,4 +165,3 @@ class VideoEditingWidget extends StatelessWidget {
     );
   }
 }
-

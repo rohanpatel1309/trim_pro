@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$CutScreenEvent {
+mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
@@ -69,23 +69,23 @@ mixin _$CutScreenEvent {
 }
 
 /// @nodoc
-abstract class $CutScreenEventCopyWith<$Res> {
-  factory $CutScreenEventCopyWith(
-          CutScreenEvent value, $Res Function(CutScreenEvent) then) =
-      _$CutScreenEventCopyWithImpl<$Res, CutScreenEvent>;
+abstract class $AudioCutScreenEventCopyWith<$Res> {
+  factory $AudioCutScreenEventCopyWith(
+          AudioCutScreenEvent value, $Res Function(AudioCutScreenEvent) then) =
+      _$AudioCutScreenEventCopyWithImpl<$Res, AudioCutScreenEvent>;
 }
 
 /// @nodoc
-class _$CutScreenEventCopyWithImpl<$Res, $Val extends CutScreenEvent>
-    implements $CutScreenEventCopyWith<$Res> {
-  _$CutScreenEventCopyWithImpl(this._value, this._then);
+class _$AudioCutScreenEventCopyWithImpl<$Res, $Val extends AudioCutScreenEvent>
+    implements $AudioCutScreenEventCopyWith<$Res> {
+  _$AudioCutScreenEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CutScreenEvent
+  /// Create a copy of AudioCutScreenEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -98,13 +98,13 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$CutScreenEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$AudioCutScreenEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CutScreenEvent
+  /// Create a copy of AudioCutScreenEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -115,7 +115,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'CutScreenEvent.started()';
+    return 'AudioCutScreenEvent.started()';
   }
 
   @override
@@ -202,7 +202,7 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements CutScreenEvent {
+abstract class _Started implements AudioCutScreenEvent {
   const factory _Started() = _$StartedImpl;
 }
 
@@ -215,13 +215,13 @@ abstract class _$$PickFileImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$PickFileImplCopyWithImpl<$Res>
-    extends _$CutScreenEventCopyWithImpl<$Res, _$PickFileImpl>
+    extends _$AudioCutScreenEventCopyWithImpl<$Res, _$PickFileImpl>
     implements _$$PickFileImplCopyWith<$Res> {
   __$$PickFileImplCopyWithImpl(
       _$PickFileImpl _value, $Res Function(_$PickFileImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CutScreenEvent
+  /// Create a copy of AudioCutScreenEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -232,7 +232,7 @@ class _$PickFileImpl implements _PickFile {
 
   @override
   String toString() {
-    return 'CutScreenEvent.pickFile()';
+    return 'AudioCutScreenEvent.pickFile()';
   }
 
   @override
@@ -319,7 +319,7 @@ class _$PickFileImpl implements _PickFile {
   }
 }
 
-abstract class _PickFile implements CutScreenEvent {
+abstract class _PickFile implements AudioCutScreenEvent {
   const factory _PickFile() = _$PickFileImpl;
 }
 
@@ -332,13 +332,13 @@ abstract class _$$SetTimeImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$SetTimeImplCopyWithImpl<$Res>
-    extends _$CutScreenEventCopyWithImpl<$Res, _$SetTimeImpl>
+    extends _$AudioCutScreenEventCopyWithImpl<$Res, _$SetTimeImpl>
     implements _$$SetTimeImplCopyWith<$Res> {
   __$$SetTimeImplCopyWithImpl(
       _$SetTimeImpl _value, $Res Function(_$SetTimeImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CutScreenEvent
+  /// Create a copy of AudioCutScreenEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -349,7 +349,7 @@ class _$SetTimeImpl implements _SetTime {
 
   @override
   String toString() {
-    return 'CutScreenEvent.setTime()';
+    return 'AudioCutScreenEvent.setTime()';
   }
 
   @override
@@ -436,7 +436,7 @@ class _$SetTimeImpl implements _SetTime {
   }
 }
 
-abstract class _SetTime implements CutScreenEvent {
+abstract class _SetTime implements AudioCutScreenEvent {
   const factory _SetTime() = _$SetTimeImpl;
 }
 
@@ -449,13 +449,13 @@ abstract class _$$CutAudioImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$CutAudioImplCopyWithImpl<$Res>
-    extends _$CutScreenEventCopyWithImpl<$Res, _$CutAudioImpl>
+    extends _$AudioCutScreenEventCopyWithImpl<$Res, _$CutAudioImpl>
     implements _$$CutAudioImplCopyWith<$Res> {
   __$$CutAudioImplCopyWithImpl(
       _$CutAudioImpl _value, $Res Function(_$CutAudioImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CutScreenEvent
+  /// Create a copy of AudioCutScreenEvent
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -466,7 +466,7 @@ class _$CutAudioImpl implements _CutAudio {
 
   @override
   String toString() {
-    return 'CutScreenEvent.cutAudio()';
+    return 'AudioCutScreenEvent.cutAudio()';
   }
 
   @override
@@ -553,12 +553,12 @@ class _$CutAudioImpl implements _CutAudio {
   }
 }
 
-abstract class _CutAudio implements CutScreenEvent {
+abstract class _CutAudio implements AudioCutScreenEvent {
   const factory _CutAudio() = _$CutAudioImpl;
 }
 
 /// @nodoc
-mixin _$CutScreenState {
+mixin _$AudioCutScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -594,23 +594,23 @@ mixin _$CutScreenState {
 }
 
 /// @nodoc
-abstract class $CutScreenStateCopyWith<$Res> {
-  factory $CutScreenStateCopyWith(
-          CutScreenState value, $Res Function(CutScreenState) then) =
-      _$CutScreenStateCopyWithImpl<$Res, CutScreenState>;
+abstract class $AudioCutScreenStateCopyWith<$Res> {
+  factory $AudioCutScreenStateCopyWith(
+          AudioCutScreenState value, $Res Function(AudioCutScreenState) then) =
+      _$AudioCutScreenStateCopyWithImpl<$Res, AudioCutScreenState>;
 }
 
 /// @nodoc
-class _$CutScreenStateCopyWithImpl<$Res, $Val extends CutScreenState>
-    implements $CutScreenStateCopyWith<$Res> {
-  _$CutScreenStateCopyWithImpl(this._value, this._then);
+class _$AudioCutScreenStateCopyWithImpl<$Res, $Val extends AudioCutScreenState>
+    implements $AudioCutScreenStateCopyWith<$Res> {
+  _$AudioCutScreenStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CutScreenState
+  /// Create a copy of AudioCutScreenState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -623,13 +623,13 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$CutScreenStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$AudioCutScreenStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CutScreenState
+  /// Create a copy of AudioCutScreenState
   /// with the given fields replaced by the non-null parameter values.
 }
 
@@ -640,7 +640,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'CutScreenState.initial()';
+    return 'AudioCutScreenState.initial()';
   }
 
   @override
@@ -709,6 +709,6 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements CutScreenState {
+abstract class _Initial implements AudioCutScreenState {
   const factory _Initial() = _$InitialImpl;
 }

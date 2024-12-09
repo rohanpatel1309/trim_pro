@@ -10,6 +10,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:trim_pro/feature/audio_editing/common_bloc/audio_bloc.dart'
+    as _i531;
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart'
     as _i24;
 
@@ -24,7 +26,8 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i24.CutScreenBloc>(() => _i24.CutScreenBloc());
+    gh.factory<_i24.AudioCutScreenBloc>(() => _i24.AudioCutScreenBloc());
+    gh.singleton<_i531.AudioBloc>(() => _i531.AudioBloc());
     return this;
   }
 }

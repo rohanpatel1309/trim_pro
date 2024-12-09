@@ -7,9 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart';
 import 'package:trim_pro/feature/audio_editing/widgets/common_button.dart';
 
-@RoutePage(name: 'audioMerge')
-class AudioMergeScreen extends StatelessWidget {
-  const AudioMergeScreen({super.key});
+@RoutePage(name: 'audioCutMerge')
+class AudioCutMergeScreen extends StatelessWidget {
+  const AudioCutMergeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +25,10 @@ class ScreenChildren extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetIt.instance<AudioCutScreenBloc>(),
       child:  Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CommonButton(onTap: (){}, buttonText: 'Select File 1', ),
-          SizedBox(height: 20.h,),
-          CommonButton(onTap: (){}, buttonText: 'Select File 2', ),
-
+          CommonButton(onTap: (){}, buttonText: 'Select File', ),
         ],
       ),
     );
   }
 }
-

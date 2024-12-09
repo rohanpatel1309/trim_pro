@@ -9,13 +9,13 @@ part 'audio_cut_screen_state.dart';
 part 'audio_cut_screen_bloc.freezed.dart';
 
 @injectable
-class CutScreenBloc extends Bloc<CutScreenEvent, CutScreenState> {
-  CutScreenBloc() : super(const CutScreenState.initial()) {
+class AudioCutScreenBloc extends Bloc<AudioCutScreenEvent, AudioCutScreenState> {
+  AudioCutScreenBloc() : super(const AudioCutScreenState.initial()) {
     on<_PickFile>(_onPickFile);
   }
 
   /// Pick File
-  Future<void> _onPickFile(_PickFile event, Emitter<CutScreenState> emit) async {
+  Future<void> _onPickFile(_PickFile event, Emitter<AudioCutScreenState> emit) async {
     await CommonMethods.pickFile();
   }
 
