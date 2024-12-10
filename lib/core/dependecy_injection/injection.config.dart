@@ -26,8 +26,8 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.factory<_i531.AudioBloc>(() => _i531.AudioBloc());
     gh.factory<_i24.AudioCutScreenBloc>(() => _i24.AudioCutScreenBloc());
-    gh.singleton<_i531.AudioBloc>(() => _i531.AudioBloc());
     return this;
   }
 }

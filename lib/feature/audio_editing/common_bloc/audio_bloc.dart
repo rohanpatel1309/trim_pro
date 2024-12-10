@@ -11,7 +11,7 @@ part 'audio_state.dart';
 
 part 'audio_bloc.freezed.dart';
 
-@singleton
+@injectable
 class AudioBloc extends Bloc<AudioEvent, AudioState> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   StreamSubscription? _positionSubscription;
