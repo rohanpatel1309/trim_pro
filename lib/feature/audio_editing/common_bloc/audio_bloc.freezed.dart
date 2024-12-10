@@ -20,6 +20,7 @@ mixin _$AudioEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) play,
     required TResult Function() pause,
+    required TResult Function(Duration position) seek,
     required TResult Function() getPosition,
   }) =>
       throw _privateConstructorUsedError;
@@ -27,6 +28,7 @@ mixin _$AudioEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? play,
     TResult? Function()? pause,
+    TResult? Function(Duration position)? seek,
     TResult? Function()? getPosition,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,6 +36,7 @@ mixin _$AudioEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? play,
     TResult Function()? pause,
+    TResult Function(Duration position)? seek,
     TResult Function()? getPosition,
     required TResult orElse(),
   }) =>
@@ -42,6 +45,7 @@ mixin _$AudioEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Play value) play,
     required TResult Function(_Pause value) pause,
+    required TResult Function(_Seek value) seek,
     required TResult Function(_GetPosition value) getPosition,
   }) =>
       throw _privateConstructorUsedError;
@@ -49,6 +53,7 @@ mixin _$AudioEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Play value)? play,
     TResult? Function(_Pause value)? pause,
+    TResult? Function(_Seek value)? seek,
     TResult? Function(_GetPosition value)? getPosition,
   }) =>
       throw _privateConstructorUsedError;
@@ -56,6 +61,7 @@ mixin _$AudioEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Play value)? play,
     TResult Function(_Pause value)? pause,
+    TResult Function(_Seek value)? seek,
     TResult Function(_GetPosition value)? getPosition,
     required TResult orElse(),
   }) =>
@@ -152,6 +158,7 @@ class _$PlayImpl implements _Play {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) play,
     required TResult Function() pause,
+    required TResult Function(Duration position) seek,
     required TResult Function() getPosition,
   }) {
     return play(url);
@@ -162,6 +169,7 @@ class _$PlayImpl implements _Play {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? play,
     TResult? Function()? pause,
+    TResult? Function(Duration position)? seek,
     TResult? Function()? getPosition,
   }) {
     return play?.call(url);
@@ -172,6 +180,7 @@ class _$PlayImpl implements _Play {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? play,
     TResult Function()? pause,
+    TResult Function(Duration position)? seek,
     TResult Function()? getPosition,
     required TResult orElse(),
   }) {
@@ -186,6 +195,7 @@ class _$PlayImpl implements _Play {
   TResult map<TResult extends Object?>({
     required TResult Function(_Play value) play,
     required TResult Function(_Pause value) pause,
+    required TResult Function(_Seek value) seek,
     required TResult Function(_GetPosition value) getPosition,
   }) {
     return play(this);
@@ -196,6 +206,7 @@ class _$PlayImpl implements _Play {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Play value)? play,
     TResult? Function(_Pause value)? pause,
+    TResult? Function(_Seek value)? seek,
     TResult? Function(_GetPosition value)? getPosition,
   }) {
     return play?.call(this);
@@ -206,6 +217,7 @@ class _$PlayImpl implements _Play {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Play value)? play,
     TResult Function(_Pause value)? pause,
+    TResult Function(_Seek value)? seek,
     TResult Function(_GetPosition value)? getPosition,
     required TResult orElse(),
   }) {
@@ -271,6 +283,7 @@ class _$PauseImpl implements _Pause {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) play,
     required TResult Function() pause,
+    required TResult Function(Duration position) seek,
     required TResult Function() getPosition,
   }) {
     return pause();
@@ -281,6 +294,7 @@ class _$PauseImpl implements _Pause {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? play,
     TResult? Function()? pause,
+    TResult? Function(Duration position)? seek,
     TResult? Function()? getPosition,
   }) {
     return pause?.call();
@@ -291,6 +305,7 @@ class _$PauseImpl implements _Pause {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? play,
     TResult Function()? pause,
+    TResult Function(Duration position)? seek,
     TResult Function()? getPosition,
     required TResult orElse(),
   }) {
@@ -305,6 +320,7 @@ class _$PauseImpl implements _Pause {
   TResult map<TResult extends Object?>({
     required TResult Function(_Play value) play,
     required TResult Function(_Pause value) pause,
+    required TResult Function(_Seek value) seek,
     required TResult Function(_GetPosition value) getPosition,
   }) {
     return pause(this);
@@ -315,6 +331,7 @@ class _$PauseImpl implements _Pause {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Play value)? play,
     TResult? Function(_Pause value)? pause,
+    TResult? Function(_Seek value)? seek,
     TResult? Function(_GetPosition value)? getPosition,
   }) {
     return pause?.call(this);
@@ -325,6 +342,7 @@ class _$PauseImpl implements _Pause {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Play value)? play,
     TResult Function(_Pause value)? pause,
+    TResult Function(_Seek value)? seek,
     TResult Function(_GetPosition value)? getPosition,
     required TResult orElse(),
   }) {
@@ -337,6 +355,158 @@ class _$PauseImpl implements _Pause {
 
 abstract class _Pause implements AudioEvent {
   const factory _Pause() = _$PauseImpl;
+}
+
+/// @nodoc
+abstract class _$$SeekImplCopyWith<$Res> {
+  factory _$$SeekImplCopyWith(
+          _$SeekImpl value, $Res Function(_$SeekImpl) then) =
+      __$$SeekImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Duration position});
+}
+
+/// @nodoc
+class __$$SeekImplCopyWithImpl<$Res>
+    extends _$AudioEventCopyWithImpl<$Res, _$SeekImpl>
+    implements _$$SeekImplCopyWith<$Res> {
+  __$$SeekImplCopyWithImpl(_$SeekImpl _value, $Res Function(_$SeekImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AudioEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? position = null,
+  }) {
+    return _then(_$SeekImpl(
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SeekImpl implements _Seek {
+  const _$SeekImpl({required this.position});
+
+  @override
+  final Duration position;
+
+  @override
+  String toString() {
+    return 'AudioEvent.seek(position: $position)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SeekImpl &&
+            (identical(other.position, position) ||
+                other.position == position));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, position);
+
+  /// Create a copy of AudioEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SeekImplCopyWith<_$SeekImpl> get copyWith =>
+      __$$SeekImplCopyWithImpl<_$SeekImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String url) play,
+    required TResult Function() pause,
+    required TResult Function(Duration position) seek,
+    required TResult Function() getPosition,
+  }) {
+    return seek(position);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String url)? play,
+    TResult? Function()? pause,
+    TResult? Function(Duration position)? seek,
+    TResult? Function()? getPosition,
+  }) {
+    return seek?.call(position);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String url)? play,
+    TResult Function()? pause,
+    TResult Function(Duration position)? seek,
+    TResult Function()? getPosition,
+    required TResult orElse(),
+  }) {
+    if (seek != null) {
+      return seek(position);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Play value) play,
+    required TResult Function(_Pause value) pause,
+    required TResult Function(_Seek value) seek,
+    required TResult Function(_GetPosition value) getPosition,
+  }) {
+    return seek(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Play value)? play,
+    TResult? Function(_Pause value)? pause,
+    TResult? Function(_Seek value)? seek,
+    TResult? Function(_GetPosition value)? getPosition,
+  }) {
+    return seek?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Play value)? play,
+    TResult Function(_Pause value)? pause,
+    TResult Function(_Seek value)? seek,
+    TResult Function(_GetPosition value)? getPosition,
+    required TResult orElse(),
+  }) {
+    if (seek != null) {
+      return seek(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Seek implements AudioEvent {
+  const factory _Seek({required final Duration position}) = _$SeekImpl;
+
+  Duration get position;
+
+  /// Create a copy of AudioEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SeekImplCopyWith<_$SeekImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -382,6 +552,7 @@ class _$GetPositionImpl implements _GetPosition {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) play,
     required TResult Function() pause,
+    required TResult Function(Duration position) seek,
     required TResult Function() getPosition,
   }) {
     return getPosition();
@@ -392,6 +563,7 @@ class _$GetPositionImpl implements _GetPosition {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? play,
     TResult? Function()? pause,
+    TResult? Function(Duration position)? seek,
     TResult? Function()? getPosition,
   }) {
     return getPosition?.call();
@@ -402,6 +574,7 @@ class _$GetPositionImpl implements _GetPosition {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? play,
     TResult Function()? pause,
+    TResult Function(Duration position)? seek,
     TResult Function()? getPosition,
     required TResult orElse(),
   }) {
@@ -416,6 +589,7 @@ class _$GetPositionImpl implements _GetPosition {
   TResult map<TResult extends Object?>({
     required TResult Function(_Play value) play,
     required TResult Function(_Pause value) pause,
+    required TResult Function(_Seek value) seek,
     required TResult Function(_GetPosition value) getPosition,
   }) {
     return getPosition(this);
@@ -426,6 +600,7 @@ class _$GetPositionImpl implements _GetPosition {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Play value)? play,
     TResult? Function(_Pause value)? pause,
+    TResult? Function(_Seek value)? seek,
     TResult? Function(_GetPosition value)? getPosition,
   }) {
     return getPosition?.call(this);
@@ -436,6 +611,7 @@ class _$GetPositionImpl implements _GetPosition {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Play value)? play,
     TResult Function(_Pause value)? pause,
+    TResult Function(_Seek value)? seek,
     TResult Function(_GetPosition value)? getPosition,
     required TResult orElse(),
   }) {
@@ -456,8 +632,8 @@ mixin _$AudioState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) =>
@@ -466,8 +642,8 @@ mixin _$AudioState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) =>
@@ -476,8 +652,8 @@ mixin _$AudioState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -580,8 +756,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) {
@@ -593,8 +769,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) {
@@ -606,8 +782,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -709,8 +885,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) {
@@ -722,8 +898,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) {
@@ -735,8 +911,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -800,6 +976,8 @@ abstract class _$$PlayingImplCopyWith<$Res> {
   factory _$$PlayingImplCopyWith(
           _$PlayingImpl value, $Res Function(_$PlayingImpl) then) =
       __$$PlayingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Duration position, Duration duration});
 }
 
 /// @nodoc
@@ -812,38 +990,73 @@ class __$$PlayingImplCopyWithImpl<$Res>
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? position = null,
+    Object? duration = null,
+  }) {
+    return _then(_$PlayingImpl(
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$PlayingImpl implements _Playing {
-  const _$PlayingImpl();
+  const _$PlayingImpl({required this.position, required this.duration});
+
+  @override
+  final Duration position;
+  @override
+  final Duration duration;
 
   @override
   String toString() {
-    return 'AudioState.playing()';
+    return 'AudioState.playing(position: $position, duration: $duration)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PlayingImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$PlayingImpl &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, position, duration);
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PlayingImplCopyWith<_$PlayingImpl> get copyWith =>
+      __$$PlayingImplCopyWithImpl<_$PlayingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) {
-    return playing();
+    return playing(position, duration);
   }
 
   @override
@@ -851,12 +1064,12 @@ class _$PlayingImpl implements _Playing {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) {
-    return playing?.call();
+    return playing?.call(position, duration);
   }
 
   @override
@@ -864,14 +1077,14 @@ class _$PlayingImpl implements _Playing {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (playing != null) {
-      return playing();
+      return playing(position, duration);
     }
     return orElse();
   }
@@ -921,7 +1134,18 @@ class _$PlayingImpl implements _Playing {
 }
 
 abstract class _Playing implements AudioState {
-  const factory _Playing() = _$PlayingImpl;
+  const factory _Playing(
+      {required final Duration position,
+      required final Duration duration}) = _$PlayingImpl;
+
+  Duration get position;
+  Duration get duration;
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PlayingImplCopyWith<_$PlayingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -929,6 +1153,8 @@ abstract class _$$PausedImplCopyWith<$Res> {
   factory _$$PausedImplCopyWith(
           _$PausedImpl value, $Res Function(_$PausedImpl) then) =
       __$$PausedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Duration position, Duration duration});
 }
 
 /// @nodoc
@@ -941,38 +1167,73 @@ class __$$PausedImplCopyWithImpl<$Res>
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? position = null,
+    Object? duration = null,
+  }) {
+    return _then(_$PausedImpl(
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$PausedImpl implements _Paused {
-  const _$PausedImpl();
+  const _$PausedImpl({required this.position, required this.duration});
+
+  @override
+  final Duration position;
+  @override
+  final Duration duration;
 
   @override
   String toString() {
-    return 'AudioState.paused()';
+    return 'AudioState.paused(position: $position, duration: $duration)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PausedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$PausedImpl &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, position, duration);
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PausedImplCopyWith<_$PausedImpl> get copyWith =>
+      __$$PausedImplCopyWithImpl<_$PausedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) {
-    return paused();
+    return paused(position, duration);
   }
 
   @override
@@ -980,12 +1241,12 @@ class _$PausedImpl implements _Paused {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) {
-    return paused?.call();
+    return paused?.call(position, duration);
   }
 
   @override
@@ -993,14 +1254,14 @@ class _$PausedImpl implements _Paused {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),
   }) {
     if (paused != null) {
-      return paused();
+      return paused(position, duration);
     }
     return orElse();
   }
@@ -1050,7 +1311,18 @@ class _$PausedImpl implements _Paused {
 }
 
 abstract class _Paused implements AudioState {
-  const factory _Paused() = _$PausedImpl;
+  const factory _Paused(
+      {required final Duration position,
+      required final Duration duration}) = _$PausedImpl;
+
+  Duration get position;
+  Duration get duration;
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PausedImplCopyWith<_$PausedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1124,8 +1396,8 @@ class _$SetPositionImpl implements _SetPosition {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) {
@@ -1137,8 +1409,8 @@ class _$SetPositionImpl implements _SetPosition {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) {
@@ -1150,8 +1422,8 @@ class _$SetPositionImpl implements _SetPosition {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),
@@ -1289,8 +1561,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() playing,
-    required TResult Function() paused,
+    required TResult Function(Duration position, Duration duration) playing,
+    required TResult Function(Duration position, Duration duration) paused,
     required TResult Function(Duration duration) setPosition,
     required TResult Function(String error) error,
   }) {
@@ -1302,8 +1574,8 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? playing,
-    TResult? Function()? paused,
+    TResult? Function(Duration position, Duration duration)? playing,
+    TResult? Function(Duration position, Duration duration)? paused,
     TResult? Function(Duration duration)? setPosition,
     TResult? Function(String error)? error,
   }) {
@@ -1315,8 +1587,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? playing,
-    TResult Function()? paused,
+    TResult Function(Duration position, Duration duration)? playing,
+    TResult Function(Duration position, Duration duration)? paused,
     TResult Function(Duration duration)? setPosition,
     TResult Function(String error)? error,
     required TResult orElse(),

@@ -4,5 +4,6 @@ part of 'audio_bloc.dart';
 class AudioEvent with _$AudioEvent {
   const factory AudioEvent.play({required String url}) = _Play;
   const factory AudioEvent.pause() = _Pause;
+  const factory AudioEvent.seek({required Duration position}) = _Seek;
   const factory AudioEvent.getPosition() = _GetPosition;
 }
