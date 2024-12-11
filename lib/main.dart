@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/core/app_utils/bloc_observer.dart';
 import 'package:trim_pro/core/dependecy_injection/injection.dart';
@@ -11,9 +12,8 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     configureDependencies();
-    final observer = AppBlocObserver();
-    runApp(MyApp()
-    );
+    Bloc.observer = AppBlocObserver();
+    runApp(MyApp());
   }, (error, stack) {
     print("error : $error");
     print("error : $stack");

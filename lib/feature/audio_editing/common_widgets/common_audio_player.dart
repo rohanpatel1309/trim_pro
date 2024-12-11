@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/audio_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 
 const String audioUrl =
     "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
 class CommonAudioPlayer extends StatelessWidget {
-  const CommonAudioPlayer({super.key});
+  const CommonAudioPlayer({super.key, required this.tools});
+
+  final Widget tools;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AudioBloc, AudioState>(
-      builder: (context, state) {
+    return BlocConsumer<AudioBloc, AudioState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    state.mapOrNull(
+      setUrl: (state){
+        BlocProvider.of<AudioBloc>(context).add(const AudioEvent.play());
+      }
+    );
+  },
+  builder: (context, state) {
         return state.maybeMap(orElse: () {
           return Center(
-            child: ElevatedButton(
-              onPressed: () {
-                BlocProvider.of<AudioBloc>(context)
-                    .add(const AudioEvent.play(url: audioUrl));
-              },
-              child: const Text('Play Audio'),
+            child: CommonButton(
+              onTap: () => onFileSelection(context),
+              buttonText: 'Select File',
             ),
           );
         }, error: (state) {
@@ -34,24 +41,36 @@ class CommonAudioPlayer extends StatelessWidget {
           return AudioPlayerWithSlider(
             state: state,
             isPlaying: true,
+            tools: tools,
           );
         }, paused: (state) {
           return AudioPlayerWithSlider(
             state: state,
             isPlaying: false,
+            tools: tools,
           );
         });
       },
     );
+
+  }
+
+  /// File selection event
+  void onFileSelection(BuildContext context) {
+    BlocProvider.of<AudioBloc>(context).add(const AudioEvent.pickFile());
   }
 }
 
 class AudioPlayerWithSlider extends StatelessWidget {
   const AudioPlayerWithSlider(
-      {super.key, required this.state, required this.isPlaying});
+      {super.key,
+      required this.state,
+      required this.isPlaying,
+      required this.tools});
 
   final dynamic state;
   final bool isPlaying;
+  final Widget tools;
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +83,13 @@ class AudioPlayerWithSlider extends StatelessWidget {
           color: Colors.white,
         ),
         Slider(
+          activeColor: Colors.white,
+          inactiveColor: Colors.white,
           value: state.position.inSeconds.toDouble(),
           min: 0,
           max: state.duration.inSeconds.toDouble(),
-          onChanged: (value) {
+          onChanged: (value) {},
+          onChangeEnd: (value) {
             BlocProvider.of<AudioBloc>(context).add(
               AudioEvent.seek(position: Duration(seconds: value.toInt())),
             );
@@ -90,13 +112,21 @@ class AudioPlayerWithSlider extends StatelessWidget {
           ),
         ),
         IconButton(
-          icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+          icon: Icon(
+            isPlaying ? Icons.pause : Icons.play_arrow,
+            color: Colors.white,
+            size: 45.h,
+          ),
           onPressed: () {
             BlocProvider.of<AudioBloc>(context).add(isPlaying
                 ? const AudioEvent.pause()
-                : const AudioEvent.play(url: audioUrl));
+                : const AudioEvent.play());
           },
         ),
+        SizedBox(
+          height: 40.h,
+        ),
+        tools,
       ],
     );
   }

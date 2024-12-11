@@ -12,17 +12,10 @@ import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio
 import 'package:trim_pro/feature/home/presentation/widgets/common_button.dart';
 
 @RoutePage(name: 'home')
-class HomeScreen extends StatelessWidget implements AutoRouteWrapper{
+class HomeScreen extends StatelessWidget{
   const HomeScreen({super.key});
 
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    // TODO: implement wrappedRoute
-    return MultiBlocProvider(providers: [
-      BlocProvider<AudioBloc>(create: (_) => GetIt.instance<AudioBloc>()),
-      BlocProvider<AudioCutScreenBloc>(create: (_) => GetIt.instance<AudioCutScreenBloc>()),
-    ], child: this);
-  }
+
 
   @override
   Widget build(BuildContext context) {

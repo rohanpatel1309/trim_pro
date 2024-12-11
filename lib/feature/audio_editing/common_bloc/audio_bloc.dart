@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:trim_pro/core/app_utils/common_methods.dart';
 
 part 'audio_event.dart';
 
@@ -15,11 +17,13 @@ part 'audio_bloc.freezed.dart';
 class AudioBloc extends Bloc<AudioEvent, AudioState> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   StreamSubscription? _positionSubscription;
+  bool isPlayed = false;
 
   AudioBloc() : super(const AudioState.initial()) {
     on<_Play>(_onPlayAudioPlayer);
     on<_Pause>(_onPauseAudioPlayer);
-    on<_Seek>(_onSeekAudioPlayer);
+    on<_Seek>(_onSeekAudioPlayer,transformer: restartable());
+    on<_PickFile>(_onPickFile);
   }
 
   /// Play audio player
@@ -28,11 +32,15 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
 
     try {
       // Set the URL for the audio player and await its completion
-      await _audioPlayer.setUrl(event.url);
-
+      if(!isPlayed){
+        isPlayed = true;
+      }else{
+        _audioPlayer.seek(_audioPlayer.position);
+      }
       // Play the audio once the URL is set
-      _audioPlayer.play();
-
+      Future.delayed(const Duration(milliseconds: 500),(){
+        _audioPlayer.play();
+      });
       await for (final position in _audioPlayer.positionStream) {
         final currentDuration = _audioPlayer.duration ?? Duration.zero;
         emit(AudioState.playing(position: position, duration: currentDuration));
@@ -60,8 +68,25 @@ class AudioBloc extends Bloc<AudioEvent, AudioState> {
 
     // Emit the updated position and duration
     final duration = _audioPlayer.duration ?? Duration.zero;
-    emit(AudioState.playing(position: _audioPlayer.position, duration: duration));
+    if(_audioPlayer.playing){
+      print("inn");
+      emit(AudioState.playing(position: _audioPlayer.position, duration: duration));
+    }else{
+      print("inn1");
+      emit(AudioState.paused(position: _audioPlayer.position, duration: duration));
+    }
+
   }
+
+  /// Pick File
+  Future<void> _onPickFile(_PickFile event, Emitter<AudioState> emit) async {
+    final fileResult = await CommonMethods.pickFile();
+    emit(const AudioState.loading());
+    await _audioPlayer.setUrl(fileResult!.files.single.path!);
+    emit(const AudioState.setUrl());
+  }
+
+
 
   @override
   Future<void> close() {

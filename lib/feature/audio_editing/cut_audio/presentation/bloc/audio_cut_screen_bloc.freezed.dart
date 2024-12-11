@@ -19,7 +19,6 @@ mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() pickFile,
     required TResult Function() setTime,
     required TResult Function() cutAudio,
   }) =>
@@ -27,7 +26,6 @@ mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? pickFile,
     TResult? Function()? setTime,
     TResult? Function()? cutAudio,
   }) =>
@@ -35,7 +33,6 @@ mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? pickFile,
     TResult Function()? setTime,
     TResult Function()? cutAudio,
     required TResult orElse(),
@@ -44,7 +41,6 @@ mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_PickFile value) pickFile,
     required TResult Function(_SetTime value) setTime,
     required TResult Function(_CutAudio value) cutAudio,
   }) =>
@@ -52,7 +48,6 @@ mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_PickFile value)? pickFile,
     TResult? Function(_SetTime value)? setTime,
     TResult? Function(_CutAudio value)? cutAudio,
   }) =>
@@ -60,7 +55,6 @@ mixin _$AudioCutScreenEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_PickFile value)? pickFile,
     TResult Function(_SetTime value)? setTime,
     TResult Function(_CutAudio value)? cutAudio,
     required TResult orElse(),
@@ -131,7 +125,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() pickFile,
     required TResult Function() setTime,
     required TResult Function() cutAudio,
   }) {
@@ -142,7 +135,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? pickFile,
     TResult? Function()? setTime,
     TResult? Function()? cutAudio,
   }) {
@@ -153,7 +145,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? pickFile,
     TResult Function()? setTime,
     TResult Function()? cutAudio,
     required TResult orElse(),
@@ -168,7 +159,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_PickFile value) pickFile,
     required TResult Function(_SetTime value) setTime,
     required TResult Function(_CutAudio value) cutAudio,
   }) {
@@ -179,7 +169,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_PickFile value)? pickFile,
     TResult? Function(_SetTime value)? setTime,
     TResult? Function(_CutAudio value)? cutAudio,
   }) {
@@ -190,7 +179,6 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_PickFile value)? pickFile,
     TResult Function(_SetTime value)? setTime,
     TResult Function(_CutAudio value)? cutAudio,
     required TResult orElse(),
@@ -204,123 +192,6 @@ class _$StartedImpl implements _Started {
 
 abstract class _Started implements AudioCutScreenEvent {
   const factory _Started() = _$StartedImpl;
-}
-
-/// @nodoc
-abstract class _$$PickFileImplCopyWith<$Res> {
-  factory _$$PickFileImplCopyWith(
-          _$PickFileImpl value, $Res Function(_$PickFileImpl) then) =
-      __$$PickFileImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PickFileImplCopyWithImpl<$Res>
-    extends _$AudioCutScreenEventCopyWithImpl<$Res, _$PickFileImpl>
-    implements _$$PickFileImplCopyWith<$Res> {
-  __$$PickFileImplCopyWithImpl(
-      _$PickFileImpl _value, $Res Function(_$PickFileImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of AudioCutScreenEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$PickFileImpl implements _PickFile {
-  const _$PickFileImpl();
-
-  @override
-  String toString() {
-    return 'AudioCutScreenEvent.pickFile()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$PickFileImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() pickFile,
-    required TResult Function() setTime,
-    required TResult Function() cutAudio,
-  }) {
-    return pickFile();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? pickFile,
-    TResult? Function()? setTime,
-    TResult? Function()? cutAudio,
-  }) {
-    return pickFile?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? pickFile,
-    TResult Function()? setTime,
-    TResult Function()? cutAudio,
-    required TResult orElse(),
-  }) {
-    if (pickFile != null) {
-      return pickFile();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_SetTime value) setTime,
-    required TResult Function(_CutAudio value) cutAudio,
-  }) {
-    return pickFile(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_SetTime value)? setTime,
-    TResult? Function(_CutAudio value)? cutAudio,
-  }) {
-    return pickFile?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_PickFile value)? pickFile,
-    TResult Function(_SetTime value)? setTime,
-    TResult Function(_CutAudio value)? cutAudio,
-    required TResult orElse(),
-  }) {
-    if (pickFile != null) {
-      return pickFile(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _PickFile implements AudioCutScreenEvent {
-  const factory _PickFile() = _$PickFileImpl;
 }
 
 /// @nodoc
@@ -365,7 +236,6 @@ class _$SetTimeImpl implements _SetTime {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() pickFile,
     required TResult Function() setTime,
     required TResult Function() cutAudio,
   }) {
@@ -376,7 +246,6 @@ class _$SetTimeImpl implements _SetTime {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? pickFile,
     TResult? Function()? setTime,
     TResult? Function()? cutAudio,
   }) {
@@ -387,7 +256,6 @@ class _$SetTimeImpl implements _SetTime {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? pickFile,
     TResult Function()? setTime,
     TResult Function()? cutAudio,
     required TResult orElse(),
@@ -402,7 +270,6 @@ class _$SetTimeImpl implements _SetTime {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_PickFile value) pickFile,
     required TResult Function(_SetTime value) setTime,
     required TResult Function(_CutAudio value) cutAudio,
   }) {
@@ -413,7 +280,6 @@ class _$SetTimeImpl implements _SetTime {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_PickFile value)? pickFile,
     TResult? Function(_SetTime value)? setTime,
     TResult? Function(_CutAudio value)? cutAudio,
   }) {
@@ -424,7 +290,6 @@ class _$SetTimeImpl implements _SetTime {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_PickFile value)? pickFile,
     TResult Function(_SetTime value)? setTime,
     TResult Function(_CutAudio value)? cutAudio,
     required TResult orElse(),
@@ -482,7 +347,6 @@ class _$CutAudioImpl implements _CutAudio {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() pickFile,
     required TResult Function() setTime,
     required TResult Function() cutAudio,
   }) {
@@ -493,7 +357,6 @@ class _$CutAudioImpl implements _CutAudio {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? pickFile,
     TResult? Function()? setTime,
     TResult? Function()? cutAudio,
   }) {
@@ -504,7 +367,6 @@ class _$CutAudioImpl implements _CutAudio {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? pickFile,
     TResult Function()? setTime,
     TResult Function()? cutAudio,
     required TResult orElse(),
@@ -519,7 +381,6 @@ class _$CutAudioImpl implements _CutAudio {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_PickFile value) pickFile,
     required TResult Function(_SetTime value) setTime,
     required TResult Function(_CutAudio value) cutAudio,
   }) {
@@ -530,7 +391,6 @@ class _$CutAudioImpl implements _CutAudio {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_PickFile value)? pickFile,
     TResult? Function(_SetTime value)? setTime,
     TResult? Function(_CutAudio value)? cutAudio,
   }) {
@@ -541,7 +401,6 @@ class _$CutAudioImpl implements _CutAudio {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_PickFile value)? pickFile,
     TResult Function(_SetTime value)? setTime,
     TResult Function(_CutAudio value)? cutAudio,
     required TResult orElse(),

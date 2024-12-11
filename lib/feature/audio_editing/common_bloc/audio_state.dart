@@ -4,6 +4,7 @@ part of 'audio_bloc.dart';
 class AudioState with _$AudioState {
   const factory AudioState.initial() = _Initial;
   const factory AudioState.loading() = _Loading;
+  const factory AudioState.setUrl() = _SetUrl;
   const factory AudioState.playing({
     required Duration position,
     required Duration duration,

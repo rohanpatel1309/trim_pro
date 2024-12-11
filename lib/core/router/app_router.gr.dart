@@ -42,7 +42,7 @@ class AudioCut extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AudioCutScreen();
+      return WrappedRoute(child: const AudioCutScreen());
     },
   );
 }
@@ -80,7 +80,7 @@ class Home extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return WrappedRoute(child: const HomeScreen());
+      return const HomeScreen();
     },
   );
 }
