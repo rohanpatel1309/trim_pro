@@ -1,14 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
-import 'package:trim_pro/core/dependecy_injection/injection.dart';
 import 'package:trim_pro/core/router/app_router.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/audio_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart';
 import 'package:trim_pro/feature/home/presentation/widgets/common_button.dart';
 
 @RoutePage(name: 'home')

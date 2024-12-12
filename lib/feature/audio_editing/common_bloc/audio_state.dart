@@ -4,15 +4,22 @@ part of 'audio_bloc.dart';
 class AudioState with _$AudioState {
   const factory AudioState.initial() = _Initial;
   const factory AudioState.loading() = _Loading;
-  const factory AudioState.setUrl() = _SetUrl;
+  const factory AudioState.setUrl({
+    required CommonBlocDataModel commonBlocDataModel,
+  }) = _SetUrl;
   const factory AudioState.playing({
-    required Duration position,
-    required Duration duration,
+    required CommonBlocDataModel commonBlocDataModel,
   }) = _Playing;
   const factory AudioState.paused({
-    required Duration position,
-    required Duration duration,
+    required CommonBlocDataModel commonBlocDataModel,
   }) = _Paused;
-  const factory AudioState.setPosition({required Duration duration}) = _SetPosition;
+  const factory AudioState.setPosition({
+    required CommonBlocDataModel commonBlocDataModel,
+  }) = _SetPosition;
   const factory AudioState.error(String error) = _Error;
+
+  // Added state to handle slider value during the slide
+  const factory AudioState.updateSliderValue({
+    required CommonBlocDataModel commonBlocDataModel,
+  }) = _UpdateSliderValue;
 }

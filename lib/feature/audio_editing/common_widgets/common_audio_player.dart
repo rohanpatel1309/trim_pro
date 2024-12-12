@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/audio_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_bloc_data_model.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 
 const String audioUrl =
@@ -18,8 +19,11 @@ class CommonAudioPlayer extends StatelessWidget {
   listener: (context, state) {
     // TODO: implement listener
     state.mapOrNull(
-      setUrl: (state){
+      setUrl: (state)  {
+
         BlocProvider.of<AudioBloc>(context).add(const AudioEvent.play());
+
+
       }
     );
   },
@@ -36,20 +40,23 @@ class CommonAudioPlayer extends StatelessWidget {
             child: Text('Error: $state'),
           );
         }, loading: (state) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: Colors.white,));
         }, playing: (state) {
           return AudioPlayerWithSlider(
-            state: state,
-            isPlaying: true,
+          commonBlocDataModel: state.commonBlocDataModel,
             tools: tools,
           );
         }, paused: (state) {
           return AudioPlayerWithSlider(
-            state: state,
-            isPlaying: false,
+            commonBlocDataModel: state.commonBlocDataModel,
+
             tools: tools,
           );
-        });
+        },
+          updateSliderValue: (state){
+          return AudioPlayerWithSlider(commonBlocDataModel: state.commonBlocDataModel, tools: tools);
+          }
+        );
       },
     );
 
@@ -64,12 +71,11 @@ class CommonAudioPlayer extends StatelessWidget {
 class AudioPlayerWithSlider extends StatelessWidget {
   const AudioPlayerWithSlider(
       {super.key,
-      required this.state,
-      required this.isPlaying,
-      required this.tools});
+      required this.commonBlocDataModel,
+        required this.tools,
+      });
 
-  final dynamic state;
-  final bool isPlaying;
+  final CommonBlocDataModel commonBlocDataModel;
   final Widget tools;
 
   @override
@@ -85,10 +91,14 @@ class AudioPlayerWithSlider extends StatelessWidget {
         Slider(
           activeColor: Colors.white,
           inactiveColor: Colors.white,
-          value: state.position.inSeconds.toDouble(),
+          value: commonBlocDataModel.sliderValue.inSeconds.toDouble(),
           min: 0,
-          max: state.duration.inSeconds.toDouble(),
-          onChanged: (value) {},
+          max: commonBlocDataModel.totalDuration.inSeconds.toDouble(),
+          onChanged: (value) {
+            BlocProvider.of<AudioBloc>(context).add(
+              AudioEvent.setSliderValue(position: Duration(seconds: value.toInt())),
+            );
+          },
           onChangeEnd: (value) {
             BlocProvider.of<AudioBloc>(context).add(
               AudioEvent.seek(position: Duration(seconds: value.toInt())),
@@ -101,11 +111,11 @@ class AudioPlayerWithSlider extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${state.position.inHours % 24} : ${state.position.inMinutes % 60} : ${state.position.inSeconds % 60}",
+                "${commonBlocDataModel.position.inHours % 24} : ${commonBlocDataModel.position.inMinutes % 60} : ${commonBlocDataModel.position.inSeconds % 60}",
                 style: TextStyle(color: Colors.white, fontSize: 12.sp),
               ),
               Text(
-                "${state.duration.inHours % 24} : ${state.duration.inMinutes % 60} : ${state.duration.inSeconds % 60}",
+                "${commonBlocDataModel.totalDuration.inHours % 24} : ${commonBlocDataModel.totalDuration.inMinutes % 60} : ${commonBlocDataModel.totalDuration.inSeconds % 60}",
                 style: TextStyle(color: Colors.white, fontSize: 12.sp),
               ),
             ],
@@ -113,12 +123,12 @@ class AudioPlayerWithSlider extends StatelessWidget {
         ),
         IconButton(
           icon: Icon(
-            isPlaying ? Icons.pause : Icons.play_arrow,
+            commonBlocDataModel.isPlayingNow ? Icons.pause : Icons.play_arrow,
             color: Colors.white,
             size: 45.h,
           ),
           onPressed: () {
-            BlocProvider.of<AudioBloc>(context).add(isPlaying
+            BlocProvider.of<AudioBloc>(context).add(commonBlocDataModel.isPlayingNow
                 ? const AudioEvent.pause()
                 : const AudioEvent.play());
           },

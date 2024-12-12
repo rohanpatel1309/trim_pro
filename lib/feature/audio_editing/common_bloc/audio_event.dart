@@ -6,5 +6,5 @@ class AudioEvent with _$AudioEvent {
   const factory AudioEvent.pause() = _Pause;
   const factory AudioEvent.seek({required Duration position}) = _Seek;
   const factory AudioEvent.pickFile() = _PickFile;
-  const factory AudioEvent.getPosition() = _GetPosition;
+  const factory AudioEvent.setSliderValue({required Duration position}) = _SetSliderValue;  // Added event for slider value
 }

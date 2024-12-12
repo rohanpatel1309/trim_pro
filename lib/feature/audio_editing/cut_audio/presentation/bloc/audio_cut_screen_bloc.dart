@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:injectable/injectable.dart';
 
 

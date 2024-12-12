@@ -22,7 +22,7 @@ mixin _$AudioEvent {
     required TResult Function() pause,
     required TResult Function(Duration position) seek,
     required TResult Function() pickFile,
-    required TResult Function() getPosition,
+    required TResult Function(Duration position) setSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,7 +31,7 @@ mixin _$AudioEvent {
     TResult? Function()? pause,
     TResult? Function(Duration position)? seek,
     TResult? Function()? pickFile,
-    TResult? Function()? getPosition,
+    TResult? Function(Duration position)? setSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$AudioEvent {
     TResult Function()? pause,
     TResult Function(Duration position)? seek,
     TResult Function()? pickFile,
-    TResult Function()? getPosition,
+    TResult Function(Duration position)? setSliderValue,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ mixin _$AudioEvent {
     required TResult Function(_Pause value) pause,
     required TResult Function(_Seek value) seek,
     required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_GetPosition value) getPosition,
+    required TResult Function(_SetSliderValue value) setSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,7 +59,7 @@ mixin _$AudioEvent {
     TResult? Function(_Pause value)? pause,
     TResult? Function(_Seek value)? seek,
     TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_GetPosition value)? getPosition,
+    TResult? Function(_SetSliderValue value)? setSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,7 +68,7 @@ mixin _$AudioEvent {
     TResult Function(_Pause value)? pause,
     TResult Function(_Seek value)? seek,
     TResult Function(_PickFile value)? pickFile,
-    TResult Function(_GetPosition value)? getPosition,
+    TResult Function(_SetSliderValue value)? setSliderValue,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -139,7 +139,7 @@ class _$PlayImpl implements _Play {
     required TResult Function() pause,
     required TResult Function(Duration position) seek,
     required TResult Function() pickFile,
-    required TResult Function() getPosition,
+    required TResult Function(Duration position) setSliderValue,
   }) {
     return play();
   }
@@ -151,7 +151,7 @@ class _$PlayImpl implements _Play {
     TResult? Function()? pause,
     TResult? Function(Duration position)? seek,
     TResult? Function()? pickFile,
-    TResult? Function()? getPosition,
+    TResult? Function(Duration position)? setSliderValue,
   }) {
     return play?.call();
   }
@@ -163,7 +163,7 @@ class _$PlayImpl implements _Play {
     TResult Function()? pause,
     TResult Function(Duration position)? seek,
     TResult Function()? pickFile,
-    TResult Function()? getPosition,
+    TResult Function(Duration position)? setSliderValue,
     required TResult orElse(),
   }) {
     if (play != null) {
@@ -179,7 +179,7 @@ class _$PlayImpl implements _Play {
     required TResult Function(_Pause value) pause,
     required TResult Function(_Seek value) seek,
     required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_GetPosition value) getPosition,
+    required TResult Function(_SetSliderValue value) setSliderValue,
   }) {
     return play(this);
   }
@@ -191,7 +191,7 @@ class _$PlayImpl implements _Play {
     TResult? Function(_Pause value)? pause,
     TResult? Function(_Seek value)? seek,
     TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_GetPosition value)? getPosition,
+    TResult? Function(_SetSliderValue value)? setSliderValue,
   }) {
     return play?.call(this);
   }
@@ -203,7 +203,7 @@ class _$PlayImpl implements _Play {
     TResult Function(_Pause value)? pause,
     TResult Function(_Seek value)? seek,
     TResult Function(_PickFile value)? pickFile,
-    TResult Function(_GetPosition value)? getPosition,
+    TResult Function(_SetSliderValue value)? setSliderValue,
     required TResult orElse(),
   }) {
     if (play != null) {
@@ -262,7 +262,7 @@ class _$PauseImpl implements _Pause {
     required TResult Function() pause,
     required TResult Function(Duration position) seek,
     required TResult Function() pickFile,
-    required TResult Function() getPosition,
+    required TResult Function(Duration position) setSliderValue,
   }) {
     return pause();
   }
@@ -274,7 +274,7 @@ class _$PauseImpl implements _Pause {
     TResult? Function()? pause,
     TResult? Function(Duration position)? seek,
     TResult? Function()? pickFile,
-    TResult? Function()? getPosition,
+    TResult? Function(Duration position)? setSliderValue,
   }) {
     return pause?.call();
   }
@@ -286,7 +286,7 @@ class _$PauseImpl implements _Pause {
     TResult Function()? pause,
     TResult Function(Duration position)? seek,
     TResult Function()? pickFile,
-    TResult Function()? getPosition,
+    TResult Function(Duration position)? setSliderValue,
     required TResult orElse(),
   }) {
     if (pause != null) {
@@ -302,7 +302,7 @@ class _$PauseImpl implements _Pause {
     required TResult Function(_Pause value) pause,
     required TResult Function(_Seek value) seek,
     required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_GetPosition value) getPosition,
+    required TResult Function(_SetSliderValue value) setSliderValue,
   }) {
     return pause(this);
   }
@@ -314,7 +314,7 @@ class _$PauseImpl implements _Pause {
     TResult? Function(_Pause value)? pause,
     TResult? Function(_Seek value)? seek,
     TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_GetPosition value)? getPosition,
+    TResult? Function(_SetSliderValue value)? setSliderValue,
   }) {
     return pause?.call(this);
   }
@@ -326,7 +326,7 @@ class _$PauseImpl implements _Pause {
     TResult Function(_Pause value)? pause,
     TResult Function(_Seek value)? seek,
     TResult Function(_PickFile value)? pickFile,
-    TResult Function(_GetPosition value)? getPosition,
+    TResult Function(_SetSliderValue value)? setSliderValue,
     required TResult orElse(),
   }) {
     if (pause != null) {
@@ -412,7 +412,7 @@ class _$SeekImpl implements _Seek {
     required TResult Function() pause,
     required TResult Function(Duration position) seek,
     required TResult Function() pickFile,
-    required TResult Function() getPosition,
+    required TResult Function(Duration position) setSliderValue,
   }) {
     return seek(position);
   }
@@ -424,7 +424,7 @@ class _$SeekImpl implements _Seek {
     TResult? Function()? pause,
     TResult? Function(Duration position)? seek,
     TResult? Function()? pickFile,
-    TResult? Function()? getPosition,
+    TResult? Function(Duration position)? setSliderValue,
   }) {
     return seek?.call(position);
   }
@@ -436,7 +436,7 @@ class _$SeekImpl implements _Seek {
     TResult Function()? pause,
     TResult Function(Duration position)? seek,
     TResult Function()? pickFile,
-    TResult Function()? getPosition,
+    TResult Function(Duration position)? setSliderValue,
     required TResult orElse(),
   }) {
     if (seek != null) {
@@ -452,7 +452,7 @@ class _$SeekImpl implements _Seek {
     required TResult Function(_Pause value) pause,
     required TResult Function(_Seek value) seek,
     required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_GetPosition value) getPosition,
+    required TResult Function(_SetSliderValue value) setSliderValue,
   }) {
     return seek(this);
   }
@@ -464,7 +464,7 @@ class _$SeekImpl implements _Seek {
     TResult? Function(_Pause value)? pause,
     TResult? Function(_Seek value)? seek,
     TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_GetPosition value)? getPosition,
+    TResult? Function(_SetSliderValue value)? setSliderValue,
   }) {
     return seek?.call(this);
   }
@@ -476,7 +476,7 @@ class _$SeekImpl implements _Seek {
     TResult Function(_Pause value)? pause,
     TResult Function(_Seek value)? seek,
     TResult Function(_PickFile value)? pickFile,
-    TResult Function(_GetPosition value)? getPosition,
+    TResult Function(_SetSliderValue value)? setSliderValue,
     required TResult orElse(),
   }) {
     if (seek != null) {
@@ -543,7 +543,7 @@ class _$PickFileImpl implements _PickFile {
     required TResult Function() pause,
     required TResult Function(Duration position) seek,
     required TResult Function() pickFile,
-    required TResult Function() getPosition,
+    required TResult Function(Duration position) setSliderValue,
   }) {
     return pickFile();
   }
@@ -555,7 +555,7 @@ class _$PickFileImpl implements _PickFile {
     TResult? Function()? pause,
     TResult? Function(Duration position)? seek,
     TResult? Function()? pickFile,
-    TResult? Function()? getPosition,
+    TResult? Function(Duration position)? setSliderValue,
   }) {
     return pickFile?.call();
   }
@@ -567,7 +567,7 @@ class _$PickFileImpl implements _PickFile {
     TResult Function()? pause,
     TResult Function(Duration position)? seek,
     TResult Function()? pickFile,
-    TResult Function()? getPosition,
+    TResult Function(Duration position)? setSliderValue,
     required TResult orElse(),
   }) {
     if (pickFile != null) {
@@ -583,7 +583,7 @@ class _$PickFileImpl implements _PickFile {
     required TResult Function(_Pause value) pause,
     required TResult Function(_Seek value) seek,
     required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_GetPosition value) getPosition,
+    required TResult Function(_SetSliderValue value) setSliderValue,
   }) {
     return pickFile(this);
   }
@@ -595,7 +595,7 @@ class _$PickFileImpl implements _PickFile {
     TResult? Function(_Pause value)? pause,
     TResult? Function(_Seek value)? seek,
     TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_GetPosition value)? getPosition,
+    TResult? Function(_SetSliderValue value)? setSliderValue,
   }) {
     return pickFile?.call(this);
   }
@@ -607,7 +607,7 @@ class _$PickFileImpl implements _PickFile {
     TResult Function(_Pause value)? pause,
     TResult Function(_Seek value)? seek,
     TResult Function(_PickFile value)? pickFile,
-    TResult Function(_GetPosition value)? getPosition,
+    TResult Function(_SetSliderValue value)? setSliderValue,
     required TResult orElse(),
   }) {
     if (pickFile != null) {
@@ -622,42 +622,71 @@ abstract class _PickFile implements AudioEvent {
 }
 
 /// @nodoc
-abstract class _$$GetPositionImplCopyWith<$Res> {
-  factory _$$GetPositionImplCopyWith(
-          _$GetPositionImpl value, $Res Function(_$GetPositionImpl) then) =
-      __$$GetPositionImplCopyWithImpl<$Res>;
+abstract class _$$SetSliderValueImplCopyWith<$Res> {
+  factory _$$SetSliderValueImplCopyWith(_$SetSliderValueImpl value,
+          $Res Function(_$SetSliderValueImpl) then) =
+      __$$SetSliderValueImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Duration position});
 }
 
 /// @nodoc
-class __$$GetPositionImplCopyWithImpl<$Res>
-    extends _$AudioEventCopyWithImpl<$Res, _$GetPositionImpl>
-    implements _$$GetPositionImplCopyWith<$Res> {
-  __$$GetPositionImplCopyWithImpl(
-      _$GetPositionImpl _value, $Res Function(_$GetPositionImpl) _then)
+class __$$SetSliderValueImplCopyWithImpl<$Res>
+    extends _$AudioEventCopyWithImpl<$Res, _$SetSliderValueImpl>
+    implements _$$SetSliderValueImplCopyWith<$Res> {
+  __$$SetSliderValueImplCopyWithImpl(
+      _$SetSliderValueImpl _value, $Res Function(_$SetSliderValueImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of AudioEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? position = null,
+  }) {
+    return _then(_$SetSliderValueImpl(
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Duration,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$GetPositionImpl implements _GetPosition {
-  const _$GetPositionImpl();
+class _$SetSliderValueImpl implements _SetSliderValue {
+  const _$SetSliderValueImpl({required this.position});
+
+  @override
+  final Duration position;
 
   @override
   String toString() {
-    return 'AudioEvent.getPosition()';
+    return 'AudioEvent.setSliderValue(position: $position)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetPositionImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SetSliderValueImpl &&
+            (identical(other.position, position) ||
+                other.position == position));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, position);
+
+  /// Create a copy of AudioEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetSliderValueImplCopyWith<_$SetSliderValueImpl> get copyWith =>
+      __$$SetSliderValueImplCopyWithImpl<_$SetSliderValueImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -666,9 +695,9 @@ class _$GetPositionImpl implements _GetPosition {
     required TResult Function() pause,
     required TResult Function(Duration position) seek,
     required TResult Function() pickFile,
-    required TResult Function() getPosition,
+    required TResult Function(Duration position) setSliderValue,
   }) {
-    return getPosition();
+    return setSliderValue(position);
   }
 
   @override
@@ -678,9 +707,9 @@ class _$GetPositionImpl implements _GetPosition {
     TResult? Function()? pause,
     TResult? Function(Duration position)? seek,
     TResult? Function()? pickFile,
-    TResult? Function()? getPosition,
+    TResult? Function(Duration position)? setSliderValue,
   }) {
-    return getPosition?.call();
+    return setSliderValue?.call(position);
   }
 
   @override
@@ -690,11 +719,11 @@ class _$GetPositionImpl implements _GetPosition {
     TResult Function()? pause,
     TResult Function(Duration position)? seek,
     TResult Function()? pickFile,
-    TResult Function()? getPosition,
+    TResult Function(Duration position)? setSliderValue,
     required TResult orElse(),
   }) {
-    if (getPosition != null) {
-      return getPosition();
+    if (setSliderValue != null) {
+      return setSliderValue(position);
     }
     return orElse();
   }
@@ -706,9 +735,9 @@ class _$GetPositionImpl implements _GetPosition {
     required TResult Function(_Pause value) pause,
     required TResult Function(_Seek value) seek,
     required TResult Function(_PickFile value) pickFile,
-    required TResult Function(_GetPosition value) getPosition,
+    required TResult Function(_SetSliderValue value) setSliderValue,
   }) {
-    return getPosition(this);
+    return setSliderValue(this);
   }
 
   @override
@@ -718,9 +747,9 @@ class _$GetPositionImpl implements _GetPosition {
     TResult? Function(_Pause value)? pause,
     TResult? Function(_Seek value)? seek,
     TResult? Function(_PickFile value)? pickFile,
-    TResult? Function(_GetPosition value)? getPosition,
+    TResult? Function(_SetSliderValue value)? setSliderValue,
   }) {
-    return getPosition?.call(this);
+    return setSliderValue?.call(this);
   }
 
   @override
@@ -730,18 +759,27 @@ class _$GetPositionImpl implements _GetPosition {
     TResult Function(_Pause value)? pause,
     TResult Function(_Seek value)? seek,
     TResult Function(_PickFile value)? pickFile,
-    TResult Function(_GetPosition value)? getPosition,
+    TResult Function(_SetSliderValue value)? setSliderValue,
     required TResult orElse(),
   }) {
-    if (getPosition != null) {
-      return getPosition(this);
+    if (setSliderValue != null) {
+      return setSliderValue(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetPosition implements AudioEvent {
-  const factory _GetPosition() = _$GetPositionImpl;
+abstract class _SetSliderValue implements AudioEvent {
+  const factory _SetSliderValue({required final Duration position}) =
+      _$SetSliderValueImpl;
+
+  Duration get position;
+
+  /// Create a copy of AudioEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SetSliderValueImplCopyWith<_$SetSliderValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -750,33 +788,40 @@ mixin _$AudioState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -789,6 +834,7 @@ mixin _$AudioState {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -800,6 +846,7 @@ mixin _$AudioState {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -811,6 +858,7 @@ mixin _$AudioState {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -880,11 +928,14 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
     return initial();
   }
@@ -894,11 +945,13 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
     return initial?.call();
   }
@@ -908,11 +961,13 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -931,6 +986,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return initial(this);
   }
@@ -945,6 +1001,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return initial?.call(this);
   }
@@ -959,6 +1016,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1015,11 +1073,14 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
     return loading();
   }
@@ -1029,11 +1090,13 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
     return loading?.call();
   }
@@ -1043,11 +1106,13 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1066,6 +1131,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return loading(this);
   }
@@ -1080,6 +1146,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return loading?.call(this);
   }
@@ -1094,6 +1161,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1112,6 +1180,8 @@ abstract class _$$SetUrlImplCopyWith<$Res> {
   factory _$$SetUrlImplCopyWith(
           _$SetUrlImpl value, $Res Function(_$SetUrlImpl) then) =
       __$$SetUrlImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CommonBlocDataModel commonBlocDataModel});
 }
 
 /// @nodoc
@@ -1124,39 +1194,68 @@ class __$$SetUrlImplCopyWithImpl<$Res>
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? commonBlocDataModel = null,
+  }) {
+    return _then(_$SetUrlImpl(
+      commonBlocDataModel: null == commonBlocDataModel
+          ? _value.commonBlocDataModel
+          : commonBlocDataModel // ignore: cast_nullable_to_non_nullable
+              as CommonBlocDataModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SetUrlImpl implements _SetUrl {
-  const _$SetUrlImpl();
+  const _$SetUrlImpl({required this.commonBlocDataModel});
+
+  @override
+  final CommonBlocDataModel commonBlocDataModel;
 
   @override
   String toString() {
-    return 'AudioState.setUrl()';
+    return 'AudioState.setUrl(commonBlocDataModel: $commonBlocDataModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SetUrlImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SetUrlImpl &&
+            (identical(other.commonBlocDataModel, commonBlocDataModel) ||
+                other.commonBlocDataModel == commonBlocDataModel));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, commonBlocDataModel);
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetUrlImplCopyWith<_$SetUrlImpl> get copyWith =>
+      __$$SetUrlImplCopyWithImpl<_$SetUrlImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
-    return setUrl();
+    return setUrl(commonBlocDataModel);
   }
 
   @override
@@ -1164,13 +1263,15 @@ class _$SetUrlImpl implements _SetUrl {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
-    return setUrl?.call();
+    return setUrl?.call(commonBlocDataModel);
   }
 
   @override
@@ -1178,15 +1279,17 @@ class _$SetUrlImpl implements _SetUrl {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (setUrl != null) {
-      return setUrl();
+      return setUrl(commonBlocDataModel);
     }
     return orElse();
   }
@@ -1201,6 +1304,7 @@ class _$SetUrlImpl implements _SetUrl {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return setUrl(this);
   }
@@ -1215,6 +1319,7 @@ class _$SetUrlImpl implements _SetUrl {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return setUrl?.call(this);
   }
@@ -1229,6 +1334,7 @@ class _$SetUrlImpl implements _SetUrl {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (setUrl != null) {
@@ -1239,7 +1345,16 @@ class _$SetUrlImpl implements _SetUrl {
 }
 
 abstract class _SetUrl implements AudioState {
-  const factory _SetUrl() = _$SetUrlImpl;
+  const factory _SetUrl(
+      {required final CommonBlocDataModel commonBlocDataModel}) = _$SetUrlImpl;
+
+  CommonBlocDataModel get commonBlocDataModel;
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SetUrlImplCopyWith<_$SetUrlImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1248,7 +1363,7 @@ abstract class _$$PlayingImplCopyWith<$Res> {
           _$PlayingImpl value, $Res Function(_$PlayingImpl) then) =
       __$$PlayingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Duration position, Duration duration});
+  $Res call({CommonBlocDataModel commonBlocDataModel});
 }
 
 /// @nodoc
@@ -1264,18 +1379,13 @@ class __$$PlayingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? position = null,
-    Object? duration = null,
+    Object? commonBlocDataModel = null,
   }) {
     return _then(_$PlayingImpl(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      commonBlocDataModel: null == commonBlocDataModel
+          ? _value.commonBlocDataModel
+          : commonBlocDataModel // ignore: cast_nullable_to_non_nullable
+              as CommonBlocDataModel,
     ));
   }
 }
@@ -1283,16 +1393,14 @@ class __$$PlayingImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PlayingImpl implements _Playing {
-  const _$PlayingImpl({required this.position, required this.duration});
+  const _$PlayingImpl({required this.commonBlocDataModel});
 
   @override
-  final Duration position;
-  @override
-  final Duration duration;
+  final CommonBlocDataModel commonBlocDataModel;
 
   @override
   String toString() {
-    return 'AudioState.playing(position: $position, duration: $duration)';
+    return 'AudioState.playing(commonBlocDataModel: $commonBlocDataModel)';
   }
 
   @override
@@ -1300,14 +1408,12 @@ class _$PlayingImpl implements _Playing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PlayingImpl &&
-            (identical(other.position, position) ||
-                other.position == position) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration));
+            (identical(other.commonBlocDataModel, commonBlocDataModel) ||
+                other.commonBlocDataModel == commonBlocDataModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, position, duration);
+  int get hashCode => Object.hash(runtimeType, commonBlocDataModel);
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1322,13 +1428,16 @@ class _$PlayingImpl implements _Playing {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
-    return playing(position, duration);
+    return playing(commonBlocDataModel);
   }
 
   @override
@@ -1336,13 +1445,15 @@ class _$PlayingImpl implements _Playing {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
-    return playing?.call(position, duration);
+    return playing?.call(commonBlocDataModel);
   }
 
   @override
@@ -1350,15 +1461,17 @@ class _$PlayingImpl implements _Playing {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (playing != null) {
-      return playing(position, duration);
+      return playing(commonBlocDataModel);
     }
     return orElse();
   }
@@ -1373,6 +1486,7 @@ class _$PlayingImpl implements _Playing {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return playing(this);
   }
@@ -1387,6 +1501,7 @@ class _$PlayingImpl implements _Playing {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return playing?.call(this);
   }
@@ -1401,6 +1516,7 @@ class _$PlayingImpl implements _Playing {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (playing != null) {
@@ -1412,11 +1528,9 @@ class _$PlayingImpl implements _Playing {
 
 abstract class _Playing implements AudioState {
   const factory _Playing(
-      {required final Duration position,
-      required final Duration duration}) = _$PlayingImpl;
+      {required final CommonBlocDataModel commonBlocDataModel}) = _$PlayingImpl;
 
-  Duration get position;
-  Duration get duration;
+  CommonBlocDataModel get commonBlocDataModel;
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1431,7 +1545,7 @@ abstract class _$$PausedImplCopyWith<$Res> {
           _$PausedImpl value, $Res Function(_$PausedImpl) then) =
       __$$PausedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Duration position, Duration duration});
+  $Res call({CommonBlocDataModel commonBlocDataModel});
 }
 
 /// @nodoc
@@ -1447,18 +1561,13 @@ class __$$PausedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? position = null,
-    Object? duration = null,
+    Object? commonBlocDataModel = null,
   }) {
     return _then(_$PausedImpl(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      commonBlocDataModel: null == commonBlocDataModel
+          ? _value.commonBlocDataModel
+          : commonBlocDataModel // ignore: cast_nullable_to_non_nullable
+              as CommonBlocDataModel,
     ));
   }
 }
@@ -1466,16 +1575,14 @@ class __$$PausedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PausedImpl implements _Paused {
-  const _$PausedImpl({required this.position, required this.duration});
+  const _$PausedImpl({required this.commonBlocDataModel});
 
   @override
-  final Duration position;
-  @override
-  final Duration duration;
+  final CommonBlocDataModel commonBlocDataModel;
 
   @override
   String toString() {
-    return 'AudioState.paused(position: $position, duration: $duration)';
+    return 'AudioState.paused(commonBlocDataModel: $commonBlocDataModel)';
   }
 
   @override
@@ -1483,14 +1590,12 @@ class _$PausedImpl implements _Paused {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PausedImpl &&
-            (identical(other.position, position) ||
-                other.position == position) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration));
+            (identical(other.commonBlocDataModel, commonBlocDataModel) ||
+                other.commonBlocDataModel == commonBlocDataModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, position, duration);
+  int get hashCode => Object.hash(runtimeType, commonBlocDataModel);
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1505,13 +1610,16 @@ class _$PausedImpl implements _Paused {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
-    return paused(position, duration);
+    return paused(commonBlocDataModel);
   }
 
   @override
@@ -1519,13 +1627,15 @@ class _$PausedImpl implements _Paused {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
-    return paused?.call(position, duration);
+    return paused?.call(commonBlocDataModel);
   }
 
   @override
@@ -1533,15 +1643,17 @@ class _$PausedImpl implements _Paused {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (paused != null) {
-      return paused(position, duration);
+      return paused(commonBlocDataModel);
     }
     return orElse();
   }
@@ -1556,6 +1668,7 @@ class _$PausedImpl implements _Paused {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return paused(this);
   }
@@ -1570,6 +1683,7 @@ class _$PausedImpl implements _Paused {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return paused?.call(this);
   }
@@ -1584,6 +1698,7 @@ class _$PausedImpl implements _Paused {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (paused != null) {
@@ -1595,11 +1710,9 @@ class _$PausedImpl implements _Paused {
 
 abstract class _Paused implements AudioState {
   const factory _Paused(
-      {required final Duration position,
-      required final Duration duration}) = _$PausedImpl;
+      {required final CommonBlocDataModel commonBlocDataModel}) = _$PausedImpl;
 
-  Duration get position;
-  Duration get duration;
+  CommonBlocDataModel get commonBlocDataModel;
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1614,7 +1727,7 @@ abstract class _$$SetPositionImplCopyWith<$Res> {
           _$SetPositionImpl value, $Res Function(_$SetPositionImpl) then) =
       __$$SetPositionImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Duration duration});
+  $Res call({CommonBlocDataModel commonBlocDataModel});
 }
 
 /// @nodoc
@@ -1630,13 +1743,13 @@ class __$$SetPositionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? duration = null,
+    Object? commonBlocDataModel = null,
   }) {
     return _then(_$SetPositionImpl(
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      commonBlocDataModel: null == commonBlocDataModel
+          ? _value.commonBlocDataModel
+          : commonBlocDataModel // ignore: cast_nullable_to_non_nullable
+              as CommonBlocDataModel,
     ));
   }
 }
@@ -1644,14 +1757,14 @@ class __$$SetPositionImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SetPositionImpl implements _SetPosition {
-  const _$SetPositionImpl({required this.duration});
+  const _$SetPositionImpl({required this.commonBlocDataModel});
 
   @override
-  final Duration duration;
+  final CommonBlocDataModel commonBlocDataModel;
 
   @override
   String toString() {
-    return 'AudioState.setPosition(duration: $duration)';
+    return 'AudioState.setPosition(commonBlocDataModel: $commonBlocDataModel)';
   }
 
   @override
@@ -1659,12 +1772,12 @@ class _$SetPositionImpl implements _SetPosition {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SetPositionImpl &&
-            (identical(other.duration, duration) ||
-                other.duration == duration));
+            (identical(other.commonBlocDataModel, commonBlocDataModel) ||
+                other.commonBlocDataModel == commonBlocDataModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, duration);
+  int get hashCode => Object.hash(runtimeType, commonBlocDataModel);
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1679,13 +1792,16 @@ class _$SetPositionImpl implements _SetPosition {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
-    return setPosition(duration);
+    return setPosition(commonBlocDataModel);
   }
 
   @override
@@ -1693,13 +1809,15 @@ class _$SetPositionImpl implements _SetPosition {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
-    return setPosition?.call(duration);
+    return setPosition?.call(commonBlocDataModel);
   }
 
   @override
@@ -1707,15 +1825,17 @@ class _$SetPositionImpl implements _SetPosition {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (setPosition != null) {
-      return setPosition(duration);
+      return setPosition(commonBlocDataModel);
     }
     return orElse();
   }
@@ -1730,6 +1850,7 @@ class _$SetPositionImpl implements _SetPosition {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return setPosition(this);
   }
@@ -1744,6 +1865,7 @@ class _$SetPositionImpl implements _SetPosition {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return setPosition?.call(this);
   }
@@ -1758,6 +1880,7 @@ class _$SetPositionImpl implements _SetPosition {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (setPosition != null) {
@@ -1768,10 +1891,11 @@ class _$SetPositionImpl implements _SetPosition {
 }
 
 abstract class _SetPosition implements AudioState {
-  const factory _SetPosition({required final Duration duration}) =
+  const factory _SetPosition(
+          {required final CommonBlocDataModel commonBlocDataModel}) =
       _$SetPositionImpl;
 
-  Duration get duration;
+  CommonBlocDataModel get commonBlocDataModel;
 
   /// Create a copy of AudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1850,11 +1974,14 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() setUrl,
-    required TResult Function(Duration position, Duration duration) playing,
-    required TResult Function(Duration position, Duration duration) paused,
-    required TResult Function(Duration duration) setPosition,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
     required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
   }) {
     return error(this.error);
   }
@@ -1864,11 +1991,13 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? setUrl,
-    TResult? Function(Duration position, Duration duration)? playing,
-    TResult? Function(Duration position, Duration duration)? paused,
-    TResult? Function(Duration duration)? setPosition,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
   }) {
     return error?.call(this.error);
   }
@@ -1878,11 +2007,13 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? setUrl,
-    TResult Function(Duration position, Duration duration)? playing,
-    TResult Function(Duration position, Duration duration)? paused,
-    TResult Function(Duration duration)? setPosition,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
     TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1901,6 +2032,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Paused value) paused,
     required TResult Function(_SetPosition value) setPosition,
     required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
   }) {
     return error(this);
   }
@@ -1915,6 +2047,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Paused value)? paused,
     TResult? Function(_SetPosition value)? setPosition,
     TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
   }) {
     return error?.call(this);
   }
@@ -1929,6 +2062,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Paused value)? paused,
     TResult Function(_SetPosition value)? setPosition,
     TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1947,5 +2081,189 @@ abstract class _Error implements AudioState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UpdateSliderValueImplCopyWith<$Res> {
+  factory _$$UpdateSliderValueImplCopyWith(_$UpdateSliderValueImpl value,
+          $Res Function(_$UpdateSliderValueImpl) then) =
+      __$$UpdateSliderValueImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({CommonBlocDataModel commonBlocDataModel});
+}
+
+/// @nodoc
+class __$$UpdateSliderValueImplCopyWithImpl<$Res>
+    extends _$AudioStateCopyWithImpl<$Res, _$UpdateSliderValueImpl>
+    implements _$$UpdateSliderValueImplCopyWith<$Res> {
+  __$$UpdateSliderValueImplCopyWithImpl(_$UpdateSliderValueImpl _value,
+      $Res Function(_$UpdateSliderValueImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? commonBlocDataModel = null,
+  }) {
+    return _then(_$UpdateSliderValueImpl(
+      commonBlocDataModel: null == commonBlocDataModel
+          ? _value.commonBlocDataModel
+          : commonBlocDataModel // ignore: cast_nullable_to_non_nullable
+              as CommonBlocDataModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateSliderValueImpl implements _UpdateSliderValue {
+  const _$UpdateSliderValueImpl({required this.commonBlocDataModel});
+
+  @override
+  final CommonBlocDataModel commonBlocDataModel;
+
+  @override
+  String toString() {
+    return 'AudioState.updateSliderValue(commonBlocDataModel: $commonBlocDataModel)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateSliderValueImpl &&
+            (identical(other.commonBlocDataModel, commonBlocDataModel) ||
+                other.commonBlocDataModel == commonBlocDataModel));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, commonBlocDataModel);
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateSliderValueImplCopyWith<_$UpdateSliderValueImpl> get copyWith =>
+      __$$UpdateSliderValueImplCopyWithImpl<_$UpdateSliderValueImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) setUrl,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) playing,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel) paused,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        setPosition,
+    required TResult Function(String error) error,
+    required TResult Function(CommonBlocDataModel commonBlocDataModel)
+        updateSliderValue,
+  }) {
+    return updateSliderValue(commonBlocDataModel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
+    TResult? Function(String error)? error,
+    TResult? Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
+  }) {
+    return updateSliderValue?.call(commonBlocDataModel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setUrl,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? playing,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? paused,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)? setPosition,
+    TResult Function(String error)? error,
+    TResult Function(CommonBlocDataModel commonBlocDataModel)?
+        updateSliderValue,
+    required TResult orElse(),
+  }) {
+    if (updateSliderValue != null) {
+      return updateSliderValue(commonBlocDataModel);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SetUrl value) setUrl,
+    required TResult Function(_Playing value) playing,
+    required TResult Function(_Paused value) paused,
+    required TResult Function(_SetPosition value) setPosition,
+    required TResult Function(_Error value) error,
+    required TResult Function(_UpdateSliderValue value) updateSliderValue,
+  }) {
+    return updateSliderValue(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_SetUrl value)? setUrl,
+    TResult? Function(_Playing value)? playing,
+    TResult? Function(_Paused value)? paused,
+    TResult? Function(_SetPosition value)? setPosition,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_UpdateSliderValue value)? updateSliderValue,
+  }) {
+    return updateSliderValue?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SetUrl value)? setUrl,
+    TResult Function(_Playing value)? playing,
+    TResult Function(_Paused value)? paused,
+    TResult Function(_SetPosition value)? setPosition,
+    TResult Function(_Error value)? error,
+    TResult Function(_UpdateSliderValue value)? updateSliderValue,
+    required TResult orElse(),
+  }) {
+    if (updateSliderValue != null) {
+      return updateSliderValue(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateSliderValue implements AudioState {
+  const factory _UpdateSliderValue(
+          {required final CommonBlocDataModel commonBlocDataModel}) =
+      _$UpdateSliderValueImpl;
+
+  CommonBlocDataModel get commonBlocDataModel;
+
+  /// Create a copy of AudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdateSliderValueImplCopyWith<_$UpdateSliderValueImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
