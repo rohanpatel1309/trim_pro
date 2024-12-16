@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/audio_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_time_fields.dart';
@@ -18,7 +18,7 @@ class AudioCutScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     // TODO: implement wrappedRoute
     return MultiBlocProvider(providers: [
-      BlocProvider<AudioBloc>(create: (_) => GetIt.instance<AudioBloc>()),
+      BlocProvider<CommonAudioBloc>(create: (_) => GetIt.instance<CommonAudioBloc>()),
       BlocProvider<AudioCutScreenBloc>(
           create: (_) => GetIt.instance<AudioCutScreenBloc>()),
     ], child: this);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/audio_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_bloc_data_model.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/common_model/common_bloc_data_model.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 
 const String audioUrl =
@@ -15,67 +15,40 @@ class CommonAudioPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AudioBloc, AudioState>(
-  listener: (context, state) {
-    // TODO: implement listener
-    state.mapOrNull(
-      setUrl: (state)  {
-
-        BlocProvider.of<AudioBloc>(context).add(const AudioEvent.play());
-
-
-      }
-    );
-  },
-  builder: (context, state) {
-        return state.maybeMap(orElse: () {
-          return Center(
-            child: CommonButton(
-              onTap: () => onFileSelection(context),
-              buttonText: 'Select File',
-            ),
+    return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
+      selector: (state) => state.commonBlocDataModel.isSetUrl,
+      builder: (context, state) {
+        if (!state) {
+          return CommonButton(
+              onTap: () => onFileSelection(context), buttonText: "Select File");
+        } else {
+          return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
+            selector: (state) => state.commonBlocDataModel.isLoading,
+            builder: (context, state) {
+              if (state)
+                return const CircularProgressIndicator(
+                  color: Colors.white,
+                );
+              return AudioPlayerWithSlider(tools: tools);
+            },
           );
-        }, error: (state) {
-          return Center(
-            child: Text('Error: $state'),
-          );
-        }, loading: (state) {
-          return const Center(child: CircularProgressIndicator(color: Colors.white,));
-        }, playing: (state) {
-          return AudioPlayerWithSlider(
-          commonBlocDataModel: state.commonBlocDataModel,
-            tools: tools,
-          );
-        }, paused: (state) {
-          return AudioPlayerWithSlider(
-            commonBlocDataModel: state.commonBlocDataModel,
-
-            tools: tools,
-          );
-        },
-          updateSliderValue: (state){
-          return AudioPlayerWithSlider(commonBlocDataModel: state.commonBlocDataModel, tools: tools);
-          }
-        );
+        }
       },
     );
-
   }
 
   /// File selection event
   void onFileSelection(BuildContext context) {
-    BlocProvider.of<AudioBloc>(context).add(const AudioEvent.pickFile());
+    BlocProvider.of<CommonAudioBloc>(context).add(const CommonAudioPickFile());
   }
 }
 
 class AudioPlayerWithSlider extends StatelessWidget {
-  const AudioPlayerWithSlider(
-      {super.key,
-      required this.commonBlocDataModel,
-        required this.tools,
-      });
+  const AudioPlayerWithSlider({
+    super.key,
+    required this.tools,
+  });
 
-  final CommonBlocDataModel commonBlocDataModel;
   final Widget tools;
 
   @override
@@ -88,50 +61,75 @@ class AudioPlayerWithSlider extends StatelessWidget {
           size: 100.h,
           color: Colors.white,
         ),
-        Slider(
-          activeColor: Colors.white,
-          inactiveColor: Colors.white,
-          value: commonBlocDataModel.sliderValue.inSeconds.toDouble(),
-          min: 0,
-          max: commonBlocDataModel.totalDuration.inSeconds.toDouble(),
-          onChanged: (value) {
-            BlocProvider.of<AudioBloc>(context).add(
-              AudioEvent.setSliderValue(position: Duration(seconds: value.toInt())),
-            );
-          },
-          onChangeEnd: (value) {
-            BlocProvider.of<AudioBloc>(context).add(
-              AudioEvent.seek(position: Duration(seconds: value.toInt())),
-            );
-          },
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${commonBlocDataModel.position.inHours % 24} : ${commonBlocDataModel.position.inMinutes % 60} : ${commonBlocDataModel.position.inSeconds % 60}",
-                style: TextStyle(color: Colors.white, fontSize: 12.sp),
+        Column(
+          children: [
+            BlocSelector<CommonAudioBloc, CommonAudioState,
+                CommonBlocDataModel>(
+              selector: (state) => state.commonBlocDataModel,
+              builder: (context, state) {
+                return Slider(
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.white,
+                  value: state.position.inSeconds.toDouble(),
+                  min: 0,
+                  max: state.totalDuration.inSeconds.toDouble(),
+                  onChanged: (value) {
+                    BlocProvider.of<CommonAudioBloc>(context).add(
+                      CommonAudioSetSliderValue(
+                          position: Duration(seconds: value.toInt())),
+                    );
+                  },
+                  onChangeEnd: (value) {
+                    BlocProvider.of<CommonAudioBloc>(context).add(
+                      CommonAudioSeek(
+                          position: Duration(seconds: value.toInt())),
+                    );
+                  },
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BlocSelector<CommonAudioBloc, CommonAudioState, Duration>(
+                    selector: (state) => state.commonBlocDataModel.position,
+                    builder: (context, state) {
+                      return Text(
+                        "${state.inHours % 24} : ${state.inMinutes % 60} : ${state.inSeconds % 60}",
+                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                      );
+                    },
+                  ),
+                  BlocSelector<CommonAudioBloc, CommonAudioState, Duration>(
+                    selector: (state) =>
+                        state.commonBlocDataModel.totalDuration,
+                    builder: (context, state) {
+                      return Text(
+                        "${state.inHours % 24} : ${state.inMinutes % 60} : ${state.inSeconds % 60}",
+                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                      );
+                    },
+                  ),
+                ],
               ),
-              Text(
-                "${commonBlocDataModel.totalDuration.inHours % 24} : ${commonBlocDataModel.totalDuration.inMinutes % 60} : ${commonBlocDataModel.totalDuration.inSeconds % 60}",
-                style: TextStyle(color: Colors.white, fontSize: 12.sp),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        IconButton(
-          icon: Icon(
-            commonBlocDataModel.isPlayingNow ? Icons.pause : Icons.play_arrow,
-            color: Colors.white,
-            size: 45.h,
+        BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
+          selector: (state) => state.commonBlocDataModel.isPlayingNow,
+          builder: (context, data) => IconButton(
+            icon: Icon(
+              data ? Icons.pause : Icons.play_arrow,
+              color: Colors.white,
+              size: 45.h,
+            ),
+            onPressed: () {
+              BlocProvider.of<CommonAudioBloc>(context).add(
+                  data ? const CommonAudioPause() : const CommonAudioPlay());
+            },
           ),
-          onPressed: () {
-            BlocProvider.of<AudioBloc>(context).add(commonBlocDataModel.isPlayingNow
-                ? const AudioEvent.pause()
-                : const AudioEvent.play());
-          },
         ),
         SizedBox(
           height: 40.h,
