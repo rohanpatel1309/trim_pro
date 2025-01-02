@@ -35,8 +35,9 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
+    return  ListView(
+      shrinkWrap: true,
+      children: const [
         CommonAudioPlayer(tools: AudioCutScreenFields(),),
       ],
     );
@@ -63,7 +64,7 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
           controller1: startController,
           controller2: endController,
           title1: "Start",
-          title2: "End",
+          title2: "  End",
         ),
         SizedBox(
           height: 40.h,

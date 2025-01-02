@@ -18,7 +18,7 @@ class CommonButton extends StatelessWidget {
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(30)
         ),
-        child: Text(buttonText,style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,color: Colors.white),),
+        child: Text(buttonText,style: TextStyle(fontSize: 40.sp,fontWeight: FontWeight.w600,color: Colors.white),),
       ),
     );
   }

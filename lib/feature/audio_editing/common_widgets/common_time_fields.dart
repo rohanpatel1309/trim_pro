@@ -15,50 +15,49 @@ class TimeFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      spacing: 15.h,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "$title1 : ",
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24.sp,
+                  fontSize: 48.sp,
                   fontWeight: FontWeight.w600),
             ),
+
             SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              "$title2 : ",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            SizedBox(
-              width: 100.w,
+              width: 250.w,
               child: TimeTextFormField(
                 controller: controller1,
               ),
             ),
-            SizedBox(
-              height: 20.h,
+
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "$title2 : ",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 48.sp,
+                  fontWeight: FontWeight.w600),
             ),
+
             SizedBox(
-              width: 100.w,
+              width: 250.w,
               child: TimeTextFormField(
                 controller: controller2,
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -79,40 +78,36 @@ class TimeTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.datetime,
       maxLength: 8,
-      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+      style: TextStyle(fontSize: 40.sp, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
         counterText: "",
-        // To remove the default text length counter
         filled: true,
-        // Ensures the background is filled with color
         fillColor: Colors.white,
-        // Background color of the field
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          // Curved corners with 20 radius
           borderSide: const BorderSide(
-            color: Colors.grey, // Border color (optional)
-            width: 1, // Border width (optional)
+            color: Colors.grey,
+            width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(
-            color: Colors.grey, // Border color when the field is enabled
+            color: Colors.grey,
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(
-            color: Colors.black, // Border color when the field is focused
-            width: 2, // Border width when focused (optional)
+            color: Colors.black,
+            width: 2,
           ),
         ),
         hintText: "HH:MM:SS",
-        // Placeholder text (optional)
         contentPadding: EdgeInsets.only(
-            left: 10.w, top: 6.h, bottom: 6.h), // Padding inside the field
+            left: 20.w, top: 6.h, bottom: 6.h),
+
       ),
     );
   }

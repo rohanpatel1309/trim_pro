@@ -10,7 +10,7 @@ class AppBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          padding: EdgeInsets.only(top: 50.h),
+          padding: EdgeInsets.only(top: 30.h),
           width: double.infinity,
           height: double.infinity,
           color: Colors.black87,

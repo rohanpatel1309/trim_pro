@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/common_model/common_bloc_data_model.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_bloc_model/common_bloc_data_model.dart';
 
 part 'common_audio_event.dart';
 
@@ -37,30 +37,41 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
     commonBlocDataModel = commonBlocDataModel.copyWith(
         isLoading: true);
 
-    final fileResult = await CommonMethods.pickFile();
-
-
     emit(CommonAudioState(
         commonBlocDataModel: commonBlocDataModel));
 
-    await _audioPlayer.setUrl(fileResult!.files.single.path!);
+    final fileResult = await CommonMethods.pickFile();
 
-    commonBlocDataModel = commonBlocDataModel.copyWith(isSetUrl: true);
+    if(fileResult != null){
 
-    commonBlocDataModel = commonBlocDataModel.copyWith(
-        totalDuration: _audioPlayer.duration, isPlayingNow: true,isLoading: false);
-    emit(CommonAudioState(commonBlocDataModel: commonBlocDataModel));
-    Future.delayed(const Duration(seconds: 1), () {
-      _audioPlayer.play();
-    });
-    await for (final position in _audioPlayer.positionStream) {
       commonBlocDataModel = commonBlocDataModel.copyWith(
-        position: position,
-        isPlayingNow: true,
-        isLoading: false,
-      );
+          isSetUrl: true);
+
+      emit(CommonAudioState(
+          commonBlocDataModel: commonBlocDataModel));
+
+      await _audioPlayer.setUrl(fileResult!.files.single.path!);
+
+
+      commonBlocDataModel = commonBlocDataModel.copyWith(
+        totalDuration: _audioPlayer.duration,);
       emit(CommonAudioState(commonBlocDataModel: commonBlocDataModel));
+
+      _audioPlayer.play();
+
+      await for (final position in _audioPlayer.positionStream) {
+        commonBlocDataModel = commonBlocDataModel.copyWith(
+          position: position,
+          isPlayingNow: true,
+          isLoading: false,
+        );
+        emit(CommonAudioState(commonBlocDataModel: commonBlocDataModel));
+      }
+    }else{
+      commonBlocDataModel = commonBlocDataModel.copyWith(isLoading: false);
+      emit(CommonAudioState(commonBlocDataModel: commonBlocDataModel.copyWith(error: "Please Select File",)));
     }
+
   }
 
   // Play audio player

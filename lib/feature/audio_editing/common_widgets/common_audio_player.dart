@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/common_model/common_bloc_data_model.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_bloc_model/common_bloc_data_model.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 
 const String audioUrl =
@@ -15,25 +16,39 @@ class CommonAudioPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
-      selector: (state) => state.commonBlocDataModel.isSetUrl,
-      builder: (context, state) {
-        if (!state) {
-          return CommonButton(
-              onTap: () => onFileSelection(context), buttonText: "Select File");
-        } else {
-          return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
-            selector: (state) => state.commonBlocDataModel.isLoading,
-            builder: (context, state) {
-              if (state)
-                return const CircularProgressIndicator(
-                  color: Colors.white,
-                );
-              return AudioPlayerWithSlider(tools: tools);
-            },
-          );
+    return BlocListener<CommonAudioBloc, CommonAudioState>(
+      listener: (context, state) {
+        // TODO: implement listener
+        if (state.commonBlocDataModel.error.isNotEmpty) {
+          CommonMethods.showToast(msg: state.commonBlocDataModel.error);
         }
       },
+      child: BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
+        selector: (state) => state.commonBlocDataModel.isSetUrl,
+        builder: (context, state) {
+          if (!state) {
+            return Center(
+              child: CommonButton(
+                  onTap: () => onFileSelection(context),
+                  buttonText: "Select File"),
+            );
+          } else {
+            return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
+              selector: (state) => state.commonBlocDataModel.isLoading,
+              builder: (context, state) {
+                if (state) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
+                }
+                return AudioPlayerWithSlider(tools: tools);
+              },
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -58,7 +73,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
       children: [
         Icon(
           Icons.music_note_rounded,
-          size: 100.h,
+          size: 50.h,
           color: Colors.white,
         ),
         Column(
@@ -89,7 +104,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              padding: EdgeInsets.symmetric(horizontal: 48.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -98,7 +113,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
                     builder: (context, state) {
                       return Text(
                         "${state.inHours % 24} : ${state.inMinutes % 60} : ${state.inSeconds % 60}",
-                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                        style: TextStyle(color: Colors.white, fontSize: 26.sp),
                       );
                     },
                   ),
@@ -108,7 +123,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
                     builder: (context, state) {
                       return Text(
                         "${state.inHours % 24} : ${state.inMinutes % 60} : ${state.inSeconds % 60}",
-                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                        style: TextStyle(color: Colors.white, fontSize: 26.sp),
                       );
                     },
                   ),
@@ -123,7 +138,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
             icon: Icon(
               data ? Icons.pause : Icons.play_arrow,
               color: Colors.white,
-              size: 45.h,
+              size: 30.h,
             ),
             onPressed: () {
               BlocProvider.of<CommonAudioBloc>(context).add(

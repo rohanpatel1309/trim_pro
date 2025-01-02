@@ -1,6 +1,10 @@
 part of 'audio_cut_screen_bloc.dart';
 
-@freezed
-class AudioCutScreenState with _$AudioCutScreenState {
-  const factory AudioCutScreenState.initial() = _Initial;
+sealed class AudioCutScreenState extends Equatable {
+  const AudioCutScreenState();
+}
+
+final class AudioCutScreenInitial extends AudioCutScreenState {
+  @override
+  List<Object> get props => [];
 }

@@ -31,7 +31,8 @@ class ScreenChildren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+
+      padding: EdgeInsets.symmetric(horizontal: 10.w,),
       children: [
         const AudioEditingWidget(),
         SizedBox(
@@ -63,7 +64,7 @@ class AudioEditingWidget extends StatelessWidget {
             Text(
               "Audio Editing",
               style: TextStyle(
-                  fontSize: 20.sp,
+                  fontSize: 40.sp,
                   color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
@@ -119,14 +120,14 @@ class VideoEditingWidget extends StatelessWidget {
         Row(
           children: [
             Icon(
-              Icons.audiotrack,
+              Icons.movie,
               size: 20.h,
               color: Colors.white,
             ),
             Text(
-              "Video Editing",
+              " Video Editing",
               style: TextStyle(
-                  fontSize: 20.sp,
+                  fontSize: 40.sp,
                   color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),

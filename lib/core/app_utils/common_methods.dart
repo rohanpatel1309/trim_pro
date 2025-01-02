@@ -76,7 +76,6 @@ class CommonMethods{
 
     if (status.isGranted) {
       final result =  await FilePicker.platform.pickFiles(
-        allowMultiple: true,
         type: FileType.custom,
         allowedExtensions: supportedAudioExtensions,
       );

@@ -15,8 +15,8 @@ class CommonButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 4.h),
 
         padding: EdgeInsets.symmetric(horizontal: 5.w),
-        height: 90.h,
-        width: 90.h,
+        height: 55.h,
+        width: 55.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.h),
           color: Colors.black
@@ -25,7 +25,7 @@ class CommonButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon,color: Colors.white70,size: 22.h,),
-            Text(text,style: TextStyle(color: Colors.white,fontSize: 16.sp,fontWeight: FontWeight.w600,),textAlign: TextAlign.center,),
+            Text(text,style: TextStyle(color: Colors.white,fontSize: 30.sp,fontWeight: FontWeight.w600,),textAlign: TextAlign.center,),
           ],
         ),
       ),
