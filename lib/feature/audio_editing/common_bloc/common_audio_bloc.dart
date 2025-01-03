@@ -45,12 +45,12 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
     if(fileResult != null){
 
       commonBlocDataModel = commonBlocDataModel.copyWith(
-          isSetUrl: true);
-
+          fileUrl: fileResult.files.single.path);
+      emit(SetAudioFileUrl(commonBlocDataModel: commonBlocDataModel));
       emit(CommonAudioState(
           commonBlocDataModel: commonBlocDataModel));
 
-      await _audioPlayer.setUrl(fileResult!.files.single.path!);
+      await _audioPlayer.setUrl(fileResult.files.single.path!);
 
 
       commonBlocDataModel = commonBlocDataModel.copyWith(

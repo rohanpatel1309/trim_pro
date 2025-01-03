@@ -23,10 +23,10 @@ class CommonAudioPlayer extends StatelessWidget {
           CommonMethods.showToast(msg: state.commonBlocDataModel.error);
         }
       },
-      child: BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
-        selector: (state) => state.commonBlocDataModel.isSetUrl,
+      child: BlocSelector<CommonAudioBloc, CommonAudioState, String>(
+        selector: (state) => state.commonBlocDataModel.fileUrl,
         builder: (context, state) {
-          if (!state) {
+          if (state.isEmpty) {
             return Center(
               child: CommonButton(
                   onTap: () => onFileSelection(context),
@@ -111,22 +111,30 @@ class AudioPlayerWithSlider extends StatelessWidget {
                   BlocSelector<CommonAudioBloc, CommonAudioState, Duration>(
                     selector: (state) => state.commonBlocDataModel.position,
                     builder: (context, state) {
+                      final hours = state.inHours % 24;
+                      final minutes = state.inMinutes % 60;
+                      final seconds = state.inSeconds % 60;
+
                       return Text(
-                        "${state.inHours % 24} : ${state.inMinutes % 60} : ${state.inSeconds % 60}",
+                        "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}",
                         style: TextStyle(color: Colors.white, fontSize: 26.sp),
                       );
                     },
                   ),
                   BlocSelector<CommonAudioBloc, CommonAudioState, Duration>(
-                    selector: (state) =>
-                        state.commonBlocDataModel.totalDuration,
+                    selector: (state) => state.commonBlocDataModel.totalDuration,
                     builder: (context, state) {
+                      final hours = state.inHours % 24;
+                      final minutes = state.inMinutes % 60;
+                      final seconds = state.inSeconds % 60;
+
                       return Text(
-                        "${state.inHours % 24} : ${state.inMinutes % 60} : ${state.inSeconds % 60}",
+                        "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}",
                         style: TextStyle(color: Colors.white, fontSize: 26.sp),
                       );
                     },
                   ),
+
                 ],
               ),
             ),

@@ -18,7 +18,8 @@ class AudioCutScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     // TODO: implement wrappedRoute
     return MultiBlocProvider(providers: [
-      BlocProvider<CommonAudioBloc>(create: (_) => GetIt.instance<CommonAudioBloc>()),
+      BlocProvider<CommonAudioBloc>(
+          create: (_) => GetIt.instance<CommonAudioBloc>()),
       BlocProvider<AudioCutScreenBloc>(
           create: (_) => GetIt.instance<AudioCutScreenBloc>()),
     ], child: this);
@@ -35,18 +36,29 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ListView(
-      shrinkWrap: true,
-      children: const [
-        CommonAudioPlayer(tools: AudioCutScreenFields(),),
-      ],
+    return BlocListener<CommonAudioBloc, CommonAudioState>(
+      listener: (context, state) {
+        // TODO: implement listener
+        if (state is SetAudioFileUrl) {
+          BlocProvider.of<AudioCutScreenBloc>(context)
+              .add(SetFilePath(filePath: state.commonBlocDataModel.fileUrl));
+        }
+      },
+      child: ListView(
+        shrinkWrap: true,
+        children: const [
+          CommonAudioPlayer(
+            tools: AudioCutScreenFields(),
+          ),
+        ],
+      ),
     );
   }
 }
 
 /// Audio cut screen fields
 class AudioCutScreenFields extends StatefulWidget {
-   const AudioCutScreenFields({super.key});
+  const AudioCutScreenFields({super.key});
 
   @override
   State<AudioCutScreenFields> createState() => _AudioCutScreenFieldsState();
@@ -70,11 +82,13 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
           height: 40.h,
         ),
         CommonButton(
-          onTap: () => (){},
+          onTap: () {
+            BlocProvider.of<AudioCutScreenBloc>(context).add(
+                CutAudio(start: startController.text, end: endController.text));
+          },
           buttonText: '  Cut  ',
         ),
       ],
     );
   }
 }
-

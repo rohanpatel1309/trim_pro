@@ -4,12 +4,12 @@ class CommonBlocDataModel {
   final Duration position;
   final Duration totalDuration;
   final String error;
-  final bool isSetUrl;
+  final String fileUrl;
 
   CommonBlocDataModel({
      this.isPlayingNow = false,
      this.isLoading = false,
-     this.isSetUrl = false,
+     this.fileUrl = "",
      this.error = "",
      this.position = const Duration(seconds: 0),
      this.totalDuration = const Duration(seconds: 0),
@@ -18,7 +18,7 @@ class CommonBlocDataModel {
   CommonBlocDataModel copyWith({
     bool? isPlayingNow,
     bool? isLoading,
-    bool? isSetUrl,
+    String? fileUrl,
     Duration? position,
     Duration? totalDuration,
     String? error,
@@ -28,7 +28,7 @@ class CommonBlocDataModel {
       totalDuration: totalDuration ?? this.totalDuration,
       position: position ?? this.position,
       isLoading: isLoading ?? this.isLoading,
-      isSetUrl: isSetUrl ?? this.isSetUrl,
+      fileUrl: fileUrl ?? this.fileUrl,
       error: error ?? this.error,
     );
   }

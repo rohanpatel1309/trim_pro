@@ -9,3 +9,12 @@ part of 'common_audio_bloc.dart';
   List<Object> get props => [commonBlocDataModel];
 }
 
+final class SetAudioFileUrl extends CommonAudioState{
+  const SetAudioFileUrl({required super.commonBlocDataModel});
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}
+
+
