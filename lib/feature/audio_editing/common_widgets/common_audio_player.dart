@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/bloc_state_model/common_bloc_state_model.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_bloc_model/common_bloc_data_model.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 
 const String audioUrl =
@@ -19,12 +19,12 @@ class CommonAudioPlayer extends StatelessWidget {
     return BlocListener<CommonAudioBloc, CommonAudioState>(
       listener: (context, state) {
         // TODO: implement listener
-        if (state.commonBlocDataModel.error.isNotEmpty) {
-          CommonMethods.showToast(msg: state.commonBlocDataModel.error);
+        if (state.commonBlocStateModel.error.isNotEmpty) {
+          CommonMethods.showToast(msg: state.commonBlocStateModel.error);
         }
       },
       child: BlocSelector<CommonAudioBloc, CommonAudioState, String>(
-        selector: (state) => state.commonBlocDataModel.fileUrl,
+        selector: (state) => state.commonBlocStateModel.fileUrl,
         builder: (context, state) {
           if (state.isEmpty) {
             return Center(
@@ -34,7 +34,7 @@ class CommonAudioPlayer extends StatelessWidget {
             );
           } else {
             return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
-              selector: (state) => state.commonBlocDataModel.isLoading,
+              selector: (state) => state.commonBlocStateModel.isLoading,
               builder: (context, state) {
                 if (state) {
                   return const Center(
@@ -79,8 +79,8 @@ class AudioPlayerWithSlider extends StatelessWidget {
         Column(
           children: [
             BlocSelector<CommonAudioBloc, CommonAudioState,
-                CommonBlocDataModel>(
-              selector: (state) => state.commonBlocDataModel,
+                CommonBlocStateModel>(
+              selector: (state) => state.commonBlocStateModel,
               builder: (context, state) {
                 return Slider(
                   activeColor: Colors.white,
@@ -109,7 +109,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BlocSelector<CommonAudioBloc, CommonAudioState, Duration>(
-                    selector: (state) => state.commonBlocDataModel.position,
+                    selector: (state) => state.commonBlocStateModel.position,
                     builder: (context, state) {
                       final hours = state.inHours % 24;
                       final minutes = state.inMinutes % 60;
@@ -122,7 +122,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
                     },
                   ),
                   BlocSelector<CommonAudioBloc, CommonAudioState, Duration>(
-                    selector: (state) => state.commonBlocDataModel.totalDuration,
+                    selector: (state) => state.commonBlocStateModel.totalDuration,
                     builder: (context, state) {
                       final hours = state.inHours % 24;
                       final minutes = state.inMinutes % 60;
@@ -141,7 +141,7 @@ class AudioPlayerWithSlider extends StatelessWidget {
           ],
         ),
         BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
-          selector: (state) => state.commonBlocDataModel.isPlayingNow,
+          selector: (state) => state.commonBlocStateModel.isPlayingNow,
           builder: (context, data) => IconButton(
             icon: Icon(
               data ? Icons.pause : Icons.play_arrow,
