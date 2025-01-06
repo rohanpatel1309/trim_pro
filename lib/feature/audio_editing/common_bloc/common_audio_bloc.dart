@@ -46,7 +46,6 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
 
       commonBlocStateModel = commonBlocStateModel.copyWith(
           fileUrl: fileResult.files.single.path!);
-      emit(SetAudioFileUrl(commonBlocStateModel: commonBlocStateModel));
       emit(CommonAudioState(
           commonBlocStateModel: commonBlocStateModel));
 
@@ -55,6 +54,7 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
 
       commonBlocStateModel = commonBlocStateModel.copyWith(
         totalDuration: _audioPlayer.duration!,);
+      emit(SetAudioFileUrl(url: fileResult.files.single.path!,totalDuration: commonBlocStateModel.totalDuration));
       emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
 
       _audioPlayer.play();
@@ -69,7 +69,8 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
       }
     }else{
       commonBlocStateModel = commonBlocStateModel.copyWith(isLoading: false);
-      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel.copyWith(error: "Please Select File",)));
+      emit(const Error( error: "Please Select File"));
+      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel.copyWith()));
     }
 
   }

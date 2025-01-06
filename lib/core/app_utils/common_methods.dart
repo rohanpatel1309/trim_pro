@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -67,7 +70,15 @@ class CommonMethods{
 
   /// File pick
   static Future<FilePickerResult?> pickFile() async {
-    PermissionStatus status = await Permission.storage.status;
+    PermissionStatus status;
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+
+    if (Platform.isAndroid && androidInfo.version.sdkInt <= 32) {
+      status = await Permission.storage.request();
+    } else {
+      status = await Permission.audio.request();
+    }
+
 
     if (status.isDenied) {
       // Request permission if not already granted

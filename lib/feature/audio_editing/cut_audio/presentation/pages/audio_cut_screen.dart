@@ -4,12 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart'
+    as common_audio_bloc;
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_time_fields.dart';
-import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart'
+    as audio_cut_bloc;
 
 @RoutePage(name: 'audioCut')
 class AudioCutScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -19,10 +22,10 @@ class AudioCutScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget wrappedRoute(BuildContext context) {
     // TODO: implement wrappedRoute
     return MultiBlocProvider(providers: [
-      BlocProvider<CommonAudioBloc>(
-          create: (_) => GetIt.instance<CommonAudioBloc>()),
-      BlocProvider<AudioCutScreenBloc>(
-          create: (_) => GetIt.instance<AudioCutScreenBloc>()),
+      BlocProvider<common_audio_bloc.CommonAudioBloc>(
+          create: (_) => GetIt.instance<common_audio_bloc.CommonAudioBloc>()),
+      BlocProvider<audio_cut_bloc.AudioCutScreenBloc>(
+          create: (_) => GetIt.instance<audio_cut_bloc.AudioCutScreenBloc>()),
     ], child: this);
   }
 
@@ -39,17 +42,22 @@ class ScreenChildren extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<CommonAudioBloc, CommonAudioState>(
-            listener: (context, state) {
-          if (state is SetAudioFileUrl) {
-            BlocProvider.of<AudioCutScreenBloc>(context)
-                .add(SetFilePath(filePath: state.commonBlocStateModel.fileUrl));
+        BlocListener<common_audio_bloc.CommonAudioBloc,
+            common_audio_bloc.CommonAudioState>(listener: (context, state) {
+          if (state is common_audio_bloc.SetAudioFileUrl) {
+            BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(context)
+                .add(audio_cut_bloc.SetFileParameters(
+              filePath: state.url,
+              totalDuration: state.totalDuration,
+            ));
           }
         }),
-        BlocListener<AudioCutScreenBloc, AudioCutScreenState>(
-            listener: (context, state) {
-          if (state.audioCutBlocStateModel.error.isNotEmpty) {
-            CommonMethods.showToast(msg: state.audioCutBlocStateModel.error);
+        BlocListener<audio_cut_bloc.AudioCutScreenBloc,
+            audio_cut_bloc.AudioCutScreenState>(listener: (context, state) {
+          if (state is audio_cut_bloc.Error) {
+            CommonMethods.showToast(
+              msg: state.error,
+            );
           }
         }),
       ],
@@ -62,16 +70,23 @@ class ScreenChildren extends StatelessWidget {
               ),
             ],
           ),
-          BlocSelector<AudioCutScreenBloc,AudioCutScreenState,bool>(
+          BlocSelector<audio_cut_bloc.AudioCutScreenBloc,
+                  audio_cut_bloc.AudioCutScreenState, bool>(
               selector: (state) => state.audioCutBlocStateModel.isLoading,
               builder: (context, state) {
-                return state ?  Center(
-                  child: Container(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  ),
-                ) : const SizedBox();
+                return state
+                    ? Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(15.h),
+                          ),
+                          child:  CircularProgressIndicator(
+                            color: ColorUtils.commonCircularProgressIndicatorColor,
+                          ),
+                        ),
+                      )
+                    : const SizedBox();
               })
         ],
       ),
@@ -93,25 +108,29 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TimeFields(
-          controller1: startController,
-          controller2: endController,
-          title1: "Start",
-          title2: "  End",
-        ),
-        SizedBox(
-          height: 40.h,
-        ),
-        CommonButton(
-          onTap: () {
-            BlocProvider.of<AudioCutScreenBloc>(context).add(
-                CutAudio(start: startController.text, end: endController.text));
-          },
-          buttonText: '  Cut  ',
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(top: 12.h),
+      child: Column(
+        children: [
+          TimeFields(
+            controller1: startController,
+            controller2: endController,
+            title1: "Start",
+            title2: "  End",
+          ),
+          SizedBox(
+            height: 40.h,
+          ),
+          CommonButton(
+            onTap: () {
+              BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(context).add(
+                  audio_cut_bloc.CutAudio(
+                      start: startController.text.trim(), end: endController.text.trim()));
+            },
+            buttonText: '  Cut  ',
+          ),
+        ],
+      ),
     );
   }
 }

@@ -13,7 +13,17 @@ class AppBackground extends StatelessWidget {
           padding: EdgeInsets.only(top: 30.h),
           width: double.infinity,
           height: double.infinity,
-          color: Colors.black87,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black,
+                Colors.black,
+                Colors.black87,
+              ],
+            ),
+          ),
           child: child),
     );
   }

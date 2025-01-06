@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
+import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/router/app_router.dart';
 import 'package:trim_pro/feature/home/presentation/widgets/common_button.dart';
 
@@ -59,7 +60,7 @@ class AudioEditingWidget extends StatelessWidget {
             Icon(
               Icons.audiotrack,
               size: 20.h,
-              color: Colors.white,
+              color: ColorUtils.themeColor1,
             ),
             Text(
               "Audio Editing",
@@ -122,7 +123,7 @@ class VideoEditingWidget extends StatelessWidget {
             Icon(
               Icons.movie,
               size: 20.h,
-              color: Colors.white,
+              color: ColorUtils.themeColor1,
             ),
             Text(
               " Video Editing",

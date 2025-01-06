@@ -4,9 +4,10 @@ sealed class AudioCutScreenEvent extends Equatable {
   const AudioCutScreenEvent();
 }
 
-final class SetFilePath extends AudioCutScreenEvent {
-  const SetFilePath({required this.filePath, });
+final class SetFileParameters extends AudioCutScreenEvent {
+  const SetFileParameters({required this.filePath, required this.totalDuration});
   final String filePath;
+  final Duration totalDuration;
 
   @override
   List<Object> get props => [filePath];

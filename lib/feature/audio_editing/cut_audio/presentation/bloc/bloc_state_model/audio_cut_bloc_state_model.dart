@@ -8,7 +8,6 @@ class AudioCutBlocStateModel with _$AudioCutBlocStateModel {
   const factory AudioCutBlocStateModel({
     @Default(false) bool isLoading,
     @Default(false) bool isCompleted,
-    @Default("") String error,
 
 }) = _AudioCutBlocStateModel;
 }
