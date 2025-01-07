@@ -75,10 +75,11 @@ class AudioCutScreenBloc
                 isLoading: false, isCompleted: true);
             emit(AudioCutScreenState(
                 audioCutBlocStateModel: audioCutBlocStateModel));
+            emit(const Completed());
           } else {
             audioCutBlocStateModel =
                 audioCutBlocStateModel.copyWith(isLoading: false);
-            emit(Error(error: "Something Went Wrong",timeStamp: DateTime.now()));
+            emit(Error(error: "File is not saved",timeStamp: DateTime.now()));
             emit(AudioCutScreenState(
                 audioCutBlocStateModel: audioCutBlocStateModel));
           }

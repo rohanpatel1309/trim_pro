@@ -5,7 +5,8 @@ import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/bloc_state_model/common_bloc_state_model.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
+import 'package:trim_pro/feature/common_widgets/common_button.dart';
+import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
 
 const String audioUrl =
     "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
@@ -38,11 +39,7 @@ class CommonAudioPlayer extends StatelessWidget {
               selector: (state) => state.commonBlocStateModel.isLoading,
               builder: (context, state) {
                 if (state) {
-                  return  Center(
-                    child: CircularProgressIndicator(
-                      color: ColorUtils.commonCircularProgressIndicatorColor,
-                    ),
-                  );
+                  return const CommonProgressIndicator();
                 }
                 return AudioPlayerWithSlider(tools: tools);
               },
@@ -80,15 +77,13 @@ class AudioPlayerWithSlider extends StatelessWidget {
               ColorUtils.themeColor1,
               Colors.black12,
               ColorUtils.themeColor1,
-             ColorUtils.themeColor2,
+              ColorUtils.themeColor2,
+              ColorUtils.themeColor1,
               Colors.black12,
               ColorUtils.themeColor1,
-
             ]),
-            borderRadius: BorderRadius.circular(45),
-
+            borderRadius: BorderRadius.circular(90),
           ),
-          
           child: Column(
             spacing: 5.h,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -100,12 +95,10 @@ class AudioPlayerWithSlider extends StatelessWidget {
               ),
               const MusicSlider(),
               const PlayPauseButton(),
-
             ],
           ),
         ),
         tools,
-
       ],
     );
   }
@@ -127,8 +120,8 @@ class PlayPauseButton extends StatelessWidget {
           size: 30.h,
         ),
         onPressed: () {
-          BlocProvider.of<CommonAudioBloc>(context).add(
-              data ? const CommonAudioPause() : const CommonAudioPlay());
+          BlocProvider.of<CommonAudioBloc>(context)
+              .add(data ? const CommonAudioPause() : const CommonAudioPlay());
         },
       ),
     );
@@ -144,8 +137,7 @@ class MusicSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        BlocSelector<CommonAudioBloc, CommonAudioState,
-            CommonBlocStateModel>(
+        BlocSelector<CommonAudioBloc, CommonAudioState, CommonBlocStateModel>(
           selector: (state) => state.commonBlocStateModel,
           builder: (context, state) {
             return Slider(
@@ -162,8 +154,7 @@ class MusicSlider extends StatelessWidget {
               },
               onChangeEnd: (value) {
                 BlocProvider.of<CommonAudioBloc>(context).add(
-                  CommonAudioSeek(
-                      position: Duration(seconds: value.toInt())),
+                  CommonAudioSeek(position: Duration(seconds: value.toInt())),
                 );
               },
             );
@@ -183,7 +174,10 @@ class MusicSlider extends StatelessWidget {
 
                   return Text(
                     "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}",
-                    style: TextStyle(color: Colors.white, fontSize: 30.sp,fontWeight: FontWeight.w900),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w900),
                   );
                 },
               ),
@@ -196,11 +190,13 @@ class MusicSlider extends StatelessWidget {
 
                   return Text(
                     "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}",
-                    style: TextStyle(color: Colors.white,fontSize: 30.sp,fontWeight: FontWeight.w900),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w900),
                   );
                 },
               ),
-
             ],
           ),
         ),

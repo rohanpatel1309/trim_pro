@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trim_pro/feature/audio_editing/common_widgets/common_button.dart';
+import 'package:trim_pro/feature/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart';
 
 @RoutePage(name: 'audioMerge')
@@ -13,7 +13,7 @@ class AudioMergeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppBackground(child: ScreenChildren());
+    return const AppBackground(titleText: "Audio Merge",child: ScreenChildren(),);
   }
 }
 

@@ -11,14 +11,21 @@ final class AudioCutScreenState extends Equatable {
 }
 
 final class Error extends AudioCutScreenState {
-  const Error( {required this.error, required this.timeStamp}) : super(audioCutBlocStateModel: const AudioCutBlocStateModel());
+  const Error({required this.error, required this.timeStamp})
+      : super(audioCutBlocStateModel: const AudioCutBlocStateModel());
   final String error;
   final DateTime timeStamp;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [error,timeStamp];
+  List<Object?> get props => [error, timeStamp];
 }
 
+final class Completed extends AudioCutScreenState {
+  const Completed()
+      : super(audioCutBlocStateModel: const AudioCutBlocStateModel());
 
-
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
