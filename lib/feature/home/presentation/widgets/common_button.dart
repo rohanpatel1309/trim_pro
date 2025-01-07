@@ -22,6 +22,7 @@ class CommonButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.h),
           gradient: LinearGradient(colors: [
             ColorUtils.themeColor1,
+            Colors.black12,
            ColorUtils.themeColor2,
           ])
         ),

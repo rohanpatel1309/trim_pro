@@ -6,13 +6,13 @@ import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart'
-    as common_audio_bloc;
+as common_audio_bloc;
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
 import 'package:trim_pro/feature/common_widgets/common_time_fields.dart';
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart'
-    as audio_cut_bloc;
+as audio_cut_bloc;
 
 @RoutePage(name: 'audioCut')
 class AudioCutScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -31,7 +31,8 @@ class AudioCutScreen extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    return const AppBackground(titleText: "Audio Cut",child: ScreenChildren(),);
+    return const AppBackground(
+      titleText: "Audio Cut", child: ScreenChildren(),);
   }
 }
 
@@ -76,14 +77,15 @@ class ScreenChildren extends StatelessWidget {
             ],
           ),
           BlocSelector<audio_cut_bloc.AudioCutScreenBloc,
-                  audio_cut_bloc.AudioCutScreenState, bool>(
+              audio_cut_bloc.AudioCutScreenState,
+              bool>(
               selector: (state) => state.audioCutBlocStateModel.isLoading,
               builder: (context, state) {
                 return state
                     ? Padding(
-                      padding:  EdgeInsets.only(bottom: 60.h),
-                      child: const CommonProgressIndicator(),
-                    )
+                  padding: EdgeInsets.only(bottom: 60.h),
+                  child: const CommonProgressIndicator(),
+                )
                     : const SizedBox();
               })
         ],
@@ -119,14 +121,23 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
           SizedBox(
             height: 40.h,
           ),
-          CommonButton(
-            onTap: () {
-              BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(context).add(
-                  audio_cut_bloc.CutAudio(
-                      start: startController.text.trim(),
-                      end: endController.text.trim()));
+          BlocSelector<audio_cut_bloc.AudioCutScreenBloc, audio_cut_bloc.AudioCutScreenState, bool>(
+            selector: (state) => state.audioCutBlocStateModel.isLoading,
+            builder: (context, state) {
+              return IgnorePointer(
+                ignoring: state,
+                child: CommonButton(
+                  onTap: () {
+                    BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(context)
+                        .add(
+                        audio_cut_bloc.CutAudio(
+                            start: startController.text.trim(),
+                            end: endController.text.trim()));
+                  },
+                  buttonText: '  Cut  ',
+                ),
+              );
             },
-            buttonText: '  Cut  ',
           ),
         ],
       ),

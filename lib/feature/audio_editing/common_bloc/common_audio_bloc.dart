@@ -70,7 +70,7 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
     }else{
       commonBlocStateModel = commonBlocStateModel.copyWith(isLoading: false);
       emit(const Error( error: "Please Select File"));
-      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel.copyWith()));
+      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
     }
 
   }

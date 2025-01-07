@@ -25,6 +25,12 @@ class AppBackground extends StatelessWidget {
                     ColorUtils.themeColor1,
                     Colors.black,
                     ColorUtils.themeColor2,
+                    Colors.black,
+
+                    ColorUtils.themeColor2,
+                    Colors.black,
+
+                    ColorUtils.themeColor1,
 
                   ],
                 ),

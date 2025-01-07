@@ -14,7 +14,7 @@ final class SetAudioFileUrl extends CommonAudioState{
     final Duration totalDuration;
   @override
   // TODO: implement props
-  List<Object> get props => [url];
+  List<Object> get props => [url,totalDuration];
 }
 
 final class Error extends CommonAudioState{
