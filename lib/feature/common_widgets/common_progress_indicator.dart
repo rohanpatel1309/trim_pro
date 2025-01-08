@@ -9,6 +9,7 @@ class CommonProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        margin: EdgeInsets.only(bottom: 60.h),
         padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 120.w),
         decoration: BoxDecoration(
           gradient: LinearGradient(

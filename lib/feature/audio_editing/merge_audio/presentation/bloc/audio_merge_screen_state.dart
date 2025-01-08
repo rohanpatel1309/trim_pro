@@ -11,11 +11,20 @@ final class AudioMergeScreenState extends Equatable {
 }
 
 final class Error extends AudioMergeScreenState{
-  const Error({required this.error}) : super(audioMergeBlocStateModel: const AudioMergeBlocStateModel());
+  const Error({required this.error,required this.timeStamp, required super.audioMergeBlocStateModel});
   final String error;
+  final DateTime timeStamp;
+
   @override
   // TODO: implement props
-  List<Object> get props => [error];
+  List<Object> get props => [error,timeStamp];
+}
+
+final class Completed extends AudioMergeScreenState{
+  const Completed() : super(audioMergeBlocStateModel: const AudioMergeBlocStateModel());
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
 }
 
 

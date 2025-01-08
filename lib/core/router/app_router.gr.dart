@@ -61,7 +61,7 @@ class AudioMerge extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AudioMergeScreen();
+      return WrappedRoute(child: const AudioMergeScreen());
     },
   );
 }

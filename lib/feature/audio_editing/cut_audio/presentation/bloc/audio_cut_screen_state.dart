@@ -11,8 +11,7 @@ final class AudioCutScreenState extends Equatable {
 }
 
 final class Error extends AudioCutScreenState {
-  const Error({required this.error, required this.timeStamp})
-      : super(audioCutBlocStateModel: const AudioCutBlocStateModel());
+  const Error({required this.error, required this.timeStamp, required super.audioCutBlocStateModel});
   final String error;
   final DateTime timeStamp;
 

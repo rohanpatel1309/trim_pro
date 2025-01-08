@@ -5,12 +5,13 @@ import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trim_pro/core/app_utils/color_utils.dart';
+import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/merge_audio/presentation/bloc/audio_merge_screen_bloc.dart';
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
-import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart';
+import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
 
 @RoutePage(name: 'audioMerge')
-class AudioMergeScreen extends StatelessWidget {
+class AudioMergeScreen extends StatelessWidget implements AutoRouteWrapper {
   const AudioMergeScreen({super.key});
 
   @override
@@ -20,6 +21,14 @@ class AudioMergeScreen extends StatelessWidget {
       child: ScreenChildren(),
     );
   }
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (_) => GetIt.instance<AudioMergeScreenBloc>(),
+      child: this,
+    );
+  }
 }
 
 class ScreenChildren extends StatelessWidget {
@@ -27,35 +36,58 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetIt.instance<AudioCutScreenBloc>(),
-      child: Column(
-        spacing: 20.h,
-        mainAxisAlignment: MainAxisAlignment.center,
+    return BlocListener<AudioMergeScreenBloc, AudioMergeScreenState>(
+      listener: (context, state) {
+        if (state is Error) {
+          CommonMethods.showToast(msg: state.error);
+        } else if (state is Completed) {
+          CommonMethods.showToast(
+            msg: "File saved successfully.",
+          );
+          context.router.back();
+        }
+      },
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, String>(
-            selector: (state) => state.audioMergeBlocStateModel.fileUrl1,
-            builder: (context, state) {
-              return CommonFileSelectionButton(
-                onTap: () {},
-                buttonText: 'Select File 1',
-                fileName: state,
-              );
-            },
+          Column(
+            spacing: 20.h,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, String>(
+                selector: (state) => state.audioMergeBlocStateModel.fileUrl1,
+                builder: (context, state) {
+                  return CommonFileSelectionButton(
+                    onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context)
+                        .add(const PickFile(fileNo: 1)),
+                    buttonText: 'Select File 1',
+                    fileName: state,
+                  );
+                },
+              ),
+              BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, String>(
+                selector: (state) => state.audioMergeBlocStateModel.fileUrl2,
+                builder: (context, state) {
+                  return CommonFileSelectionButton(
+                    onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context)
+                        .add(const PickFile(fileNo: 2)),
+                    buttonText: 'Select File 2',
+                    fileName: state,
+                  );
+                },
+              ),
+              CommonButton(
+                onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context).add(const MergeFile()),
+                buttonText: 'Merge',
+              ),
+            ],
           ),
-          BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, String>(
-            selector: (state) => state.audioMergeBlocStateModel.fileUrl2,
+          BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, bool>(
+            selector: (state) => state.audioMergeBlocStateModel.isLoading,
             builder: (context, state) {
-              return CommonFileSelectionButton(
-                onTap: () {},
-                buttonText: 'Select File 2',
-                fileName: state,
-              );
+              return Visibility(
+                  visible: state, child: const CommonProgressIndicator());
             },
-          ),
-          CommonButton(
-            onTap: () {},
-            buttonText: 'Merge',
           ),
         ],
       ),
@@ -87,7 +119,7 @@ class CommonFileSelectionButton extends StatelessWidget {
         Visibility(
           visible: fileName.isNotEmpty,
           child: Text(
-            "FileName: $fileName",
+            "File: ${fileName.split("/").last}",
             style: TextStyle(
                 color: ColorUtils.commonButtonTextColor,
                 fontSize: 40.sp,

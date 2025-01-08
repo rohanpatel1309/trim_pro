@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -64,7 +65,7 @@ class CommonMethods{
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.grey,
         textColor: Colors.black,
-        fontSize: 15
+        fontSize: 45.sp
     );
   }
 

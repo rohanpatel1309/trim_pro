@@ -30,7 +30,8 @@ class AudioCutScreenBloc
   }
 
   /// Set path
-  void _onSetFileParameters(SetFileParameters event, Emitter<AudioCutScreenState> emit) {
+  void _onSetFileParameters(
+      SetFileParameters event, Emitter<AudioCutScreenState> emit) {
     filePath = event.filePath;
     totalDuration = event.totalDuration;
   }
@@ -38,13 +39,15 @@ class AudioCutScreenBloc
   /// Cut audio
   Future<void> _onCutAudio(
       CutAudio event, Emitter<AudioCutScreenState> emit) async {
+    final (isValid, errorMessage) =
+        validate(startDuration: event.start, endDuration: event.end);
 
-    final (isValid,errorMessage) = validate(startDuration: event.start, endDuration: event.end);
-
-    if(isValid){
+    if (isValid) {
       try {
-        audioCutBlocStateModel = audioCutBlocStateModel.copyWith(isLoading: true);
-        emit(AudioCutScreenState(audioCutBlocStateModel: audioCutBlocStateModel));
+        audioCutBlocStateModel =
+            audioCutBlocStateModel.copyWith(isLoading: true);
+        emit(AudioCutScreenState(
+            audioCutBlocStateModel: audioCutBlocStateModel));
 
         final Directory tempDir = await getTemporaryDirectory();
         final String tempFilePath = '${tempDir.path}/cut_audio_temp.mp3';
@@ -52,7 +55,6 @@ class AudioCutScreenBloc
         final String command =
             '-i "$filePath" -ss ${event.start} -to ${event.end} -c copy "$tempFilePath"';
 
-        // Execute FFmpeg command and wait for completion
         final session = await FFmpegKit.execute(command);
         final returnCode = await session.getReturnCode();
 
@@ -62,7 +64,8 @@ class AudioCutScreenBloc
             fileName: "cut_audio.mp3", // Default file name for saving
           );
 
-          final savedFilePath = await FlutterFileDialog.saveFile(params: params);
+          final savedFilePath =
+              await FlutterFileDialog.saveFile(params: params);
 
           // Delete temporary file
           final tempFile = File(tempFilePath);
@@ -72,38 +75,46 @@ class AudioCutScreenBloc
 
           if (savedFilePath != null) {
             audioCutBlocStateModel = audioCutBlocStateModel.copyWith(
-                isLoading: false, isCompleted: true);
+              isLoading: false,
+            );
             emit(AudioCutScreenState(
                 audioCutBlocStateModel: audioCutBlocStateModel));
             emit(const Completed());
           } else {
             audioCutBlocStateModel =
                 audioCutBlocStateModel.copyWith(isLoading: false);
-            emit(Error(error: "File is not saved",timeStamp: DateTime.now()));
+            emit(Error(
+                error: "File is not saved",
+                timeStamp: DateTime.now(),
+                audioCutBlocStateModel: audioCutBlocStateModel));
             emit(AudioCutScreenState(
                 audioCutBlocStateModel: audioCutBlocStateModel));
           }
         } else {
           audioCutBlocStateModel =
               audioCutBlocStateModel.copyWith(isLoading: false);
-          emit(Error(error: "Failed to cut audio. Code: $returnCode",timeStamp: DateTime.now()));
+          emit(Error(
+              error: "Failed to cut audio. Code: $returnCode",
+              timeStamp: DateTime.now(),
+              audioCutBlocStateModel: audioCutBlocStateModel));
+
           emit(AudioCutScreenState(
               audioCutBlocStateModel: audioCutBlocStateModel));
         }
       } catch (e) {
         audioCutBlocStateModel =
             audioCutBlocStateModel.copyWith(isLoading: false);
-        emit(Error(error: "An error occurred: $e",timeStamp: DateTime.now()));
-        emit(AudioCutScreenState(audioCutBlocStateModel: audioCutBlocStateModel));
+        emit(Error(error: "An error occurred: $e", timeStamp: DateTime.now(),audioCutBlocStateModel: audioCutBlocStateModel));
+        emit(AudioCutScreenState(
+            audioCutBlocStateModel: audioCutBlocStateModel));
       }
-    }else{
-     emit(Error(error: errorMessage,timeStamp: DateTime.now()));
+    } else {
+      emit(Error(error: errorMessage, timeStamp: DateTime.now(),audioCutBlocStateModel: audioCutBlocStateModel));
     }
-
   }
 
   /// Validate duration
-  (bool,String) validate({
+  (bool, String) validate({
     required String startDuration,
     required String endDuration,
   }) {
@@ -112,7 +123,7 @@ class AudioCutScreenBloc
       final end = _parseDuration(endDuration);
 
       if (start < Duration.zero || start > totalDuration) {
-        return (false,"Start duration is out of range.");
+        return (false, "Start duration is out of range.");
       }
 
       if (end < Duration.zero || end > totalDuration) {
@@ -120,28 +131,28 @@ class AudioCutScreenBloc
       }
 
       if (start >= end || (end - start).inSeconds < 1) {
-        return (false, "Start must be less than end, with at least 1-second difference.");
+        return (
+          false,
+          "Start must be less than end, with at least 1-second difference."
+        );
       }
 
-     return (true,"");
+      return (true, "");
     } catch (e) {
-
-      return (false,"$e");
+      return (false, "$e");
     }
   }
 
   /// Helper method to parse a duration string in the format "HH:mm:ss"
   Duration _parseDuration(String duration) {
-    try{
+    try {
       final parts = duration.split(':').map(int.parse).toList();
       if (parts.length != 3) {
         throw Exception("Invalid duration format");
       }
       return Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
-    }catch (e){
+    } catch (e) {
       throw Exception("Invalid duration format");
-
     }
   }
-
 }
