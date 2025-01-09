@@ -95,4 +95,17 @@ class CommonMethods{
     showToast(msg: "Please allow permission");
     return null;
   }
+
+  /// Helper method to parse a duration string in the format "HH:mm:ss"
+  static Duration parseDuration(String duration) {
+    try {
+      final parts = duration.split(':').map(int.parse).toList();
+      if (parts.length != 3) {
+        throw Exception("Invalid duration format");
+      }
+      return Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
+    } catch (e) {
+      throw Exception("Invalid duration format");
+    }
+  }
 }

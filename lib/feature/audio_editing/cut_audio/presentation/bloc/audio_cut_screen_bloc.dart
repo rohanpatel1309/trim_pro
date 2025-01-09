@@ -7,6 +7,7 @@ import 'package:ffmpeg_kit_flutter/return_code.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/bloc_state_model/audio_cut_bloc_state_model.dart';
 
 part 'audio_cut_screen_event.dart';
@@ -119,8 +120,8 @@ class AudioCutScreenBloc
     required String endDuration,
   }) {
     try {
-      final start = _parseDuration(startDuration);
-      final end = _parseDuration(endDuration);
+      final start = CommonMethods.parseDuration(startDuration);
+      final end = CommonMethods.parseDuration(endDuration);
 
       if (start < Duration.zero || start > totalDuration) {
         return (false, "Start duration is out of range.");
@@ -143,16 +144,4 @@ class AudioCutScreenBloc
     }
   }
 
-  /// Helper method to parse a duration string in the format "HH:mm:ss"
-  Duration _parseDuration(String duration) {
-    try {
-      final parts = duration.split(':').map(int.parse).toList();
-      if (parts.length != 3) {
-        throw Exception("Invalid duration format");
-      }
-      return Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]);
-    } catch (e) {
-      throw Exception("Invalid duration format");
-    }
-  }
 }

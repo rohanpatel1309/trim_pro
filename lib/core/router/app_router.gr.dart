@@ -48,6 +48,25 @@ class AudioCut extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AudioInsertScreen]
+class AudioInsert extends PageRouteInfo<void> {
+  const AudioInsert({List<PageRouteInfo>? children})
+      : super(
+          AudioInsert.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AudioInsert';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const AudioInsertScreen());
+    },
+  );
+}
+
+/// generated route for
 /// [AudioMergeScreen]
 class AudioMerge extends PageRouteInfo<void> {
   const AudioMerge({List<PageRouteInfo>? children})

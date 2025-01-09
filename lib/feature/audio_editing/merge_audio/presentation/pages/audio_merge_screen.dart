@@ -8,6 +8,7 @@ import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/merge_audio/presentation/bloc/audio_merge_screen_bloc.dart';
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
+import 'package:trim_pro/feature/common_widgets/common_file_selection_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
 
 @RoutePage(name: 'audioMerge')
@@ -95,38 +96,3 @@ class ScreenChildren extends StatelessWidget {
   }
 }
 
-class CommonFileSelectionButton extends StatelessWidget {
-  const CommonFileSelectionButton({
-    super.key,
-    required this.buttonText,
-    required this.onTap,
-    required this.fileName,
-  });
-
-  final String buttonText;
-  final VoidCallback onTap;
-  final String fileName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      spacing: 5.h,
-      children: [
-        CommonButton(
-          onTap: onTap,
-          buttonText: buttonText,
-        ),
-        Visibility(
-          visible: fileName.isNotEmpty,
-          child: Text(
-            "File: ${fileName.split("/").last}",
-            style: TextStyle(
-                color: ColorUtils.commonButtonTextColor,
-                fontSize: 40.sp,
-                fontWeight: FontWeight.w600),
-          ),
-        ),
-      ],
-    );
-  }
-}

@@ -100,7 +100,7 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.input,
               text: "Insert",
-              onTap: () {},
+              onTap: () => context.router.pushNamed(AppRouter.audioInsertScreen),
             ),
           ],
         ),
