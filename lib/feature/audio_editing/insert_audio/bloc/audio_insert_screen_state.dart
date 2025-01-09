@@ -19,3 +19,10 @@ final class Error extends AudioInsertScreenState {
   // TODO: implement props
   List<Object?> get props => [error, timeStamp];
 }
+
+final class Completed extends AudioInsertScreenState{
+  const Completed() : super(audioInsertBlocStateModel: const AudioInsertBlocStateModel());
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}

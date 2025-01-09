@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
+import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart'
-as common_audio_bloc;
+    as common_audio_bloc;
 
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
 import 'package:trim_pro/feature/audio_editing/insert_audio/bloc/audio_insert_screen_bloc.dart'
-as audio_insert_bloc;
-import 'package:trim_pro/feature/audio_editing/merge_audio/presentation/pages/audio_merge_screen.dart';
+    as audio_insert_bloc;
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_file_selection_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
@@ -44,25 +44,54 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ListView(
-          children: const [
-            CommonAudioPlayer(
-              tools: AudioCutScreenFields(),
-            ),
-          ],
-        ),
-        BlocSelector<audio_insert_bloc.AudioInsertScreenBloc, audio_insert_bloc.AudioInsertScreenState, bool>(
-          selector: (state) => state.audioInsertBlocStateModel.isLoading,
-          builder: (context, state) {
-            return Visibility(
-              visible: state,
-              child: const CommonProgressIndicator(),
-            );
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<audio_insert_bloc.AudioInsertScreenBloc,
+            audio_insert_bloc.AudioInsertScreenState>(
+          listener: (context, state) {
+            if (state is audio_insert_bloc.Error) {
+              CommonMethods.showToast(msg: state.error);
+            } else if (state is audio_insert_bloc.Completed) {
+              CommonMethods.showToast(
+                msg: "File saved successfully.",
+              );
+              context.router.back();
+            }
+
           },
         ),
+        BlocListener<common_audio_bloc.CommonAudioBloc,
+            common_audio_bloc.CommonAudioState>(listener: (context, state) {
+          if (state is common_audio_bloc.SetAudioFileUrl) {
+            BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(context)
+                .add(audio_insert_bloc.SetFileParameters(
+              filePath: state.url,
+              totalDuration: state.totalDuration,
+            ));
+          }
+        }),
       ],
+      child: Stack(
+        children: [
+          ListView(
+            children: const [
+              CommonAudioPlayer(
+                tools: AudioCutScreenFields(),
+              ),
+            ],
+          ),
+          BlocSelector<audio_insert_bloc.AudioInsertScreenBloc,
+              audio_insert_bloc.AudioInsertScreenState, bool>(
+            selector: (state) => state.audioInsertBlocStateModel.isLoading,
+            builder: (context, state) {
+              return Visibility(
+                visible: state,
+                child: const CommonProgressIndicator(),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -104,14 +133,13 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
             ],
           ),
           BlocSelector<audio_insert_bloc.AudioInsertScreenBloc,
-              audio_insert_bloc.AudioInsertScreenState,
-              String>(
+              audio_insert_bloc.AudioInsertScreenState, String>(
             selector: (state) => state.audioInsertBlocStateModel.fileUrl,
             builder: (context, state) {
               return CommonFileSelectionButton(
                 onTap: () =>
                     BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
-                        context)
+                            context)
                         .add(audio_insert_bloc.PickFile()),
                 buttonText: 'Select File',
                 fileName: state,
@@ -121,7 +149,11 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
           IgnorePointer(
             ignoring: false,
             child: CommonButton(
-              onTap: () => BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(context).add(audio_insert_bloc.InsertAudio(insertAt: insertAtController.text.trim())),
+              onTap: () =>
+                  BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
+                          context)
+                      .add(audio_insert_bloc.InsertAudio(
+                          insertAt: insertAtController.text.trim())),
               buttonText: '  Insert  ',
             ),
           )

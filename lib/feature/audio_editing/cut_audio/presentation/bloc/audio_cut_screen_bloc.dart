@@ -88,8 +88,7 @@ class AudioCutScreenBloc
                 error: "File is not saved",
                 timeStamp: DateTime.now(),
                 audioCutBlocStateModel: audioCutBlocStateModel));
-            emit(AudioCutScreenState(
-                audioCutBlocStateModel: audioCutBlocStateModel));
+
           }
         } else {
           audioCutBlocStateModel =
@@ -99,15 +98,12 @@ class AudioCutScreenBloc
               timeStamp: DateTime.now(),
               audioCutBlocStateModel: audioCutBlocStateModel));
 
-          emit(AudioCutScreenState(
-              audioCutBlocStateModel: audioCutBlocStateModel));
         }
       } catch (e) {
         audioCutBlocStateModel =
             audioCutBlocStateModel.copyWith(isLoading: false);
         emit(Error(error: "An error occurred: $e", timeStamp: DateTime.now(),audioCutBlocStateModel: audioCutBlocStateModel));
-        emit(AudioCutScreenState(
-            audioCutBlocStateModel: audioCutBlocStateModel));
+
       }
     } else {
       emit(Error(error: errorMessage, timeStamp: DateTime.now(),audioCutBlocStateModel: audioCutBlocStateModel));
