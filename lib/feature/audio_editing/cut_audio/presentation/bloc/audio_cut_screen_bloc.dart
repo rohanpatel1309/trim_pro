@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter/return_code.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
@@ -38,77 +37,65 @@ class AudioCutScreenBloc
   }
 
   /// Cut audio
-  Future<void> _onCutAudio(
-      CutAudio event, Emitter<AudioCutScreenState> emit) async {
-    final (isValid, errorMessage) =
-        validate(startDuration: event.start, endDuration: event.end);
+
+  Future<void> _onCutAudio(CutAudio event, Emitter<AudioCutScreenState> emit) async {
+    final (isValid, errorMessage) = validate(startDuration: event.start, endDuration: event.end);
 
     if (isValid) {
       try {
-        audioCutBlocStateModel =
-            audioCutBlocStateModel.copyWith(isLoading: true);
-        emit(AudioCutScreenState(
-            audioCutBlocStateModel: audioCutBlocStateModel));
+        audioCutBlocStateModel = audioCutBlocStateModel.copyWith(isLoading: true);
+        emit(AudioCutScreenState(audioCutBlocStateModel: audioCutBlocStateModel));
 
         final Directory tempDir = await getTemporaryDirectory();
-        final String tempFilePath = '${tempDir.path}/cut_audio_temp.mp3';
+        const extension = "mp3";  // Always output as MP3
+        final String tempFilePath = '${tempDir.path}/cut_audio_temp.$extension';
 
+        // Delete temporary file if exists
+        final tempFile = File(tempFilePath);
+        if (await tempFile.exists()) {
+          await tempFile.delete();
+        }
+
+        // FFmpeg command to cut and convert to MP3
         final String command =
-            '-i "$filePath" -ss ${event.start} -to ${event.end} -c copy "$tempFilePath"';
+            '-i "$filePath" -ss ${event.start} -to ${event.end} -c:a libmp3lame "$tempFilePath"';
 
         final session = await FFmpegKit.execute(command);
+        // final logs = await session.getLogs();
+        // logs.forEach((log) => print(log.getMessage()));
+
         final returnCode = await session.getReturnCode();
 
         if (ReturnCode.isSuccess(returnCode)) {
-          final params = SaveFileDialogParams(
-            sourceFilePath: tempFilePath,
-            fileName: "cut_audio.mp3", // Default file name for saving
-          );
 
-          final savedFilePath =
-              await FlutterFileDialog.saveFile(params: params);
 
+          final savedFilePath = await CommonMethods.saveFile(filePath: tempFilePath, fileName: "cut_audio.$extension");
           // Delete temporary file
-          final tempFile = File(tempFilePath);
           if (await tempFile.exists()) {
             await tempFile.delete();
           }
 
           if (savedFilePath != null) {
-            audioCutBlocStateModel = audioCutBlocStateModel.copyWith(
-              isLoading: false,
-            );
-            emit(AudioCutScreenState(
-                audioCutBlocStateModel: audioCutBlocStateModel));
+            audioCutBlocStateModel = audioCutBlocStateModel.copyWith(isLoading: false);
+            emit(AudioCutScreenState(audioCutBlocStateModel: audioCutBlocStateModel));
             emit(const Completed());
           } else {
-            audioCutBlocStateModel =
-                audioCutBlocStateModel.copyWith(isLoading: false);
-            emit(Error(
-                error: "File is not saved",
-                timeStamp: DateTime.now(),
-                audioCutBlocStateModel: audioCutBlocStateModel));
-
+            audioCutBlocStateModel = audioCutBlocStateModel.copyWith(isLoading: false);
+            emit(Error(error: "File is not saved", timeStamp: DateTime.now(), audioCutBlocStateModel: audioCutBlocStateModel));
           }
         } else {
-          audioCutBlocStateModel =
-              audioCutBlocStateModel.copyWith(isLoading: false);
-          emit(Error(
-              error: "Failed to cut audio. Code: $returnCode",
-              timeStamp: DateTime.now(),
-              audioCutBlocStateModel: audioCutBlocStateModel));
-
+          audioCutBlocStateModel = audioCutBlocStateModel.copyWith(isLoading: false);
+          emit(Error(error: "Failed to cut audio. Code: $returnCode", timeStamp: DateTime.now(), audioCutBlocStateModel: audioCutBlocStateModel));
         }
       } catch (e) {
-        audioCutBlocStateModel =
-            audioCutBlocStateModel.copyWith(isLoading: false);
-        emit(Error(error: "An error occurred: $e", timeStamp: DateTime.now(),audioCutBlocStateModel: audioCutBlocStateModel));
-
+        audioCutBlocStateModel = audioCutBlocStateModel.copyWith(isLoading: false);
+        emit(Error(error: "An error occurred: $e", timeStamp: DateTime.now(), audioCutBlocStateModel: audioCutBlocStateModel));
       }
     } else {
-      emit(Error(error: errorMessage, timeStamp: DateTime.now(),audioCutBlocStateModel: audioCutBlocStateModel));
+      emit(Error(error: errorMessage, timeStamp: DateTime.now(), audioCutBlocStateModel: audioCutBlocStateModel));
     }
   }
+
 
   /// Validate duration
   (bool, String) validate({

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -107,5 +108,14 @@ class CommonMethods{
     } catch (e) {
       throw Exception("Invalid duration format");
     }
+  }
+
+  static Future<String?> saveFile({required String filePath, required String fileName}) async {
+    final params = SaveFileDialogParams(
+      sourceFilePath: filePath,
+      fileName: fileName, // Default file name for saving
+    );
+
+     return await FlutterFileDialog.saveFile(params: params);
   }
 }

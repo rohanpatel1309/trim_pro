@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter/return_code.dart';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
@@ -60,56 +59,62 @@ class AudioMergeScreenBloc
   Future<void> _onMergeFile(
       MergeFile event, Emitter<AudioMergeScreenState> emit) async {
     if (audioMergeBlocStateModel.fileUrl1.isEmpty) {
-      emit(Error(error: "Please select a file 1", timeStamp: DateTime.now(),audioMergeBlocStateModel: audioMergeBlocStateModel));
+      emit(Error(error: "Please select a file 1", timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
       return;
     }
 
     if (audioMergeBlocStateModel.fileUrl2.isEmpty) {
-      emit(Error(error: "Please select a file 2", timeStamp: DateTime.now(),audioMergeBlocStateModel: audioMergeBlocStateModel));
+      emit(Error(error: "Please select a file 2", timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
       return;
     }
 
     emit(AudioMergeScreenState(
-        audioMergeBlocStateModel:
-            audioMergeBlocStateModel.copyWith(isLoading: true)));
+        audioMergeBlocStateModel: audioMergeBlocStateModel.copyWith(isLoading: true)));
 
     try {
-      final tempFilePath =
-          "${(await getTemporaryDirectory()).path}/merged_audio.mp3";
+      final tempDir = await getTemporaryDirectory();
+      const extension = "mp3";
+      final tempFilePath = "${tempDir.path}/merged_audio.$extension";
+
+      // Remove the temporary file if it exists from previous merges
+      final tempFile = File(tempFilePath);
+      if (await tempFile.exists()) {
+        await tempFile.delete();
+      }
 
       final command =
-          "-i \"concat:${audioMergeBlocStateModel.fileUrl1}|${audioMergeBlocStateModel.fileUrl2}\" -acodec copy $tempFilePath";
+          '-i ${audioMergeBlocStateModel.fileUrl1} -i ${audioMergeBlocStateModel.fileUrl2} -filter_complex "[0:a:0][1:a:0]concat=n=2:v=0:a=1[out]" -map "[out]" -c:a libmp3lame $tempFilePath';
 
       final session = await FFmpegKit.execute(command);
+      // final logs = await session.getLogs();
+      // logs.forEach((log) => print(log.getMessage()));
       final returnCode = await session.getReturnCode();
 
       if (ReturnCode.isSuccess(returnCode)) {
-        final params = SaveFileDialogParams(
-          sourceFilePath: tempFilePath,
-          fileName: "merged_audio.mp3",
-        );
-        await FlutterFileDialog.saveFile(params: params);
 
-        final tempFile = File(tempFilePath);
-        if (await tempFile.exists()) {
-          await tempFile.delete();
+        final savedFilePath = await CommonMethods.saveFile(fileName: "merged_Audio.$extension",filePath: tempFilePath);
+
+        if (savedFilePath != null) {
+          // Delete temporary file after saving
+          if (await tempFile.exists()) {
+            await tempFile.delete();
+          }
+
+          emit(const Completed());
+        } else {
+          emit(Error(error: "File is not saved", timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
         }
-
-        emit(const Completed());
       } else {
         final errorLog = await session.getOutput();
         print(errorLog);
-        emit(AudioMergeScreenState(
-            audioMergeBlocStateModel:
-                audioMergeBlocStateModel.copyWith(isLoading: false)));
-        emit(Error(error: errorLog.toString(), timeStamp: DateTime.now(),audioMergeBlocStateModel: audioMergeBlocStateModel));
+        emit(Error(error: errorLog.toString(), timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
       }
     } catch (e) {
       print(e);
-      emit(AudioMergeScreenState(
-          audioMergeBlocStateModel:
-              audioMergeBlocStateModel.copyWith(isLoading: false)));
-      emit(Error(error: e.toString(), timeStamp: DateTime.now(),audioMergeBlocStateModel: audioMergeBlocStateModel));
+      emit(AudioMergeScreenState(audioMergeBlocStateModel: audioMergeBlocStateModel.copyWith(isLoading: false)));
+      emit(Error(error: e.toString(), timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
     }
   }
+
+
 }
