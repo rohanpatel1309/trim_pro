@@ -79,16 +79,30 @@ class AudioInsertScreenBloc
       final tempDir = await getTemporaryDirectory();
       final tempFilePath = '${tempDir.path}/insert_audio_temp.mp3';
 
+      // Convert the position time (insertAt) to milliseconds
       final delayMs = formatTimeToMilliseconds(event.insertAt);
 
+      // Paths to the original files (F1 and F2)
+      String f1Path = filePath; // F1 file path
+      String f2Path = audioInsertBlocStateModel.fileUrl; // F2 file path (file to insert)
 
 
-      final command = '''
-        -i "${filePath}" 
-        -i "${audioInsertBlocStateModel.fileUrl}" 
-        -filter_complex "[0]atrim=0:2[a1];[1]adelay=${delayMs}|${delayMs},atrim=0:5[a2];[0]atrim=2:10[a3];[a1][a2][a3]concat=n=3:v=0:a=1[out]" 
-        -map "[out]" "$tempFilePath"
-        ''';
+      // Step 2: Trim F1 before the insertion point (0 to insertAt)
+      String part1Path = '${tempDir.path}/f1_part1.mp3';
+      await FFmpegKit.execute(
+          "-i $f1Path -ss 0 -to ${event.insertAt} -c copy $part1Path"
+      );
+
+      print("ooo $totalDuration}");
+      // Step 3: Trim F1 after the insertion point (insertAt to the end)
+      String part2Path = '${tempDir.path}/f1_part2.mp3';
+      await FFmpegKit.execute(
+          "-i $f1Path -ss ${event.insertAt} -to $totalDuration -c copy $part2Path"
+      );
+
+      // Step 4: Concatenate Part 1, F2, and Part 2
+      final outputPath = tempFilePath;
+      String command = '-i "concat:$part1Path|$f2Path|$part2Path" -c copy $outputPath';
 
       print('FFmpeg Command: $command');
       final session = await FFmpegKit.execute(command);
@@ -100,7 +114,10 @@ class AudioInsertScreenBloc
       if (ReturnCode.isSuccess(returnCode)) {
         final savedFilePath = await FlutterFileDialog.saveFile(
             params: SaveFileDialogParams(
-                sourceFilePath: tempFilePath, fileName: "inserted_audio.mp3"));
+                sourceFilePath: tempFilePath,
+                fileName: "inserted_audio.mp3"
+            )
+        );
 
         if (savedFilePath != null) {
           audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: false);
@@ -120,6 +137,27 @@ class AudioInsertScreenBloc
       print('Error: $e, StackTrace: $stackTrace');
       emit(Error(error: "An unexpected error occurred: $e", timeStamp: DateTime.now(), audioInsertBlocStateModel: audioInsertBlocStateModel));
     }
+  }
+
+  /// Helper function to get audio file duration in seconds
+  Future<String> _getAudioDuration(String filePath) async {
+    final session = await FFmpegKit.execute("-i $filePath");
+    final returnCode = await session.getReturnCode();
+
+    if (ReturnCode.isSuccess(returnCode)) {
+      final logs = await session.getLogs();
+      for (var log in logs) {
+        if (log.getMessage().contains('Duration:')) {
+          final durationString = log.getMessage().split('Duration:')[1].split(',')[0];
+          final durationParts = durationString.split(':');
+          final durationInSeconds = (int.parse(durationParts[0]) * 3600) +
+              (int.parse(durationParts[1]) * 60) +
+              int.parse(durationParts[2].split('.')[0]);
+          return durationParts[0] + durationParts[1] + durationParts[2].split('.')[0];
+        }
+      }
+    }
+    return "";
   }
 
   /// Validate duration
@@ -147,11 +185,11 @@ class AudioInsertScreenBloc
   }
 
   /// Format time
-  String formatTimeToMilliseconds(String hhmmss) {
+  int formatTimeToMilliseconds(String hhmmss) {
     final parts = hhmmss.split(':').map(int.parse).toList();
     final hours = parts[0];
     final minutes = parts[1];
     final seconds = parts[2];
-    return ((hours * 3600 + minutes * 60 + seconds) * 1000).toString();
+    return ((hours * 3600 + minutes * 60 + seconds) * 1000);
   }
 }
