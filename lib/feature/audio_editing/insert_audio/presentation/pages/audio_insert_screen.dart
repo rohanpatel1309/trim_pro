@@ -9,7 +9,7 @@ import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dar
     as common_audio_bloc;
 
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
-import 'package:trim_pro/feature/audio_editing/insert_audio/bloc/audio_insert_screen_bloc.dart'
+import 'package:trim_pro/feature/audio_editing/insert_audio/presentation/bloc/audio_insert_screen_bloc.dart'
     as audio_insert_bloc;
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_file_selection_button.dart';
@@ -76,7 +76,7 @@ class ScreenChildren extends StatelessWidget {
           ListView(
             children: const [
               CommonAudioPlayer(
-                tools: AudioCutScreenFields(),
+                tools: AudioInsertScreenFields(),
               ),
             ],
           ),
@@ -96,15 +96,15 @@ class ScreenChildren extends StatelessWidget {
   }
 }
 
-/// Audio cut screen fields
-class AudioCutScreenFields extends StatefulWidget {
-  const AudioCutScreenFields({super.key});
+/// Audio Insert screen fields
+class AudioInsertScreenFields extends StatefulWidget {
+  const AudioInsertScreenFields({super.key});
 
   @override
-  State<AudioCutScreenFields> createState() => _AudioCutScreenFieldsState();
+  State<AudioInsertScreenFields> createState() => _AudioInsertScreenFieldsState();
 }
 
-class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
+class _AudioInsertScreenFieldsState extends State<AudioInsertScreenFields> {
   TextEditingController insertAtController = TextEditingController();
 
   @override

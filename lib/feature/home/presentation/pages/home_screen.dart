@@ -95,7 +95,7 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.call_split,
               text: "Split",
-              onTap: () {},
+              onTap: () => context.router.pushNamed(AppRouter.audioSplitScreen),
             ),
             CommonButton(
               icon: Icons.input,

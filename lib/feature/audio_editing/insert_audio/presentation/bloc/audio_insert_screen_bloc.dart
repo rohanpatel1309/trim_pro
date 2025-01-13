@@ -8,7 +8,7 @@ import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/insert_audio/bloc/bloc_state_model/audio_insert_bloc_state_model.dart';
+import 'package:trim_pro/feature/audio_editing/insert_audio/presentation/bloc/bloc_state_model/audio_insert_bloc_state_model.dart';
 
 part 'audio_insert_screen_event.dart';
 
