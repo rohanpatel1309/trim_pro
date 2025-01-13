@@ -1,17 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/router/app_router.dart';
+import 'package:trim_pro/feature/home/presentation/bloc/home_screen_bloc.dart';
 import 'package:trim_pro/feature/home/presentation/widgets/common_button.dart';
+import 'package:trim_pro/feature/home/presentation/widgets/selection_button.dart';
 
 @RoutePage(name: 'home')
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatelessWidget implements AutoRouteWrapper {
   const HomeScreen({super.key});
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,13 @@ class HomeScreen extends StatelessWidget{
     );
   }
 
-
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider<HomeScreenBloc>(
+      create: (_) => GetIt.instance<HomeScreenBloc>(),
+      child: this,
+    );
+  }
 }
 
 /// Audio Editing
@@ -33,14 +41,42 @@ class ScreenChildren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-
-      padding: EdgeInsets.symmetric(horizontal: 10.w,),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.w,
+      ),
       children: [
-        const AudioEditingWidget(),
-        SizedBox(
-          height: 30.h,
+        BlocSelector<HomeScreenBloc, HomeScreenState, int>(
+          selector: (state) => state.index,
+          builder: (context, state) {
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 35.w,
+                  children: [
+                    SelectionButton(
+                      isSelected: state == 0,
+                      onTap: () => BlocProvider.of<HomeScreenBloc>(context)
+                          .add(const SetIndex(index: 0)),
+                      text: "Audio Editing",
+                    ),
+                    SelectionButton(
+                      isSelected: state == 1,
+                      onTap: () => BlocProvider.of<HomeScreenBloc>(context)
+                          .add(const SetIndex(index: 1)),
+                      text: "Video Editing",
+                    ),
+                  ],
+                ),
+                Visibility(
+                  visible: state == 0,
+                  replacement: const VideoEditingWidget(),
+                  child: const AudioEditingWidget(),
+                ),
+              ],
+            );
+          },
         ),
-        const VideoEditingWidget(),
       ],
     );
   }
@@ -56,22 +92,6 @@ class AudioEditingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Icon(
-              Icons.audiotrack,
-              size: 20.h,
-              color: ColorUtils.themeColor1,
-            ),
-            Text(
-              "Audio Editing",
-              style: TextStyle(
-                  fontSize: 40.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
         SizedBox(
           height: 10.h,
         ),
@@ -90,7 +110,8 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.all_inclusive,
               text: "Cut & Merge",
-              onTap: () => context.router.pushNamed(AppRouter.audioCutMergeScreen),
+              onTap: () =>
+                  context.router.pushNamed(AppRouter.audioCutMergeScreen),
             ),
             CommonButton(
               icon: Icons.call_split,
@@ -100,7 +121,58 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.input,
               text: "Insert",
-              onTap: () => context.router.pushNamed(AppRouter.audioInsertScreen),
+              onTap: () =>
+                  context.router.pushNamed(AppRouter.audioInsertScreen),
+            ),
+            CommonButton(
+              icon: Icons.speed_outlined,
+              text: "Speed",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.volume_down,
+              text: "Volume",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.change_circle,
+              text: "Convert\nFormat",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.multitrack_audio_rounded,
+              text: "Mix Track",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.keyboard_backspace,
+              text: "Reverse",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.loop,
+              text: "Loop",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.speaker_phone,
+              text: "Normalize",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.noise_aware,
+              text: "Remove\nSilence",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.gradient,
+              text: "Fade",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.text_fields,
+              text: "Text to Audio",
+              onTap: () {},
             ),
           ],
         ),
@@ -119,22 +191,6 @@ class VideoEditingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Icon(
-              Icons.movie,
-              size: 20.h,
-              color: ColorUtils.themeColor1,
-            ),
-            Text(
-              " Video Editing",
-              style: TextStyle(
-                  fontSize: 40.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
         SizedBox(
           height: 10.h,
         ),
@@ -165,6 +221,73 @@ class VideoEditingWidget extends StatelessWidget {
               icon: Icons.input,
               text: "Insert",
               onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.image,
+              text: "Extract\nFrames",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.water,
+              text: "Add\nWatermark",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.music_note,
+              text: "Extract\nAudio",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.photo_size_select_small,
+              text: "Resize",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.change_circle,
+              text: "Convert\nFormat",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.keyboard_backspace,
+              text: "Reverse",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.speed,
+              text: "Speed\nChange",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.rotate_right,
+              text: "Rotate",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.loop,
+              text: "Loop",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.subtitles,
+              text: "Add\nSubtitles",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.blur_on,
+              text: "Blur",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.video_library,
+              text: "Overlay",
+              onTap: () {},
+            ),
+            CommonButton(
+              icon: Icons.audiotrack,
+              text: "Add\nAudio",
+              onTap: () {
+                // Logic to open a screen or execute the FFmpeg command
+              },
             ),
           ],
         ),

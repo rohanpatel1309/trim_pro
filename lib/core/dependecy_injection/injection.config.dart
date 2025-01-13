@@ -20,6 +20,8 @@ import 'package:trim_pro/feature/audio_editing/merge_audio/presentation/bloc/aud
     as _i698;
 import 'package:trim_pro/feature/audio_editing/split_audio/presentation/bloc/audio_split_screen_bloc.dart'
     as _i243;
+import 'package:trim_pro/feature/home/presentation/bloc/home_screen_bloc.dart'
+    as _i783;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -38,6 +40,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i974.AudioInsertScreenBloc());
     gh.factory<_i24.AudioCutScreenBloc>(() => _i24.AudioCutScreenBloc());
     gh.factory<_i243.AudioSplitScreenBloc>(() => _i243.AudioSplitScreenBloc());
+    gh.factory<_i783.HomeScreenBloc>(() => _i783.HomeScreenBloc());
     return this;
   }
 }

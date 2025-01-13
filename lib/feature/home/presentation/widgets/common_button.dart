@@ -30,7 +30,7 @@ class CommonButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon,color: ColorUtils.commonButtonTextColor,size: 22.h,),
-            Text(text,style: TextStyle(color: ColorUtils.commonButtonTextColor,fontSize: 30.sp,fontWeight: FontWeight.w600,),textAlign: TextAlign.center,),
+            FittedBox(child: Text(text,style: TextStyle(color: ColorUtils.commonButtonTextColor,fontSize: 30.sp,fontWeight: FontWeight.w600,),textAlign: TextAlign.center,)),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
@@ -19,6 +20,8 @@ class AudioSplitScreenBloc
       const AudioSplitBlocStateModel();
   late String filePath;
   late Duration totalDuration;
+  late String part1Path, part2Path;
+  late File part1File, part2File;
 
   AudioSplitScreenBloc()
       : super(const AudioSplitScreenState(
@@ -38,17 +41,7 @@ class AudioSplitScreenBloc
   Future<void> _onSplitAudio(
       SplitAudio event, Emitter<AudioSplitScreenState> emit) async {
     try {
-
-      // Validate the splitAt time
-      final (isValid, message) = validate(splitAt: event.splitAt);
-      if (!isValid) {
-        emit(Error(
-            error: message,
-            timeStamp: DateTime.now(),
-            audioSplitBlocStateModel: audioSplitBlocStateModel));
-        return;
-      }
-
+      // Validation...
       audioSplitBlocStateModel =
           audioSplitBlocStateModel.copyWith(isLoading: true);
       emit(AudioSplitScreenState(
@@ -57,66 +50,68 @@ class AudioSplitScreenBloc
       final tempDir = await getTemporaryDirectory();
       const extension = "mp3";
 
-      // Original file path
-      String originalFilePath = filePath;
+      // Convert input file to MP3
+      String convertedMp3Path = '${tempDir.path}/input_converted.mp3';
+      final session = await FFmpegKit.execute(
+          "-i $filePath -vn -acodec libmp3lame $convertedMp3Path");
+      if (!ReturnCode.isSuccess(await session.getReturnCode())) {
+        final failStackTrace = await session.getFailStackTrace();
+        throw Exception('FFmpeg Conversion Error: $failStackTrace');
+      }
 
-      // Part 1 and Part 2 paths
       String part1Path = '${tempDir.path}/split_part1.$extension';
       String part2Path = '${tempDir.path}/split_part2.$extension';
 
-      // Delete existing temporary files
-      final part1File = File(part1Path);
-      final part2File = File(part2Path);
-
-      if (await part1File.exists()) {
-        await part1File.delete();
-      }
-      if (await part2File.exists()) {
-        await part2File.delete();
+      // Create Part 1
+      final part1Session = await FFmpegKit.execute(
+          "-i $convertedMp3Path -ss 0 -to ${event.splitAt} -c copy $part1Path");
+      if (!ReturnCode.isSuccess(await part1Session.getReturnCode())) {
+        final failStackTrace = await part1Session.getFailStackTrace();
+        throw Exception('FFmpeg Error (Part 1): $failStackTrace');
       }
 
-      // Split the file using FFmpeg
-      await FFmpegKit.execute(
-          "-i $originalFilePath -ss 0 -to ${event.splitAt} -c copy $part1Path");
-      await FFmpegKit.execute(
-          "-i $originalFilePath -ss ${event.splitAt} -c copy $part2Path");
+      // Verify Part 1
+      if (!(await File(part1Path).exists())) {
+        throw Exception('File not created: $part1Path');
+      }
 
-      // Save the split files
+      // Create Part 2
+      final part2Session = await FFmpegKit.execute(
+          "-i $convertedMp3Path -ss ${event.splitAt} -c copy $part2Path");
+      if (!ReturnCode.isSuccess(await part2Session.getReturnCode())) {
+        final failStackTrace = await part2Session.getFailStackTrace();
+        throw Exception('FFmpeg Error (Part 2): $failStackTrace');
+      }
+
+      // Verify Part 2
+      if (!(await File(part2Path).exists())) {
+        throw Exception('File not created: $part2Path');
+      }
+
+      // Save files
       final savedPart1Path = await CommonMethods.saveFile(
           fileName: "split_part1.$extension", filePath: part1Path);
       final savedPart2Path = await CommonMethods.saveFile(
           fileName: "split_part2.$extension", filePath: part2Path);
 
       if (savedPart1Path != null && savedPart2Path != null) {
-        // Clean up temporary files
-        if (await part1File.exists()) {
-          await part1File.delete();
-        }
-        if (await part2File.exists()) {
-          await part2File.delete();
-        }
-
         audioSplitBlocStateModel =
             audioSplitBlocStateModel.copyWith(isLoading: false);
         emit(const Completed());
       } else {
-        audioSplitBlocStateModel =
-            audioSplitBlocStateModel.copyWith(isLoading: false);
-        emit(Error(
-            error: "Failed to save split files",
-            timeStamp: DateTime.now(),
-            audioSplitBlocStateModel: audioSplitBlocStateModel));
+        throw Exception('Failed to save split files.');
       }
     } catch (e, stackTrace) {
+      print('Error: $e, StackTrace: $stackTrace');
       audioSplitBlocStateModel =
           audioSplitBlocStateModel.copyWith(isLoading: false);
-      print('Error: $e, StackTrace: $stackTrace');
       emit(Error(
-          error: "An unexpected error occurred: $e",
+          error: e.toString(),
           timeStamp: DateTime.now(),
           audioSplitBlocStateModel: audioSplitBlocStateModel));
     }
   }
+
 
   /// Validate duration
   (bool, String) validate({

@@ -5,15 +5,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart' as common_audio_bloc;
+import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart'
+    as common_audio_bloc;
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
-import 'package:trim_pro/feature/audio_editing/split_audio/presentation/bloc/audio_split_screen_bloc.dart' as audio_split_bloc;
+import 'package:trim_pro/feature/audio_editing/split_audio/presentation/bloc/audio_split_screen_bloc.dart'
+    as audio_split_bloc;
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
 import 'package:trim_pro/feature/common_widgets/common_time_fields.dart';
 
 @RoutePage(name: 'audioSplit')
-class AudioSplitScreen extends StatelessWidget implements AutoRouteWrapper{
+class AudioSplitScreen extends StatelessWidget implements AutoRouteWrapper {
   const AudioSplitScreen({super.key});
 
   @override
@@ -21,16 +23,20 @@ class AudioSplitScreen extends StatelessWidget implements AutoRouteWrapper{
     return const AppBackground(
       titleText: "Audio Split",
       child: ScreenChildren(),
-    );;
+    );
+    ;
   }
 
   @override
   Widget wrappedRoute(BuildContext context) {
     // TODO: implement wrappedRoute
-   return MultiBlocProvider(providers: [
-     BlocProvider(create: (_) => GetIt.instance<common_audio_bloc.CommonAudioBloc>()),
-     BlocProvider(create: (_) => GetIt.instance<audio_split_bloc.AudioSplitScreenBloc>())
-   ], child: this) ;
+    return MultiBlocProvider(providers: [
+      BlocProvider(
+          create: (_) => GetIt.instance<common_audio_bloc.CommonAudioBloc>()),
+      BlocProvider(
+          create: (_) =>
+              GetIt.instance<audio_split_bloc.AudioSplitScreenBloc>())
+    ], child: this);
   }
 }
 
@@ -99,7 +105,7 @@ class AudioSplitScreenFields extends StatefulWidget {
 }
 
 class _AudioSplitScreenFieldsState extends State<AudioSplitScreenFields> {
-  TextEditingController insertAtController = TextEditingController();
+  TextEditingController splitAtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -121,23 +127,49 @@ class _AudioSplitScreenFieldsState extends State<AudioSplitScreenFields> {
               SizedBox(
                 width: 250.w,
                 child: TimeTextFormField(
-                  controller: insertAtController,
+                  controller: splitAtController,
                 ),
               ),
             ],
           ),
-
           IgnorePointer(
             ignoring: false,
             child: CommonButton(
               onTap: () =>
                   BlocProvider.of<audio_split_bloc.AudioSplitScreenBloc>(
-                      context)
+                          context)
                       .add(audio_split_bloc.SplitAudio(
-                      splitAt: insertAtController.text.trim())),
+                          splitAt: splitAtController.text.trim())),
               buttonText: '  Split  ',
             ),
-          )
+          ),
+          BlocSelector<audio_split_bloc.AudioSplitScreenBloc,
+                  audio_split_bloc.AudioSplitScreenState, bool>(
+              selector: (state) => state is audio_split_bloc.Completed,
+              builder: (context, state) {
+                if(state){
+                  return Column(
+                    spacing: 10.h,
+                    children: [
+                       Text("Save splitted files", style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 48.sp,
+                          fontWeight: FontWeight.w600),),
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 35.w,
+                        children: [
+                          CommonButton(onTap: (){}, buttonText: "Save File 1"),
+
+                          CommonButton(onTap: (){}, buttonText: "Save File 2")
+                        ],
+                      )
+                    ],
+                  );
+                }
+                return const SizedBox();
+
+              })
         ],
       ),
     );
