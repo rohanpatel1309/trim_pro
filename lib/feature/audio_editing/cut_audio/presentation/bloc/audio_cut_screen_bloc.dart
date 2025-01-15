@@ -16,8 +16,6 @@ part 'audio_cut_screen_state.dart';
 @injectable
 class AudioCutScreenBloc
     extends Bloc<AudioCutScreenEvent, AudioCutScreenState> {
-  late String filePath;
-  late Duration totalDuration;
   AudioCutBlocStateModel audioCutBlocStateModel = const AudioCutBlocStateModel(
     isLoading: false,
   );
@@ -27,13 +25,14 @@ class AudioCutScreenBloc
             audioCutBlocStateModel: AudioCutBlocStateModel())) {
     on<SetFileParameters>(_onSetFileParameters);
     on<CutAudio>(_onCutAudio);
+    on<Reset>(_onReset);
   }
 
   /// Set path
   void _onSetFileParameters(
       SetFileParameters event, Emitter<AudioCutScreenState> emit) {
-    filePath = event.filePath;
-    totalDuration = event.totalDuration;
+    audioCutBlocStateModel = audioCutBlocStateModel.copyWith(
+        filePath: event.filePath, totalDuration: event.totalDuration);
   }
 
   /// Cut audio
@@ -65,10 +64,9 @@ class AudioCutScreenBloc
       // Delete temporary file if it exists
       await CommonMethods.cleanupTempFiles();
 
-
       // Ensure the input file path is properly escaped
       final String command =
-          '-i "$filePath" -ss ${event.start} -to ${event.end} -c:a libmp3lame "$tempFilePath"';
+          '-i "${audioCutBlocStateModel.filePath}" -ss ${event.start} -to ${event.end} -c:a libmp3lame "$tempFilePath"';
 
       // Execute FFmpeg command
       final session = await FFmpegKit.execute(command);
@@ -120,7 +118,7 @@ class AudioCutScreenBloc
         timeStamp: DateTime.now(),
         audioCutBlocStateModel: audioCutBlocStateModel,
       ));
-    }finally{
+    } finally {
       CommonMethods.cleanupTempFiles();
     }
   }
@@ -134,11 +132,12 @@ class AudioCutScreenBloc
       final start = CommonMethods.parseDuration(startDuration);
       final end = CommonMethods.parseDuration(endDuration);
 
-      if (start < Duration.zero || start > totalDuration) {
+      if (start < Duration.zero ||
+          start > audioCutBlocStateModel.totalDuration) {
         return (false, "Start duration is out of range.");
       }
 
-      if (end < Duration.zero || end > totalDuration) {
+      if (end < Duration.zero || end > audioCutBlocStateModel.totalDuration) {
         return (false, "End duration is out of range.");
       }
 
@@ -153,5 +152,13 @@ class AudioCutScreenBloc
     } catch (e) {
       return (false, "$e");
     }
+  }
+
+  /// Reset
+  void _onReset(Reset event, Emitter<AudioCutScreenState> emit) {
+    audioCutBlocStateModel = const AudioCutBlocStateModel();
+    CommonMethods.cleanupTempFiles();
+    emit(AudioCutScreenState(audioCutBlocStateModel: audioCutBlocStateModel));
+
   }
 }

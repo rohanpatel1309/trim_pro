@@ -65,7 +65,6 @@ class ScreenChildren extends StatelessWidget {
             CommonMethods.showToast(
               msg: "File saved successfully.",
             );
-            context.router.back();
           }
         }),
       ],
@@ -127,14 +126,32 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
             builder: (context, state) {
               return IgnorePointer(
                 ignoring: state,
-                child: CommonButton(
-                  onTap: () {
-                    BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(context)
-                        .add(audio_cut_bloc.CutAudio(
-                            start: startController.text.trim(),
-                            end: endController.text.trim()));
-                  },
-                  buttonText: '  Cut  ',
+                child: Row(
+                  spacing: 25.w,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CommonButton(
+                      onTap: () {
+                        BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(
+                                context)
+                            .add(audio_cut_bloc.CutAudio(
+                                start: startController.text.trim(),
+                                end: endController.text.trim()));
+                      },
+                      buttonText: '  Cut  ',
+                    ),
+                    CommonButton(
+                      onTap: () {
+                        BlocProvider.of<common_audio_bloc.CommonAudioBloc>(
+                                context)
+                            .add(const common_audio_bloc.ResetFile());
+                        BlocProvider.of<audio_cut_bloc.AudioCutScreenBloc>(
+                            context)
+                            .add(const audio_cut_bloc.Reset());
+                      },
+                      buttonText: '  Reset  ',
+                    ),
+                  ],
                 ),
               );
             },

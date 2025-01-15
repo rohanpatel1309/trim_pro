@@ -17,7 +17,7 @@ final class SplitAudio extends AudioSplitScreenEvent {
 
   @override
   // TODO: implement props
-  List<Object?> get props => [];
+  List<Object?> get props => [splitAt];
 }
 
 final class SetFileParameters extends AudioSplitScreenEvent {
@@ -27,4 +27,31 @@ final class SetFileParameters extends AudioSplitScreenEvent {
 
   @override
   List<Object> get props => [filePath];
+}
+
+final class SaveFile1 extends AudioSplitScreenEvent {
+
+  const SaveFile1();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
+final class SaveFile2 extends AudioSplitScreenEvent {
+
+  const SaveFile2();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+
+final class Reset extends AudioSplitScreenEvent {
+
+  const Reset();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
 }

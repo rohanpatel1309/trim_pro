@@ -7,6 +7,8 @@ part 'audio_cut_bloc_state_model.freezed.dart';
 class AudioCutBlocStateModel with _$AudioCutBlocStateModel {
   const factory AudioCutBlocStateModel({
     @Default(false) bool isLoading,
+    @Default("") String filePath,
+    @Default(Duration()) Duration totalDuration,
 
 }) = _AudioCutBlocStateModel;
 }

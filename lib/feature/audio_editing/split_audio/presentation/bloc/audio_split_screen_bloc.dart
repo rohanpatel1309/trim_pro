@@ -18,9 +18,8 @@ class AudioSplitScreenBloc
     extends Bloc<AudioSplitScreenEvent, AudioSplitScreenState> {
   AudioSplitBlocStateModel audioSplitBlocStateModel =
       const AudioSplitBlocStateModel();
-  late String filePath;
-  late Duration totalDuration;
-  late String part1Path, part2Path;
+
+  late String part1Path, part2Path, extension;
   late File part1File, part2File;
 
   AudioSplitScreenBloc()
@@ -28,13 +27,18 @@ class AudioSplitScreenBloc
             audioSplitBlocStateModel: AudioSplitBlocStateModel())) {
     on<SetFileParameters>(_onSetFileParameters);
     on<SplitAudio>(_onSplitAudio);
+    on<SaveFile1>(_onSaveFile1);
+    on<SaveFile2>(_onSaveFile2);
+    on<Reset>(_onReset);
   }
 
   /// Set file parameter
   void _onSetFileParameters(
       SetFileParameters event, Emitter<AudioSplitScreenState> emit) {
-    totalDuration = event.totalDuration;
-    filePath = event.filePath;
+    audioSplitBlocStateModel = audioSplitBlocStateModel.copyWith(
+      filePath: event.filePath,
+      totalDuration: event.totalDuration,
+    );
   }
 
   /// Split audio files
@@ -48,23 +52,21 @@ class AudioSplitScreenBloc
           audioSplitBlocStateModel: audioSplitBlocStateModel));
 
       final tempDir = await getTemporaryDirectory();
-      const extension = "mp3";
+      extension = "mp3";
 
       // Paths
       String convertedMp3Path = '${tempDir.path}/input_converted.mp3';
-      String part1Path = '${tempDir.path}/split_part1.$extension';
-      String part2Path = '${tempDir.path}/split_part2.$extension';
+      part1Path = '${tempDir.path}/split_part1.$extension';
+      part2Path = '${tempDir.path}/split_part2.$extension';
 
       // Ensure paths are properly escaped
       convertedMp3Path = '"$convertedMp3Path"';
       part1Path = '"$part1Path"';
       part2Path = '"$part2Path"';
-      String inputFilePath = '"$filePath"';
+      String inputFilePath = '"${audioSplitBlocStateModel.filePath}"';
 
       // Delete existing temporary files if any
-      await _cleanupTempFile(convertedMp3Path);
-      await _cleanupTempFile(part1Path);
-      await _cleanupTempFile(part2Path);
+      await CommonMethods.cleanupTempFiles();
 
       // Convert input file to MP3
       final session = await FFmpegKit.execute(
@@ -100,48 +102,19 @@ class AudioSplitScreenBloc
         throw Exception('File not created: $part2Path');
       }
 
-      // Save files
-      final savedPart1Path = await CommonMethods.saveFile(
-          fileName: "split_part1.$extension",
-          filePath: part1Path.replaceAll('"', ''));
-      final savedPart2Path = await CommonMethods.saveFile(
-          fileName: "split_part2.$extension",
-          filePath: part2Path.replaceAll('"', ''));
-
-      if (savedPart1Path != null && savedPart2Path != null) {
-        // Delete temporary files after saving
-        await _cleanupTempFile(convertedMp3Path);
-        await _cleanupTempFile(part1Path);
-        await _cleanupTempFile(part2Path);
-
-        audioSplitBlocStateModel =
-            audioSplitBlocStateModel.copyWith(isLoading: false);
-        emit(const Completed());
-      } else {
-        throw Exception('Failed to save split files.');
-      }
+      audioSplitBlocStateModel =
+          audioSplitBlocStateModel.copyWith(isLoading: false);
+      emit( Completed(no: 0, dateTime: DateTime.now()));
     } catch (e, stackTrace) {
       print('Error: $e, StackTrace: $stackTrace');
 
-
-
       audioSplitBlocStateModel =
           audioSplitBlocStateModel.copyWith(isLoading: false);
+      CommonMethods.cleanupTempFiles();
       emit(Error(
           error: e.toString(),
           timeStamp: DateTime.now(),
           audioSplitBlocStateModel: audioSplitBlocStateModel));
-    }finally{
-      // Cleanup temporary files in case of error
-      CommonMethods.cleanupTempFiles();
-    }
-  }
-
-  /// Helper method to clean up a temporary file if it exists
-  Future<void> _cleanupTempFile(String filePath) async {
-    final file = File(filePath.replaceAll('"', ''));
-    if (await file.exists()) {
-      await file.delete();
     }
   }
 
@@ -152,7 +125,7 @@ class AudioSplitScreenBloc
     try {
       final position = CommonMethods.parseDuration(splitAt);
 
-      if (position < Duration.zero || position > totalDuration) {
+      if (position < Duration.zero || position > audioSplitBlocStateModel.totalDuration) {
         return (false, "Duration is out of range.");
       }
 
@@ -160,5 +133,55 @@ class AudioSplitScreenBloc
     } catch (e) {
       return (false, "$e");
     }
+  }
+
+  /// Save file1
+  Future<void> _onSaveFile1(
+      SaveFile1 event, Emitter<AudioSplitScreenState> emit) async {
+    final savedPart1Path = await CommonMethods.saveFile(
+        fileName: "split_part1.$extension",
+        filePath: part1Path.replaceAll('"', ''));
+
+    if (savedPart1Path != null) {
+      emit( Completed(no: 1, dateTime: DateTime.now()));
+    } else {
+      emit(Error(
+          error: "Please Save File",
+          timeStamp: DateTime.now(),
+          audioSplitBlocStateModel: audioSplitBlocStateModel));
+    }
+  }
+
+  /// Save file2
+  Future<void> _onSaveFile2(
+      SaveFile2 event, Emitter<AudioSplitScreenState> emit) async {
+    final savedPart1Path = await CommonMethods.saveFile(
+        fileName: "split_part2.$extension",
+        filePath: part2Path.replaceAll('"', ''));
+
+    if (savedPart1Path != null) {
+      emit( Completed(no: 2, dateTime: DateTime.now()));
+    } else {
+      emit(Error(
+          error: "Please Save File",
+          timeStamp: DateTime.now(),
+          audioSplitBlocStateModel: audioSplitBlocStateModel));
+    }
+  }
+
+  /// Reset
+  void _onReset(Reset event, Emitter<AudioSplitScreenState> emit){
+    audioSplitBlocStateModel = const AudioSplitBlocStateModel();
+    CommonMethods.cleanupTempFiles();
+    emit(AudioSplitScreenState(audioSplitBlocStateModel: audioSplitBlocStateModel));
+
+  }
+
+  @override
+  Future<void> close() {
+    // TODO: implement close
+    CommonMethods.cleanupTempFiles();
+    return super.close();
+
   }
 }

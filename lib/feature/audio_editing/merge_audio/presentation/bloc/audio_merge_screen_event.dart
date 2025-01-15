@@ -21,3 +21,11 @@ final class MergeFile extends AudioMergeScreenEvent {
   // TODO: implement props
   List<Object?> get props => [];
 }
+final class Reset extends AudioMergeScreenEvent {
+  const Reset();
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+

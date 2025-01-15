@@ -21,8 +21,15 @@ final class Error extends AudioSplitScreenState {
 }
 
 final class Completed extends AudioSplitScreenState{
-  const Completed() : super(audioSplitBlocStateModel:  const AudioSplitBlocStateModel());
+
+  /// 0 = Process Completed
+  /// 1 = Saved File 1
+  /// 2 = Saved File 2
+
+  const Completed({required this.no, required this.dateTime}) : super(audioSplitBlocStateModel:  const AudioSplitBlocStateModel());
+  final int no;
+  final DateTime dateTime;
   @override
   // TODO: implement props
-  List<Object> get props => [];
+  List<Object> get props => [no,dateTime];
 }

@@ -40,44 +40,46 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.symmetric(
-        horizontal: 10.w,
-      ),
-      children: [
-        BlocSelector<HomeScreenBloc, HomeScreenState, int>(
-          selector: (state) => state.index,
-          builder: (context, state) {
-            return Column(
+    return BlocSelector<HomeScreenBloc, HomeScreenState, int>(
+      selector: (state) => state.index,
+      builder: (context, state) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 35.w,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 35.w,
-                  children: [
-                    SelectionButton(
-                      isSelected: state == 0,
-                      onTap: () => BlocProvider.of<HomeScreenBloc>(context)
-                          .add(const SetIndex(index: 0)),
-                      text: "Audio Editing",
-                    ),
-                    SelectionButton(
-                      isSelected: state == 1,
-                      onTap: () => BlocProvider.of<HomeScreenBloc>(context)
-                          .add(const SetIndex(index: 1)),
-                      text: "Video Editing",
-                    ),
-                  ],
+                SelectionButton(
+                  isSelected: state == 0,
+                  onTap: () => BlocProvider.of<HomeScreenBloc>(context)
+                      .add(const SetIndex(index: 0)),
+                  text: "Audio Editing",
                 ),
-                Visibility(
-                  visible: state == 0,
-                  replacement: const VideoEditingWidget(),
-                  child: const AudioEditingWidget(),
+                SelectionButton(
+                  isSelected: state == 1,
+                  onTap: () => BlocProvider.of<HomeScreenBloc>(context)
+                      .add(const SetIndex(index: 1)),
+                  text: "Video Editing",
                 ),
               ],
-            );
-          },
-        ),
-      ],
+            ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10.w,
+                ),
+                children: [
+                  Visibility(
+                    visible: state == 0,
+                    replacement: const VideoEditingWidget(),
+                    child: const AudioEditingWidget(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

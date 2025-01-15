@@ -20,3 +20,10 @@ final class CutAudio extends AudioCutScreenEvent {
   @override
   List<Object> get props => [start,end];
 }
+
+final class Reset extends AudioCutScreenEvent {
+  const Reset();
+
+  @override
+  List<Object> get props => [];
+}

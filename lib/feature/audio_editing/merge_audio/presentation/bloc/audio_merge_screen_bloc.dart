@@ -24,6 +24,7 @@ class AudioMergeScreenBloc
             audioMergeBlocStateModel: AudioMergeBlocStateModel())) {
     on<PickFile>(_onPickFile);
     on<MergeFile>(_onMergeFile);
+    on<Reset>(_onReset);
   }
 
   /// Pick file
@@ -129,6 +130,13 @@ class AudioMergeScreenBloc
       CommonMethods.cleanupTempFiles();
 
     }
+  }
+
+  /// Reset
+  void _onReset(Reset event, Emitter<AudioMergeScreenState> emit){
+    audioMergeBlocStateModel = const AudioMergeBlocStateModel();
+    CommonMethods.cleanupTempFiles();
+    emit(AudioMergeScreenState(audioMergeBlocStateModel: audioMergeBlocStateModel));
   }
 
 

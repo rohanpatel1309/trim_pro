@@ -45,7 +45,6 @@ class ScreenChildren extends StatelessWidget {
           CommonMethods.showToast(
             msg: "File saved successfully.",
           );
-          context.router.back();
         }
       },
       child: Stack(
@@ -77,9 +76,19 @@ class ScreenChildren extends StatelessWidget {
                   );
                 },
               ),
-              CommonButton(
-                onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context).add(const MergeFile()),
-                buttonText: 'Merge',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 15.w,
+                children: [
+                  CommonButton(
+                    onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context).add(const MergeFile()),
+                    buttonText: 'Merge',
+                  ),
+                  CommonButton(
+                    onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context).add(const Reset()),
+                    buttonText: 'Reset',
+                  ),
+                ],
               ),
             ],
           ),

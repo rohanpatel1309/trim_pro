@@ -67,10 +67,10 @@ class AudioPlayerWithSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 5.h,
       children: [
         Container(
           margin: EdgeInsets.symmetric(horizontal: 10.w),
-          padding: EdgeInsets.symmetric(vertical: 5.h),
           decoration: BoxDecoration(
             color: Colors.grey.shade700,
             gradient: LinearGradient(colors: [
@@ -98,6 +98,19 @@ class AudioPlayerWithSlider extends StatelessWidget {
             ],
           ),
         ),
+        BlocSelector<CommonAudioBloc, CommonAudioState, String>(
+            selector: (state) => state.commonBlocStateModel.fileUrl, builder: (context,state){
+              return Visibility(
+                  visible: state.isNotEmpty,
+                  replacement: const SizedBox(),
+                  child: Text(state.split("/").last,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 34.sp,
+                        fontWeight: FontWeight.w600),
+                  ),
+              );
+        }),
         tools,
       ],
     );
@@ -113,17 +126,19 @@ class PlayPauseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
       selector: (state) => state.commonBlocStateModel.isPlayingNow,
-      builder: (context, data) => IconButton(
-        icon: Icon(
-          data ? Icons.pause : Icons.play_arrow,
-          color: Colors.white,
-          size: 30.h,
-        ),
-        onPressed: () {
-          BlocProvider.of<CommonAudioBloc>(context)
-              .add(data ? const CommonAudioPause() : const CommonAudioPlay());
-        },
-      ),
+      builder: (context, data) =>
+          IconButton(
+            icon: Icon(
+              data ? Icons.pause : Icons.play_arrow,
+              color: Colors.white,
+              size: 30.h,
+            ),
+            onPressed: () {
+              BlocProvider.of<CommonAudioBloc>(context)
+                  .add(
+                  data ? const CommonAudioPause() : const CommonAudioPlay());
+            },
+          ),
     );
   }
 }
@@ -173,7 +188,9 @@ class MusicSlider extends StatelessWidget {
                   final seconds = state.inSeconds % 60;
 
                   return Text(
-                    "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}",
+                    "${hours.toString().padLeft(2, '0')}:${minutes.toString()
+                        .padLeft(2, '0')}:${seconds.toString().padLeft(
+                        2, '0')}",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 30.sp,
@@ -189,7 +206,9 @@ class MusicSlider extends StatelessWidget {
                   final seconds = state.inSeconds % 60;
 
                   return Text(
-                    "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}",
+                    "${hours.toString().padLeft(2, '0')}:${minutes.toString()
+                        .padLeft(2, '0')}:${seconds.toString().padLeft(
+                        2, '0')}",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 30.sp,

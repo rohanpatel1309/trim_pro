@@ -41,3 +41,11 @@ final class CommonAudioSetSliderValue extends CommonAudioEvent {
   @override
   List<Object> get props => [position];
 }
+
+final class ResetFile extends CommonAudioEvent {
+  const ResetFile();
+
+
+  @override
+  List<Object> get props => [];
+}

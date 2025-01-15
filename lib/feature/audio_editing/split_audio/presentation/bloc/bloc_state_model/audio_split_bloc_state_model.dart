@@ -7,5 +7,7 @@ class AudioSplitBlocStateModel with _$AudioSplitBlocStateModel{
 
   const factory AudioSplitBlocStateModel({
     @Default(false) bool isLoading,
+    @Default("") String filePath,
+    @Default(Duration()) Duration totalDuration,
   }) = _AudioSplitBlocStateModel;
 }
