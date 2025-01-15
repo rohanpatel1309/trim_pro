@@ -64,154 +64,109 @@ class AudioInsertScreenBloc
     try {
       if (audioInsertBlocStateModel.fileUrl.isEmpty) {
         emit(Error(
-            error: "Please select a file",
-            timeStamp: DateTime.now(),
-            audioInsertBlocStateModel: audioInsertBlocStateModel));
+          error: "Please select a file",
+          timeStamp: DateTime.now(),
+          audioInsertBlocStateModel: audioInsertBlocStateModel,
+        ));
         return;
       }
 
+      // Validate insert position
       final (isValid, message) = validate(insertAt: event.insertAt);
       if (!isValid) {
         emit(Error(
-            error: message,
-            timeStamp: DateTime.now(),
-            audioInsertBlocStateModel: audioInsertBlocStateModel));
+          error: message,
+          timeStamp: DateTime.now(),
+          audioInsertBlocStateModel: audioInsertBlocStateModel,
+        ));
         return;
       }
 
-      audioInsertBlocStateModel =
-          audioInsertBlocStateModel.copyWith(isLoading: true);
-      emit(AudioInsertScreenState(
-          audioInsertBlocStateModel: audioInsertBlocStateModel));
+      // Update loading state
+      audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: true);
+      emit(AudioInsertScreenState(audioInsertBlocStateModel: audioInsertBlocStateModel));
 
-      final tempDir = await getTemporaryDirectory();
-      const extension = "mp3";
-      final tempFilePath = '${tempDir.path}/insert_audio_temp.$extension';
+      // Paths setup
+      final Directory tempDir = await getTemporaryDirectory();
+      const String extension = "mp3";
+      final String tempFilePath = '${tempDir.path}/insert_audio_temp.$extension';
 
-      // Clean up any leftover temporary files from previous operations
-      final tempFile = File(tempFilePath);
-      if (await tempFile.exists()) {
-        await tempFile.delete();
-      }
+      await CommonMethods.cleanupTempFiles();
 
-      String part1Path = '${tempDir.path}/f1_part1.$extension';
-      final part1File = File(part1Path);
-      if (await part1File.exists()) {
-        await part1File.delete();
-      }
-
-      String part2Path = '${tempDir.path}/f1_part2.$extension';
-      final part2File = File(part2Path);
-      if (await part2File.exists()) {
-        await part2File.delete();
-      }
-
-      // Paths to the original files (F1 and F2)
-      String f1Path = filePath; // F1 file path
-      String f2Path =
-          audioInsertBlocStateModel.fileUrl; // F2 file path (file to insert)
+      // Paths to source files
+      final String f1Path = '"$filePath"'; // Wrap in quotes for FFmpeg
+      final String f2Path = '"${audioInsertBlocStateModel.fileUrl}"';
 
       // Step 1: Convert F1 and F2 to MP3
-      String f1Mp3Path = '${tempDir.path}/f1_converted.mp3';
-      final f1Mp3File = File(f1Mp3Path);
+      final String f1Mp3Path = '"${tempDir.path}/f1_converted.mp3"';
+      final String f2Mp3Path = '"${tempDir.path}/f2_converted.mp3"';
 
-      if (await f1Mp3File.exists()) {
-        await f1Mp3File.delete();
-      }
+      await FFmpegKit.execute('-i $f1Path -vn -acodec libmp3lame $f1Mp3Path');
+      await FFmpegKit.execute('-i $f2Path -vn -acodec libmp3lame $f2Mp3Path');
 
-      String f2Mp3Path = '${tempDir.path}/f2_converted.mp3';
+      // Step 2: Trim F1 (before and after insertion point)
+      final String part1Path = '"${tempDir.path}/f1_part1.$extension"';
+      final String part2Path = '"${tempDir.path}/f1_part2.$extension"';
 
-      final f2Mp3File = File(f1Mp3Path);
+      await FFmpegKit.execute('-i $f1Mp3Path -ss 0 -to ${event.insertAt} -c copy $part1Path');
+      await FFmpegKit.execute('-i $f1Mp3Path -ss ${event.insertAt} -c copy $part2Path');
 
-      if (await f2Mp3File.exists()) {
-        await f2Mp3File.delete();
-      }
-
-      await FFmpegKit.execute("-i $f1Path -vn -acodec libmp3lame $f1Mp3Path");
-      await FFmpegKit.execute("-i $f2Path -vn -acodec libmp3lame $f2Mp3Path");
-
-      // Step 2: Trim F1 before the insertion point (0 to insertAt)
-      await FFmpegKit.execute(
-          "-i $f1Mp3Path -ss 0 -to ${event.insertAt} -c copy $part1Path");
-
-      // Step 3: Trim F1 after the insertion point (insertAt to the end)
-      await FFmpegKit.execute(
-          "-i $f1Mp3Path -ss ${event.insertAt} -c copy $part2Path");
-
-      // Step 4: Create a concat file for proper concatenation
-      final concatFilePath = '${tempDir.path}/concat_list.txt';
-      final concatFile = File(concatFilePath);
+      // Step 3: Concatenate files
+      final String concatFilePath = '"${tempDir.path}/concat_list.txt"';
+      final File concatFile = File(concatFilePath.replaceAll('"', ''));
       await concatFile.writeAsString(
-          "file '$part1Path'\nfile '$f2Mp3Path'\nfile '$part2Path'\n");
+        "file ${part1Path.replaceAll('"', '')}\n"
+            "file ${f2Mp3Path.replaceAll('"', '')}\n"
+            "file ${part2Path.replaceAll('"', '')}\n",
+      );
 
-      // Step 5: Concatenate Part 1, F2, and Part 2 using concat demuxer
-      String command =
-          "-f concat -safe 0 -i $concatFilePath -c copy $tempFilePath";
-
-      print('FFmpeg Command: $command');
+      // Final concatenation
+      final String command =
+          '-f concat -safe 0 -i $concatFilePath -c copy "$tempFilePath"';
       final session = await FFmpegKit.execute(command);
-      //
-      // final logs = await session.getLogs();
-      // logs.forEach((log) => print(log.getMessage()));
-
       final returnCode = await session.getReturnCode();
+
       if (ReturnCode.isSuccess(returnCode)) {
+        // Save the final file
         final savedFilePath = await CommonMethods.saveFile(
           fileName: "inserted_audio.$extension",
-          filePath: tempFilePath,
+          filePath: tempFilePath.replaceAll('"', ''),
         );
 
         if (savedFilePath != null) {
-          // Delete temporary files after saving
-          if (await tempFile.exists()) {
-            await tempFile.delete();
-          }
-
-          if (await part1File.exists()) {
-            await part1File.delete();
-          }
-
-          if (await part2File.exists()) {
-            await part2File.delete();
-          }
-
-          if (await f1Mp3File.exists()) {
-            await f1Mp3File.delete();
-          }
-
-          if (await f2Mp3File.exists()) {
-            await f2Mp3File.delete();
-          }
-
-          audioInsertBlocStateModel =
-              audioInsertBlocStateModel.copyWith(isLoading: false);
+          // Success
+          audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: false);
           emit(const Completed());
         } else {
-          audioInsertBlocStateModel =
-              audioInsertBlocStateModel.copyWith(isLoading: false);
           emit(Error(
-              error: "File is not saved",
-              timeStamp: DateTime.now(),
-              audioInsertBlocStateModel: audioInsertBlocStateModel));
+            error: "File is not saved",
+            timeStamp: DateTime.now(),
+            audioInsertBlocStateModel: audioInsertBlocStateModel,
+          ));
         }
       } else {
-        final errorMessage = await session.getFailStackTrace();
-        print("FFmpeg Error: $errorMessage");
-        audioInsertBlocStateModel =
-            audioInsertBlocStateModel.copyWith(isLoading: false);
+        // Failure during FFmpeg execution
+        final String errorMessage = await session.getOutput() ?? "Unknown error";
         emit(Error(
-            error: "FFmpeg Error: $errorMessage",
-            timeStamp: DateTime.now(),
-            audioInsertBlocStateModel: audioInsertBlocStateModel));
+          error: "FFmpeg Error: $errorMessage",
+          timeStamp: DateTime.now(),
+          audioInsertBlocStateModel: audioInsertBlocStateModel,
+        ));
       }
     } catch (e, stackTrace) {
-      audioInsertBlocStateModel =
-          audioInsertBlocStateModel.copyWith(isLoading: false);
-      print('Error: $e, StackTrace: $stackTrace');
+      // Log error and reset state
+      print("Error: $e\nStackTrace: $stackTrace");
+      audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: false);
+      await CommonMethods.cleanupTempFiles();
+
       emit(Error(
-          error: "An unexpected error occurred: $e",
-          timeStamp: DateTime.now(),
-          audioInsertBlocStateModel: audioInsertBlocStateModel));
+        error: "An unexpected error occurred: $e",
+        timeStamp: DateTime.now(),
+        audioInsertBlocStateModel: audioInsertBlocStateModel,
+      ));
+    }finally{
+       CommonMethods.cleanupTempFiles();
+
     }
   }
 

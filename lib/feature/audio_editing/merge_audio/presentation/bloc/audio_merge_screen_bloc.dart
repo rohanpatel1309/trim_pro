@@ -59,12 +59,18 @@ class AudioMergeScreenBloc
   Future<void> _onMergeFile(
       MergeFile event, Emitter<AudioMergeScreenState> emit) async {
     if (audioMergeBlocStateModel.fileUrl1.isEmpty) {
-      emit(Error(error: "Please select a file 1", timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
+      emit(Error(
+          error: "Please select a file 1",
+          timeStamp: DateTime.now(),
+          audioMergeBlocStateModel: audioMergeBlocStateModel));
       return;
     }
 
     if (audioMergeBlocStateModel.fileUrl2.isEmpty) {
-      emit(Error(error: "Please select a file 2", timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
+      emit(Error(
+          error: "Please select a file 2",
+          timeStamp: DateTime.now(),
+          audioMergeBlocStateModel: audioMergeBlocStateModel));
       return;
     }
 
@@ -77,42 +83,51 @@ class AudioMergeScreenBloc
       final tempFilePath = "${tempDir.path}/merged_audio.$extension";
 
       // Remove the temporary file if it exists from previous merges
-      final tempFile = File(tempFilePath);
-      if (await tempFile.exists()) {
-        await tempFile.delete();
-      }
+      await CommonMethods.cleanupTempFiles();
 
+      // Properly handle file paths with spaces by enclosing them in double quotes
       final command =
-          '-i ${audioMergeBlocStateModel.fileUrl1} -i ${audioMergeBlocStateModel.fileUrl2} -filter_complex "[0:a:0][1:a:0]concat=n=2:v=0:a=1[out]" -map "[out]" -c:a libmp3lame $tempFilePath';
+          '-i "${audioMergeBlocStateModel.fileUrl1}" -i "${audioMergeBlocStateModel.fileUrl2}" -filter_complex "[0:a:0][1:a:0]concat=n=2:v=0:a=1[out]" -map "[out]" -c:a libmp3lame "$tempFilePath"';
 
       final session = await FFmpegKit.execute(command);
-      // final logs = await session.getLogs();
-      // logs.forEach((log) => print(log.getMessage()));
+      final logs = await session.getLogs();
+      logs.forEach((log) => print(log.getMessage()));
       final returnCode = await session.getReturnCode();
 
       if (ReturnCode.isSuccess(returnCode)) {
-
-        final savedFilePath = await CommonMethods.saveFile(fileName: "merged_Audio.$extension",filePath: tempFilePath);
+        final savedFilePath = await CommonMethods.saveFile(
+            fileName: "merged_Audio.$extension", filePath: tempFilePath);
 
         if (savedFilePath != null) {
-          // Delete temporary file after saving
-          if (await tempFile.exists()) {
-            await tempFile.delete();
-          }
-
           emit(const Completed());
         } else {
-          emit(Error(error: "File is not saved", timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
+          emit(Error(
+              error: "File is not saved",
+              timeStamp: DateTime.now(),
+              audioMergeBlocStateModel: audioMergeBlocStateModel));
         }
       } else {
         final errorLog = await session.getOutput();
         print(errorLog);
-        emit(Error(error: errorLog.toString(), timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
+        emit(Error(
+            error: errorLog.toString(),
+            timeStamp: DateTime.now(),
+            audioMergeBlocStateModel: audioMergeBlocStateModel));
       }
     } catch (e) {
       print(e);
-      emit(AudioMergeScreenState(audioMergeBlocStateModel: audioMergeBlocStateModel.copyWith(isLoading: false)));
-      emit(Error(error: e.toString(), timeStamp: DateTime.now(), audioMergeBlocStateModel: audioMergeBlocStateModel));
+      await CommonMethods.cleanupTempFiles();
+
+      emit(AudioMergeScreenState(
+          audioMergeBlocStateModel: audioMergeBlocStateModel.copyWith(isLoading: false)));
+      emit(Error(
+          error: e.toString(),
+          timeStamp: DateTime.now(),
+          audioMergeBlocStateModel: audioMergeBlocStateModel));
+    }finally{
+
+      CommonMethods.cleanupTempFiles();
+
     }
   }
 

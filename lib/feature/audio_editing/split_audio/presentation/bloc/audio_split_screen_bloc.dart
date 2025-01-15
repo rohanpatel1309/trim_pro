@@ -50,17 +50,29 @@ class AudioSplitScreenBloc
       final tempDir = await getTemporaryDirectory();
       const extension = "mp3";
 
-      // Convert input file to MP3
+      // Paths
       String convertedMp3Path = '${tempDir.path}/input_converted.mp3';
+      String part1Path = '${tempDir.path}/split_part1.$extension';
+      String part2Path = '${tempDir.path}/split_part2.$extension';
+
+      // Ensure paths are properly escaped
+      convertedMp3Path = '"$convertedMp3Path"';
+      part1Path = '"$part1Path"';
+      part2Path = '"$part2Path"';
+      String inputFilePath = '"$filePath"';
+
+      // Delete existing temporary files if any
+      await _cleanupTempFile(convertedMp3Path);
+      await _cleanupTempFile(part1Path);
+      await _cleanupTempFile(part2Path);
+
+      // Convert input file to MP3
       final session = await FFmpegKit.execute(
-          "-i $filePath -vn -acodec libmp3lame $convertedMp3Path");
+          "-i $inputFilePath -vn -acodec libmp3lame $convertedMp3Path");
       if (!ReturnCode.isSuccess(await session.getReturnCode())) {
         final failStackTrace = await session.getFailStackTrace();
         throw Exception('FFmpeg Conversion Error: $failStackTrace');
       }
-
-      String part1Path = '${tempDir.path}/split_part1.$extension';
-      String part2Path = '${tempDir.path}/split_part2.$extension';
 
       // Create Part 1
       final part1Session = await FFmpegKit.execute(
@@ -71,7 +83,7 @@ class AudioSplitScreenBloc
       }
 
       // Verify Part 1
-      if (!(await File(part1Path).exists())) {
+      if (!(await File(part1Path.replaceAll('"', '')).exists())) {
         throw Exception('File not created: $part1Path');
       }
 
@@ -84,17 +96,24 @@ class AudioSplitScreenBloc
       }
 
       // Verify Part 2
-      if (!(await File(part2Path).exists())) {
+      if (!(await File(part2Path.replaceAll('"', '')).exists())) {
         throw Exception('File not created: $part2Path');
       }
 
       // Save files
       final savedPart1Path = await CommonMethods.saveFile(
-          fileName: "split_part1.$extension", filePath: part1Path);
+          fileName: "split_part1.$extension",
+          filePath: part1Path.replaceAll('"', ''));
       final savedPart2Path = await CommonMethods.saveFile(
-          fileName: "split_part2.$extension", filePath: part2Path);
+          fileName: "split_part2.$extension",
+          filePath: part2Path.replaceAll('"', ''));
 
       if (savedPart1Path != null && savedPart2Path != null) {
+        // Delete temporary files after saving
+        await _cleanupTempFile(convertedMp3Path);
+        await _cleanupTempFile(part1Path);
+        await _cleanupTempFile(part2Path);
+
         audioSplitBlocStateModel =
             audioSplitBlocStateModel.copyWith(isLoading: false);
         emit(const Completed());
@@ -103,15 +122,28 @@ class AudioSplitScreenBloc
       }
     } catch (e, stackTrace) {
       print('Error: $e, StackTrace: $stackTrace');
+
+
+
       audioSplitBlocStateModel =
           audioSplitBlocStateModel.copyWith(isLoading: false);
       emit(Error(
           error: e.toString(),
           timeStamp: DateTime.now(),
           audioSplitBlocStateModel: audioSplitBlocStateModel));
+    }finally{
+      // Cleanup temporary files in case of error
+      CommonMethods.cleanupTempFiles();
     }
   }
 
+  /// Helper method to clean up a temporary file if it exists
+  Future<void> _cleanupTempFile(String filePath) async {
+    final file = File(filePath.replaceAll('"', ''));
+    if (await file.exists()) {
+      await file.delete();
+    }
+  }
 
   /// Validate duration
   (bool, String) validate({

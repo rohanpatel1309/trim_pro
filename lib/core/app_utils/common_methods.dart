@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CommonMethods{
@@ -117,5 +118,21 @@ class CommonMethods{
     );
 
      return await FlutterFileDialog.saveFile(params: params);
+  }
+
+  /// Helper method to clean up all files in the temp directory
+  static Future<void> cleanupTempFiles() async {
+    try {
+      final tempDir =await getTemporaryDirectory();
+
+      final tempFiles = tempDir.listSync();
+      for (var file in tempFiles) {
+        if (file is File) {
+          await file.delete();
+        }
+      }
+    } catch (e) {
+      print('Error cleaning up temporary files: $e');
+    }
   }
 }
