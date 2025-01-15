@@ -8,5 +8,6 @@ class AudioInsertBlocStateModel with _$AudioInsertBlocStateModel{
   const factory AudioInsertBlocStateModel({
     @Default(false) bool isLoading,
     @Default("") String fileUrl,
+    @Default(Duration()) Duration totalDuration,
 }) = _AudioInsertBlocStateModel;
 }

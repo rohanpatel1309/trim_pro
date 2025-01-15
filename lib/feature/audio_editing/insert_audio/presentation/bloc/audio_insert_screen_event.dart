@@ -21,10 +21,19 @@ final class InsertAudio extends AudioInsertScreenEvent {
 }
 
 final class SetFileParameters extends AudioInsertScreenEvent {
-  const SetFileParameters({required this.filePath, required this.totalDuration});
+  const SetFileParameters(
+      {required this.filePath, required this.totalDuration});
+
   final String filePath;
   final Duration totalDuration;
 
   @override
   List<Object> get props => [filePath];
+}
+
+final class Reset extends AudioInsertScreenEvent {
+  const Reset();
+
+  @override
+  List<Object> get props => [];
 }

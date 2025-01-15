@@ -114,94 +114,109 @@ class _AudioSplitScreenFieldsState extends State<AudioSplitScreenFields> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 12.h),
-      child: Column(
-        spacing: 20.h,
-        children: [
-          BlocSelector<audio_split_bloc.AudioSplitScreenBloc,
-              audio_split_bloc.AudioSplitScreenState, bool>(
-            selector: (state) => state is audio_split_bloc.Completed,
-            builder: (context, state) {
-              return Column(
-                spacing: 10.h,
-                children: [
-                  Visibility(
-                    visible: state,
-                    replacement: Column(
+      child: BlocSelector<audio_split_bloc.AudioSplitScreenBloc,
+          audio_split_bloc.AudioSplitScreenState, bool>(
+        selector: (state) => state.audioSplitBlocStateModel.isLoading,
+        builder: (context, state) {
+          return IgnorePointer(
+            ignoring: state,
+            child: Column(
+              spacing: 20.h,
+              children: [
+                BlocSelector<audio_split_bloc.AudioSplitScreenBloc,
+                    audio_split_bloc.AudioSplitScreenState, bool>(
+                  selector: (state) => state is audio_split_bloc.Completed,
+                  builder: (context, state) {
+                    return Column(
                       spacing: 10.h,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Split At: ",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 48.sp,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            SizedBox(
-                              width: 250.w,
-                              child: TimeTextFormField(
-                                controller: splitAtController,
+                        Visibility(
+                          visible: state,
+                          replacement: Column(
+                            spacing: 10.h,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Split At: ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 48.sp,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    width: 250.w,
+                                    child: TimeTextFormField(
+                                      controller: splitAtController,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              CommonButton(
+                                onTap: () => BlocProvider.of<
+                                        audio_split_bloc
+                                        .AudioSplitScreenBloc>(context)
+                                    .add(audio_split_bloc.SplitAudio(
+                                        splitAt:
+                                            splitAtController.text.trim())),
+                                buttonText: '  Split  ',
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            spacing: 10.h,
+                            children: [
+                              Text(
+                                "Save splitted files",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 48.sp,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                spacing: 35.w,
+                                children: [
+                                  CommonButton(
+                                      onTap: () => BlocProvider.of<
+                                              audio_split_bloc
+                                              .AudioSplitScreenBloc>(context)
+                                          .add(const audio_split_bloc
+                                              .SaveFile1()),
+                                      buttonText: "Save File 1"),
+                                  CommonButton(
+                                      onTap: () => BlocProvider.of<
+                                              audio_split_bloc
+                                              .AudioSplitScreenBloc>(context)
+                                          .add(const audio_split_bloc
+                                              .SaveFile2()),
+                                      buttonText: "Save File 2"),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                         CommonButton(
-                          onTap: () =>
-                              BlocProvider.of<audio_split_bloc.AudioSplitScreenBloc>(
-                                  context)
-                                  .add(audio_split_bloc.SplitAudio(
-                                  splitAt: splitAtController.text.trim())),
-                          buttonText: '  Split  ',
-                        ),
+                            onTap: () {
+                              BlocProvider.of<
+                                      audio_split_bloc
+                                      .AudioSplitScreenBloc>(context)
+                                  .add(const audio_split_bloc.Reset());
+                              BlocProvider.of<
+                                      common_audio_bloc
+                                      .CommonAudioBloc>(context)
+                                  .add(const common_audio_bloc.ResetFile());
+                            },
+                            buttonText: "Reset")
                       ],
-                    ),
-                    child: Column(
-                      spacing: 10.h,
-                      children: [
-                        Text(
-                          "Save splitted files",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 48.sp,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          spacing: 35.w,
-                          children: [
-                            CommonButton(
-                                onTap: () => BlocProvider.of<
-                                        audio_split_bloc
-                                        .AudioSplitScreenBloc>(context)
-                                    .add(const audio_split_bloc.SaveFile1()),
-                                buttonText: "Save File 1"),
-                            CommonButton(
-                                onTap: () => BlocProvider.of<
-                                        audio_split_bloc
-                                        .AudioSplitScreenBloc>(context)
-                                    .add(const audio_split_bloc.SaveFile2()),
-                                buttonText: "Save File 2"),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  CommonButton(
-                      onTap: (){
-                        BlocProvider.of<
-                            audio_split_bloc
-                                .AudioSplitScreenBloc>(context)
-                            .add(const audio_split_bloc.Reset());
-                        BlocProvider.of<common_audio_bloc.CommonAudioBloc>(context).add(const common_audio_bloc.ResetFile());
-                      },
-                      buttonText: "Reset")
-                ],
-              );
-            },
-          ),
-        ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -76,19 +76,31 @@ class ScreenChildren extends StatelessWidget {
                   );
                 },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 15.w,
-                children: [
-                  CommonButton(
-                    onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context).add(const MergeFile()),
-                    buttonText: 'Merge',
-                  ),
-                  CommonButton(
-                    onTap: () => BlocProvider.of<AudioMergeScreenBloc>(context).add(const Reset()),
-                    buttonText: 'Reset',
-                  ),
-                ],
+              BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, bool>(
+                selector: (state) => state.audioMergeBlocStateModel.isLoading,
+                builder: (context, state) {
+                  return IgnorePointer(
+                    ignoring: state,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 15.w,
+                      children: [
+                        CommonButton(
+                          onTap: () =>
+                              BlocProvider.of<AudioMergeScreenBloc>(context)
+                                  .add(const MergeFile()),
+                          buttonText: 'Merge',
+                        ),
+                        CommonButton(
+                          onTap: () =>
+                              BlocProvider.of<AudioMergeScreenBloc>(context)
+                                  .add(const Reset()),
+                          buttonText: 'Reset',
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -104,4 +116,3 @@ class ScreenChildren extends StatelessWidget {
     );
   }
 }
-

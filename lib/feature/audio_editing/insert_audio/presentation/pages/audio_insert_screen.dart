@@ -109,56 +109,75 @@ class _AudioInsertScreenFieldsState extends State<AudioInsertScreenFields> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 12.h),
-      child: Column(
-        spacing: 20.h,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Insert At: ",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 48.sp,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                width: 250.w,
-                child: TimeTextFormField(
-                  controller: insertAtController,
+    return BlocSelector<audio_insert_bloc.AudioInsertScreenBloc, audio_insert_bloc.AudioInsertScreenState, bool>(
+  selector: (state) => state.audioInsertBlocStateModel.isLoading,
+  builder: (context, state) {
+    return IgnorePointer(
+      ignoring: state,
+      child: Padding(
+        padding: EdgeInsets.only(top: 12.h),
+        child: Column(
+          spacing: 20.h,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Insert At: ",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 48.sp,
+                      fontWeight: FontWeight.w600),
                 ),
-              ),
-            ],
-          ),
-          BlocSelector<audio_insert_bloc.AudioInsertScreenBloc,
-              audio_insert_bloc.AudioInsertScreenState, String>(
-            selector: (state) => state.audioInsertBlocStateModel.fileUrl,
-            builder: (context, state) {
-              return CommonFileSelectionButton(
-                onTap: () =>
-                    BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
-                            context)
-                        .add(audio_insert_bloc.PickFile()),
-                buttonText: 'Select File',
-                fileName: state,
-              );
-            },
-          ),
-          IgnorePointer(
-            ignoring: false,
-            child: CommonButton(
-              onTap: () =>
-                  BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
-                          context)
-                      .add(audio_insert_bloc.InsertAudio(
-                          insertAt: insertAtController.text.trim())),
-              buttonText: '  Insert  ',
+                SizedBox(
+                  width: 250.w,
+                  child: TimeTextFormField(
+                    controller: insertAtController,
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
+            BlocSelector<audio_insert_bloc.AudioInsertScreenBloc,
+                audio_insert_bloc.AudioInsertScreenState, String>(
+              selector: (state) => state.audioInsertBlocStateModel.fileUrl,
+              builder: (context, state) {
+                return CommonFileSelectionButton(
+                  onTap: () =>
+                      BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
+                              context)
+                          .add(audio_insert_bloc.PickFile()),
+                  buttonText: 'Select File',
+                  fileName: state,
+                );
+              },
+            ),
+            Row(
+              children: [
+                CommonButton(
+                  onTap: () =>
+                      BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
+                              context)
+                          .add(audio_insert_bloc.InsertAudio(
+                              insertAt: insertAtController.text.trim())),
+                  buttonText: '  Insert  ',
+                ),
+                CommonButton(
+                  onTap: () {
+                    BlocProvider.of<audio_insert_bloc.AudioInsertScreenBloc>(
+                        context)
+                        .add(const audio_insert_bloc.Reset());
+                    BlocProvider.of<common_audio_bloc.CommonAudioBloc>(context).add(const common_audio_bloc.ResetFile());
+
+                  },
+                  buttonText: 'Reset',
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
+  },
+);
   }
 }

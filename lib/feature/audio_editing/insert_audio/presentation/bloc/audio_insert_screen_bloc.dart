@@ -19,8 +19,6 @@ class AudioInsertScreenBloc
     extends Bloc<AudioInsertScreenEvent, AudioInsertScreenState> {
   AudioInsertBlocStateModel audioInsertBlocStateModel =
       const AudioInsertBlocStateModel();
-  late Duration totalDuration;
-  late String filePath;
 
   AudioInsertScreenBloc()
       : super(const AudioInsertScreenState(
@@ -28,6 +26,7 @@ class AudioInsertScreenBloc
     on<PickFile>(_onPickFile);
     on<InsertAudio>(_onInsertAudio);
     on<SetFileParameters>(_onSetFileParameters);
+    on<Reset>(_onReset);
   }
 
   /// Pick file
@@ -83,18 +82,22 @@ class AudioInsertScreenBloc
       }
 
       // Update loading state
-      audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: true);
-      emit(AudioInsertScreenState(audioInsertBlocStateModel: audioInsertBlocStateModel));
+      audioInsertBlocStateModel =
+          audioInsertBlocStateModel.copyWith(isLoading: true);
+      emit(AudioInsertScreenState(
+          audioInsertBlocStateModel: audioInsertBlocStateModel));
 
       // Paths setup
       final Directory tempDir = await getTemporaryDirectory();
       const String extension = "mp3";
-      final String tempFilePath = '${tempDir.path}/insert_audio_temp.$extension';
+      final String tempFilePath =
+          '${tempDir.path}/insert_audio_temp.$extension';
 
       await CommonMethods.cleanupTempFiles();
 
       // Paths to source files
-      final String f1Path = '"$filePath"'; // Wrap in quotes for FFmpeg
+      final String f1Path =
+          '"${audioInsertBlocStateModel.fileUrl}"'; // Wrap in quotes for FFmpeg
       final String f2Path = '"${audioInsertBlocStateModel.fileUrl}"';
 
       // Step 1: Convert F1 and F2 to MP3
@@ -108,16 +111,18 @@ class AudioInsertScreenBloc
       final String part1Path = '"${tempDir.path}/f1_part1.$extension"';
       final String part2Path = '"${tempDir.path}/f1_part2.$extension"';
 
-      await FFmpegKit.execute('-i $f1Mp3Path -ss 0 -to ${event.insertAt} -c copy $part1Path');
-      await FFmpegKit.execute('-i $f1Mp3Path -ss ${event.insertAt} -c copy $part2Path');
+      await FFmpegKit.execute(
+          '-i $f1Mp3Path -ss 0 -to ${event.insertAt} -c copy $part1Path');
+      await FFmpegKit.execute(
+          '-i $f1Mp3Path -ss ${event.insertAt} -c copy $part2Path');
 
       // Step 3: Concatenate files
       final String concatFilePath = '"${tempDir.path}/concat_list.txt"';
       final File concatFile = File(concatFilePath.replaceAll('"', ''));
       await concatFile.writeAsString(
         "file ${part1Path.replaceAll('"', '')}\n"
-            "file ${f2Mp3Path.replaceAll('"', '')}\n"
-            "file ${part2Path.replaceAll('"', '')}\n",
+        "file ${f2Mp3Path.replaceAll('"', '')}\n"
+        "file ${part2Path.replaceAll('"', '')}\n",
       );
 
       // Final concatenation
@@ -135,7 +140,8 @@ class AudioInsertScreenBloc
 
         if (savedFilePath != null) {
           // Success
-          audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: false);
+          audioInsertBlocStateModel =
+              audioInsertBlocStateModel.copyWith(isLoading: false);
           emit(const Completed());
         } else {
           emit(Error(
@@ -146,7 +152,8 @@ class AudioInsertScreenBloc
         }
       } else {
         // Failure during FFmpeg execution
-        final String errorMessage = await session.getOutput() ?? "Unknown error";
+        final String errorMessage =
+            await session.getOutput() ?? "Unknown error";
         emit(Error(
           error: "FFmpeg Error: $errorMessage",
           timeStamp: DateTime.now(),
@@ -156,7 +163,8 @@ class AudioInsertScreenBloc
     } catch (e, stackTrace) {
       // Log error and reset state
       print("Error: $e\nStackTrace: $stackTrace");
-      audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(isLoading: false);
+      audioInsertBlocStateModel =
+          audioInsertBlocStateModel.copyWith(isLoading: false);
       await CommonMethods.cleanupTempFiles();
 
       emit(Error(
@@ -164,9 +172,8 @@ class AudioInsertScreenBloc
         timeStamp: DateTime.now(),
         audioInsertBlocStateModel: audioInsertBlocStateModel,
       ));
-    }finally{
-       CommonMethods.cleanupTempFiles();
-
+    } finally {
+      CommonMethods.cleanupTempFiles();
     }
   }
 
@@ -177,7 +184,8 @@ class AudioInsertScreenBloc
     try {
       final position = CommonMethods.parseDuration(insertAt);
 
-      if (position < Duration.zero || position > totalDuration) {
+      if (position < Duration.zero ||
+          position > audioInsertBlocStateModel.totalDuration) {
         return (false, "Duration is out of range.");
       }
 
@@ -190,8 +198,10 @@ class AudioInsertScreenBloc
   /// Set file parameter
   void _onSetFileParameters(
       SetFileParameters event, Emitter<AudioInsertScreenState> emit) {
-    totalDuration = event.totalDuration;
-    filePath = event.filePath;
+    audioInsertBlocStateModel = audioInsertBlocStateModel.copyWith(
+      fileUrl: event.filePath,
+      totalDuration: event.totalDuration,
+    );
   }
 
   /// Format time
@@ -201,5 +211,12 @@ class AudioInsertScreenBloc
     final minutes = parts[1];
     final seconds = parts[2];
     return ((hours * 3600 + minutes * 60 + seconds) * 1000);
+  }
+
+  /// Reset
+  void _onReset(Reset event, Emitter<AudioInsertScreenState> emit) {
+    audioInsertBlocStateModel = const AudioInsertBlocStateModel();
+    CommonMethods.cleanupTempFiles();
+    emit(AudioInsertScreenState(audioInsertBlocStateModel: audioInsertBlocStateModel));
   }
 }
