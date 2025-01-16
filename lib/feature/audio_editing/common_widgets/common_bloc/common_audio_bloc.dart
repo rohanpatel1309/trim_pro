@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -32,40 +34,41 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
   // Pick file and set URL to the audio player
   Future<void> _onPickFile(
       CommonAudioPickFile event, Emitter<CommonAudioState> emit) async {
-    commonBlocStateModel = commonBlocStateModel.copyWith(isLoading: true);
-
-    emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
-
     final fileResult = await CommonMethods.pickFile();
 
-    if (fileResult != null) {
-      commonBlocStateModel =
-          commonBlocStateModel.copyWith(fileUrl: fileResult.files.single.path!);
-      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
-      _audioPlayer = AudioPlayer();
-      await _audioPlayer!.setUrl(fileResult.files.single.path!);
-
-      commonBlocStateModel = commonBlocStateModel.copyWith(
-        totalDuration: _audioPlayer!.duration!,
-      );
-      emit(SetAudioFileUrl(
-          url: fileResult.files.single.path!,
-          totalDuration: commonBlocStateModel.totalDuration));
-      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
-
-      _audioPlayer!.play();
-
-      await for (final position in _audioPlayer!.positionStream) {
-        commonBlocStateModel = commonBlocStateModel.copyWith(
-          position: position,
-          isPlayingNow: true,
-          isLoading: false,
-        );
-        emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
-      }
-    } else {
-      commonBlocStateModel = commonBlocStateModel.copyWith(isLoading: false);
+    if (fileResult == null) {
       emit(const Error(error: "Please Select File"));
+      emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
+      return;
+    }
+
+    commonBlocStateModel = commonBlocStateModel.copyWith(isLoading: true);
+    emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
+
+    commonBlocStateModel =
+        commonBlocStateModel.copyWith(fileUrl: fileResult!.files.single.path!);
+    emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
+    _audioPlayer = AudioPlayer();
+    await _audioPlayer!.setUrl(fileResult.files.single.path!);
+
+    commonBlocStateModel = commonBlocStateModel.copyWith(
+      totalDuration: _audioPlayer!.duration!,
+    );
+    emit(SetAudioFileUrl(
+        url: fileResult.files.single.path!,
+        totalDuration: commonBlocStateModel.totalDuration));
+    emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
+
+
+    _audioPlayer!.play();
+
+
+    await for (final position in _audioPlayer!.positionStream.distinct()) {
+      commonBlocStateModel = commonBlocStateModel.copyWith(
+        position: position,
+        isPlayingNow: position < commonBlocStateModel.totalDuration,
+        isLoading: false,
+      );
       emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
     }
   }
@@ -75,6 +78,10 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
       CommonAudioPlay event, Emitter<CommonAudioState> emit) async {
     try {
       // Play the audio
+      if(_audioPlayer?.processingState == ProcessingState.completed){
+        _audioPlayer!.seek(const Duration(seconds: 0));
+        return;
+      }
 
       Future.delayed(const Duration(milliseconds: 500), () {
         _audioPlayer!.play();
@@ -105,11 +112,6 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
     if (commonBlocStateModel.isPlayingNow) {
       await _audioPlayer!.play();
     }
-    commonBlocStateModel = commonBlocStateModel.copyWith(
-      position: event.position,
-    );
-
-    emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
   }
 
   // Update slider value in the state while sliding
@@ -140,6 +142,8 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
     _audioPlayer?.dispose();
   }
 
+
+
   @override
   Future<void> close() {
     // TODO: implement close
@@ -147,3 +151,19 @@ class CommonAudioBloc extends Bloc<CommonAudioEvent, CommonAudioState> {
     return super.close();
   }
 }
+
+
+// /// Listen player state
+// void _listenPlayerState({required Emitter<CommonAudioState> emit}){
+//   playerStateSubscription = _audioPlayer!.playerStateStream.listen((state){
+//     print("Current state:  ${state.processingState}");
+//     if(state.processingState == ProcessingState.completed){
+//       Future.delayed(Duration(seconds: 1),(){
+//         commonBlocStateModel = commonBlocStateModel.copyWith(
+//           isPlayingNow: false,
+//         );
+//         emit(CommonAudioState(commonBlocStateModel: commonBlocStateModel));
+//       });
+//     }
+//   });
+// }

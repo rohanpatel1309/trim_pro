@@ -126,17 +126,17 @@ class PlayPauseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocSelector<CommonAudioBloc, CommonAudioState, bool>(
       selector: (state) => state.commonBlocStateModel.isPlayingNow,
-      builder: (context, data) =>
+      builder: (context, state) =>
           IconButton(
             icon: Icon(
-              data ? Icons.pause : Icons.play_arrow,
+              state ? Icons.pause : Icons.play_arrow,
               color: Colors.white,
               size: 30.h,
             ),
             onPressed: () {
               BlocProvider.of<CommonAudioBloc>(context)
                   .add(
-                  data ? const CommonAudioPause() : const CommonAudioPlay());
+                  state ? const CommonAudioPause() : const CommonAudioPlay());
             },
           ),
     );
