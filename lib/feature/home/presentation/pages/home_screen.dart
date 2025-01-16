@@ -129,7 +129,7 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.speed_outlined,
               text: "Speed",
-              onTap: () {},
+              onTap: () => context.router.pushNamed(AppRouter.audioSpeedScreen),
             ),
             CommonButton(
               icon: Icons.volume_down,

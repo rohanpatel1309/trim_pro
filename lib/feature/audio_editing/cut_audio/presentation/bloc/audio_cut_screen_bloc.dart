@@ -159,6 +159,5 @@ class AudioCutScreenBloc
     audioCutBlocStateModel = const AudioCutBlocStateModel();
     CommonMethods.cleanupTempFiles();
     emit(AudioCutScreenState(audioCutBlocStateModel: audioCutBlocStateModel));
-
   }
 }

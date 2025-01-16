@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/bloc_state_model/common_bloc_state_model.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart';
+import 'package:trim_pro/feature/audio_editing/common_widgets/common_bloc/bloc_state_model/common_bloc_state_model.dart';
+import 'package:trim_pro/feature/audio_editing/common_widgets/common_bloc/common_audio_bloc.dart';
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
 import 'package:trim_pro/feature/common_widgets/common_progress_indicator.dart';
 

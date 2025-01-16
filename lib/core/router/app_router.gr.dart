@@ -86,6 +86,25 @@ class AudioMerge extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AudioSpeedScreen]
+class AudioSpeed extends PageRouteInfo<void> {
+  const AudioSpeed({List<PageRouteInfo>? children})
+      : super(
+          AudioSpeed.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AudioSpeed';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const AudioSpeedScreen());
+    },
+  );
+}
+
+/// generated route for
 /// [AudioSplitScreen]
 class AudioSplit extends PageRouteInfo<void> {
   const AudioSplit({List<PageRouteInfo>? children})

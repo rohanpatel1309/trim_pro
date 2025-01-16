@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trim_pro/core/app_utils/color_utils.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
 import 'package:trim_pro/feature/audio_editing/merge_audio/presentation/bloc/audio_merge_screen_bloc.dart';
 import 'package:trim_pro/feature/common_widgets/common_button.dart';

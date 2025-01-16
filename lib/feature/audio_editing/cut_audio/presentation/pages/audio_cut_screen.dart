@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart'
+import 'package:trim_pro/feature/audio_editing/common_widgets/common_bloc/common_audio_bloc.dart'
     as common_audio_bloc;
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
 import 'package:trim_pro/feature/common_widgets/common_button.dart';
@@ -138,7 +138,7 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
                                 start: startController.text.trim(),
                                 end: endController.text.trim()));
                       },
-                      buttonText: '  Cut  ',
+                      buttonText: 'Cut',
                     ),
                     CommonButton(
                       onTap: () {
@@ -149,7 +149,7 @@ class _AudioCutScreenFieldsState extends State<AudioCutScreenFields> {
                             context)
                             .add(const audio_cut_bloc.Reset());
                       },
-                      buttonText: '  Reset  ',
+                      buttonText: 'Reset',
                     ),
                   ],
                 ),

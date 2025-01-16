@@ -49,3 +49,11 @@ final class ResetFile extends CommonAudioEvent {
   @override
   List<Object> get props => [];
 }
+
+final class SetAudioSpeed extends CommonAudioEvent {
+  const SetAudioSpeed({required this.speed});
+  final double speed;
+
+  @override
+  List<Object> get props => [speed];
+}

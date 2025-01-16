@@ -5,8 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
-import 'package:trim_pro/feature/audio_editing/common_bloc/common_audio_bloc.dart'
-    as common_audio_bloc;
+import 'package:trim_pro/feature/audio_editing/common_widgets/common_bloc/common_audio_bloc.dart'    as common_audio_bloc;
 
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
 import 'package:trim_pro/feature/audio_editing/insert_audio/presentation/bloc/audio_insert_screen_bloc.dart'
@@ -152,6 +151,8 @@ class _AudioInsertScreenFieldsState extends State<AudioInsertScreenFields> {
               },
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 15.w,
               children: [
                 CommonButton(
                   onTap: () =>
@@ -159,7 +160,7 @@ class _AudioInsertScreenFieldsState extends State<AudioInsertScreenFields> {
                               context)
                           .add(audio_insert_bloc.InsertAudio(
                               insertAt: insertAtController.text.trim())),
-                  buttonText: '  Insert  ',
+                  buttonText: 'Insert',
                 ),
                 CommonButton(
                   onTap: () {
