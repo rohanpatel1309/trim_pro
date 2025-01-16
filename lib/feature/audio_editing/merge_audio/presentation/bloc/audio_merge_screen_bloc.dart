@@ -139,5 +139,11 @@ class AudioMergeScreenBloc
     emit(AudioMergeScreenState(audioMergeBlocStateModel: audioMergeBlocStateModel));
   }
 
+  @override
+  Future<void> close() {
+    CommonMethods.cleanupTempFiles();
+    // TODO: implement close
+    return super.close();
+  }
 
 }

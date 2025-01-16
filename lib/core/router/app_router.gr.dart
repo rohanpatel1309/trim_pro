@@ -23,7 +23,7 @@ class AudioConvert extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AudioConvertScreen();
+      return WrappedRoute(child: const AudioConvertScreen());
     },
   );
 }
@@ -42,7 +42,7 @@ class AudioCutMerge extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return  AudioCutMergeScreen();
+      return const AudioCutMergeScreen();
     },
   );
 }
