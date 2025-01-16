@@ -10,6 +10,25 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AudioConvertScreen]
+class AudioConvert extends PageRouteInfo<void> {
+  const AudioConvert({List<PageRouteInfo>? children})
+      : super(
+          AudioConvert.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AudioConvert';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AudioConvertScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [AudioCutMergeScreen]
 class AudioCutMerge extends PageRouteInfo<void> {
   const AudioCutMerge({List<PageRouteInfo>? children})
@@ -23,7 +42,7 @@ class AudioCutMerge extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AudioCutMergeScreen();
+      return  AudioCutMergeScreen();
     },
   );
 }

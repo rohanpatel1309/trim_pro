@@ -21,7 +21,7 @@ final class Error extends AudioMergeScreenState{
 }
 
 final class Completed extends AudioMergeScreenState{
-  const Completed() : super(audioMergeBlocStateModel: const AudioMergeBlocStateModel());
+  const Completed({required super.audioMergeBlocStateModel});
   @override
   // TODO: implement props
   List<Object> get props => [];

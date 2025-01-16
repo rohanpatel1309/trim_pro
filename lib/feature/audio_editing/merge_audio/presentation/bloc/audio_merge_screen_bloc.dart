@@ -100,7 +100,7 @@ class AudioMergeScreenBloc
             fileName: "merged_Audio.$extension", filePath: tempFilePath);
 
         if (savedFilePath != null) {
-          emit(const Completed());
+          emit( Completed(audioMergeBlocStateModel: audioMergeBlocStateModel));
         } else {
           emit(Error(
               error: "File is not saved",

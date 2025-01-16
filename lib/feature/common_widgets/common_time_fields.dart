@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trim_pro/core/app_utils/common_styles.dart';
 
 class TimeFields extends StatelessWidget {
   const TimeFields({
@@ -23,10 +24,7 @@ class TimeFields extends StatelessWidget {
           children: [
             Text(
               "$title1 : ",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 48.sp,
-                  fontWeight: FontWeight.w600),
+              style: CommonStyles.commonLabelStyle,
             ),
 
             SizedBox(
@@ -44,10 +42,7 @@ class TimeFields extends StatelessWidget {
           children: [
             Text(
               "$title2 : ",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 48.sp,
-                  fontWeight: FontWeight.w600),
+              style: CommonStyles.commonLabelStyle,
             ),
 
             SizedBox(

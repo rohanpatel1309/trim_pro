@@ -32,3 +32,10 @@ final class SaveFile extends AudioSpeedScreenEvent{
 
 }
 
+final class SetFileParameters extends AudioSpeedScreenEvent {
+  const SetFileParameters({required this.filePath,});
+  final String filePath;
+
+  @override
+  List<Object> get props => [filePath];
+}

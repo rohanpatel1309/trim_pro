@@ -83,9 +83,7 @@ class AudioCutScreenBloc
           // Success: Update state and emit completion
           audioCutBlocStateModel =
               audioCutBlocStateModel.copyWith(isLoading: false);
-          emit(AudioCutScreenState(
-              audioCutBlocStateModel: audioCutBlocStateModel));
-          emit(const Completed());
+          emit(Completed(audioCutBlocStateModel: audioCutBlocStateModel));
         } else {
           // File save failed
           audioCutBlocStateModel =

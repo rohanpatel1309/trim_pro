@@ -21,8 +21,7 @@ final class Error extends AudioCutScreenState {
 }
 
 final class Completed extends AudioCutScreenState {
-  const Completed()
-      : super(audioCutBlocStateModel: const AudioCutBlocStateModel());
+  const Completed({required super.audioCutBlocStateModel});
 
   @override
   // TODO: implement props

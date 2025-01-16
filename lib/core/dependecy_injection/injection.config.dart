@@ -12,6 +12,8 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_bloc/common_audio_bloc.dart'
     as _i480;
+import 'package:trim_pro/feature/audio_editing/covert_audio/bloc/audio_convert_screen_bloc.dart'
+    as _i561;
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/audio_cut_screen_bloc.dart'
     as _i24;
 import 'package:trim_pro/feature/audio_editing/insert_audio/presentation/bloc/audio_insert_screen_bloc.dart'
@@ -44,6 +46,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i783.HomeScreenBloc>(() => _i783.HomeScreenBloc());
     gh.factory<_i865.AudioSpeedScreenBloc>(() => _i865.AudioSpeedScreenBloc());
     gh.factory<_i480.CommonAudioBloc>(() => _i480.CommonAudioBloc());
+    gh.factory<_i561.AudioConvertScreenBloc>(
+        () => _i561.AudioConvertScreenBloc());
     return this;
   }
 }

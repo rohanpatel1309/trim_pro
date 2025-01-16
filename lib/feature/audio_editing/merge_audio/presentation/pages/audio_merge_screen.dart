@@ -75,6 +75,7 @@ class ScreenChildren extends StatelessWidget {
                   );
                 },
               ),
+
               BlocSelector<AudioMergeScreenBloc, AudioMergeScreenState, bool>(
                 selector: (state) => state.audioMergeBlocStateModel.isLoading,
                 builder: (context, state) {

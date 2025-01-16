@@ -139,7 +139,7 @@ class AudioEditingWidget extends StatelessWidget {
             CommonButton(
               icon: Icons.change_circle,
               text: "Convert\nFormat",
-              onTap: () {},
+              onTap: () => context.router.pushNamed(AppRouter.audioConvertScreen),
             ),
             CommonButton(
               icon: Icons.multitrack_audio_rounded,

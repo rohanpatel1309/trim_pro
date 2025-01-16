@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:trim_pro/core/app_utils/app_background.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/core/app_utils/common_styles.dart';
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_bloc/common_audio_bloc.dart'    as common_audio_bloc;
 
 import 'package:trim_pro/feature/audio_editing/common_widgets/common_audio_player.dart';
@@ -123,10 +124,7 @@ class _AudioInsertScreenFieldsState extends State<AudioInsertScreenFields> {
               children: [
                 Text(
                   "Insert At: ",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 48.sp,
-                      fontWeight: FontWeight.w600),
+                  style: CommonStyles.commonLabelStyle,
                 ),
                 SizedBox(
                   width: 250.w,
