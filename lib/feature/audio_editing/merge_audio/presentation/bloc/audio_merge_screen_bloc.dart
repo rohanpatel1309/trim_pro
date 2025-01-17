@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
+import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_audio/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/core/app_utils/ffmpeg_command.dart';
 import 'package:trim_pro/feature/audio_editing/merge_audio/presentation/bloc/bloc_state_model/audio_merge_bloc_state_model.dart';
 
 part 'audio_merge_screen_event.dart';
@@ -50,7 +51,10 @@ class AudioMergeScreenBloc
     } else {
       audioMergeBlocStateModel =
           audioMergeBlocStateModel.copyWith(isLoading: false);
-      emit(Error(error: "Please Select File", timeStamp: DateTime.now(),audioMergeBlocStateModel: audioMergeBlocStateModel));
+      emit(Error(
+          error: "Please Select File",
+          timeStamp: DateTime.now(),
+          audioMergeBlocStateModel: audioMergeBlocStateModel));
       emit(AudioMergeScreenState(
           audioMergeBlocStateModel: audioMergeBlocStateModel));
     }
@@ -76,7 +80,8 @@ class AudioMergeScreenBloc
     }
 
     emit(AudioMergeScreenState(
-        audioMergeBlocStateModel: audioMergeBlocStateModel.copyWith(isLoading: true)));
+        audioMergeBlocStateModel:
+            audioMergeBlocStateModel.copyWith(isLoading: true)));
 
     try {
       final tempDir = await getTemporaryDirectory();
@@ -87,8 +92,10 @@ class AudioMergeScreenBloc
       await CommonMethods.cleanupTempFiles();
 
       // Properly handle file paths with spaces by enclosing them in double quotes
-      final command =
-          '-i "${audioMergeBlocStateModel.fileUrl1}" -i "${audioMergeBlocStateModel.fileUrl2}" -filter_complex "[0:a:0][1:a:0]concat=n=2:v=0:a=1[out]" -map "[out]" -c:a libmp3lame "$tempFilePath"';
+      final command = FfmpegCommand.mergeTwoAudioFiles
+          .replaceFirst("filePath1", audioMergeBlocStateModel.fileUrl1)
+          .replaceFirst("filePath2", audioMergeBlocStateModel.fileUrl2)
+          .replaceFirst("tempFilePath", tempFilePath);
 
       final session = await FFmpegKit.execute(command);
       final logs = await session.getLogs();
@@ -100,7 +107,7 @@ class AudioMergeScreenBloc
             fileName: "merged_Audio.$extension", filePath: tempFilePath);
 
         if (savedFilePath != null) {
-          emit( Completed(audioMergeBlocStateModel: audioMergeBlocStateModel));
+          emit(Completed(audioMergeBlocStateModel: audioMergeBlocStateModel));
         } else {
           emit(Error(
               error: "File is not saved",
@@ -120,23 +127,23 @@ class AudioMergeScreenBloc
       await CommonMethods.cleanupTempFiles();
 
       emit(AudioMergeScreenState(
-          audioMergeBlocStateModel: audioMergeBlocStateModel.copyWith(isLoading: false)));
+          audioMergeBlocStateModel:
+              audioMergeBlocStateModel.copyWith(isLoading: false)));
       emit(Error(
           error: e.toString(),
           timeStamp: DateTime.now(),
           audioMergeBlocStateModel: audioMergeBlocStateModel));
-    }finally{
-
+    } finally {
       CommonMethods.cleanupTempFiles();
-
     }
   }
 
   /// Reset
-  void _onReset(Reset event, Emitter<AudioMergeScreenState> emit){
+  void _onReset(Reset event, Emitter<AudioMergeScreenState> emit) {
     audioMergeBlocStateModel = const AudioMergeBlocStateModel();
     CommonMethods.cleanupTempFiles();
-    emit(AudioMergeScreenState(audioMergeBlocStateModel: audioMergeBlocStateModel));
+    emit(AudioMergeScreenState(
+        audioMergeBlocStateModel: audioMergeBlocStateModel));
   }
 
   @override
@@ -145,5 +152,4 @@ class AudioMergeScreenBloc
     // TODO: implement close
     return super.close();
   }
-
 }

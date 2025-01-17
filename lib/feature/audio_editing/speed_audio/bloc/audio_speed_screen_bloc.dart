@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
+import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_audio/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/core/app_utils/ffmpeg_command.dart';
 import 'package:trim_pro/feature/audio_editing/speed_audio/bloc/bloc_state_model/audio_speed_bloc_state_model.dart';
 
 part 'audio_speed_screen_event.dart';
@@ -50,7 +51,7 @@ class AudioSpeedScreenBloc
       SaveFile event, Emitter<AudioSpeedScreenState> emit) async {
     // Validate the speed input
     final speedValue =
-    double.tryParse(audioSpeedBlocStateModel.speed.replaceAll('x', ''));
+        double.tryParse(audioSpeedBlocStateModel.speed.replaceAll('x', ''));
 
     try {
       // Show loading state
@@ -69,8 +70,10 @@ class AudioSpeedScreenBloc
       await CommonMethods.cleanupTempFiles();
 
       // FFmpeg command for adjusting speed and converting to MP3
-      final String command =
-          '-i "${audioSpeedBlocStateModel.filePath}" -filter:a "atempo=${speedValue}" -c:a libmp3lame "$tempFilePath"';
+      final String command = FfmpegCommand.speedAudioFiles
+          .replaceFirst("filePath", audioSpeedBlocStateModel.filePath)
+          .replaceFirst("speedValue", speedValue.toString())
+          .replaceFirst("tempFilePath", tempFilePath);
 
       // Execute FFmpeg command
       final session = await FFmpegKit.execute(command);
@@ -126,8 +129,10 @@ class AudioSpeedScreenBloc
   }
 
   /// On Set file parameter
-  void _onSetFileParameter(SetFileParameters event, Emitter<AudioSpeedScreenState> emit){
-    audioSpeedBlocStateModel = audioSpeedBlocStateModel.copyWith(filePath: event.filePath);
+  void _onSetFileParameter(
+      SetFileParameters event, Emitter<AudioSpeedScreenState> emit) {
+    audioSpeedBlocStateModel =
+        audioSpeedBlocStateModel.copyWith(filePath: event.filePath);
   }
 
   @override
@@ -137,5 +142,4 @@ class AudioSpeedScreenBloc
     // TODO: implement close
     return super.close();
   }
-
 }

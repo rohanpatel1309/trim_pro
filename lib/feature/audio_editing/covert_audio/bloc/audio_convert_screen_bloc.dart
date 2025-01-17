@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
+import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_audio/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/core/app_utils/ffmpeg_command.dart';
 import 'package:trim_pro/feature/audio_editing/covert_audio/bloc/bloc_state_model/audio_convert_bloc_state_model.dart';
 
 part 'audio_convert_screen_event.dart';
@@ -84,13 +85,14 @@ class AudioConvertScreenBloc
       return;
     }
 
-
     final String outputFormat =
         audioConvertBlocStateModel.extension.toLowerCase();
 
-    final selectedFileExtension = audioConvertBlocStateModel.filePath.split(".").last;
+    final selectedFileExtension =
+        audioConvertBlocStateModel.filePath.split(".").last;
 
-    if(outputFormat == selectedFileExtension || outputFormat == selectedFileExtension.toLowerCase()){
+    if (outputFormat == selectedFileExtension ||
+        outputFormat == selectedFileExtension.toLowerCase()) {
       emit(Error(
           error: "Input and Output file extensions are same",
           timeStamp: DateTime.now(),
@@ -114,8 +116,11 @@ class AudioConvertScreenBloc
       await CommonMethods.cleanupTempFiles();
       final codec = getCodec(outputFormat: outputFormat);
       // Execute FFmpeg command
-      final String command =
-          '-i "${audioConvertBlocStateModel.filePath}" -c:a $codec "$tempFilePath"';
+      final String command = FfmpegCommand.convertAudioCommand
+          .replaceFirst("filePath", audioConvertBlocStateModel.filePath)
+          .replaceFirst("codec", codec)
+          .replaceFirst("tempFilePath", tempFilePath);
+
       final session = await FFmpegKit.execute(command);
       final returnCode = await session.getReturnCode();
 

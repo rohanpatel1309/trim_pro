@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
+import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_audio/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/core/app_utils/ffmpeg_command.dart';
 import 'package:trim_pro/feature/audio_editing/cut_audio/presentation/bloc/bloc_state_model/audio_cut_bloc_state_model.dart';
 
 part 'audio_cut_screen_event.dart';
@@ -65,8 +66,11 @@ class AudioCutScreenBloc
       await CommonMethods.cleanupTempFiles();
 
       // Ensure the input file path is properly escaped
-      final String command =
-          '-i "${audioCutBlocStateModel.filePath}" -ss ${event.start} -to ${event.end} -c:a libmp3lame "$tempFilePath"';
+      final String command = FfmpegCommand.cutAudioCommand
+          .replaceFirst("filePath", audioCutBlocStateModel.filePath)
+          .replaceFirst("start", event.start)
+          .replaceFirst("end", event.end)
+          .replaceFirst("tempFilePath", tempFilePath);
 
       // Execute FFmpeg command
       final session = await FFmpegKit.execute(command);

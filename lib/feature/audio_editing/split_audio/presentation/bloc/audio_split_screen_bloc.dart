@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/ffmpeg_kit.dart';
-import 'package:ffmpeg_kit_flutter_full_gpl/return_code.dart';
+import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_audio/return_code.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:trim_pro/core/app_utils/common_methods.dart';
+import 'package:trim_pro/core/app_utils/ffmpeg_command.dart';
 import 'package:trim_pro/feature/audio_editing/split_audio/presentation/bloc/bloc_state_model/audio_split_bloc_state_model.dart';
 
 part 'audio_split_screen_event.dart';
@@ -69,16 +70,23 @@ class AudioSplitScreenBloc
       await CommonMethods.cleanupTempFiles();
 
       // Convert input file to MP3
-      final session = await FFmpegKit.execute(
-          "-i $inputFilePath -vn -acodec libmp3lame $convertedMp3Path");
+      final session = await FFmpegKit.execute(FfmpegCommand.convertAudioToMp3
+          .replaceFirst("filePath", inputFilePath)
+          .replaceFirst("filePathMp3", convertedMp3Path));
+
       if (!ReturnCode.isSuccess(await session.getReturnCode())) {
         final failStackTrace = await session.getFailStackTrace();
         throw Exception('FFmpeg Conversion Error: $failStackTrace');
       }
 
       // Create Part 1
-      final part1Session = await FFmpegKit.execute(
-          "-i $convertedMp3Path -ss 0 -to ${event.splitAt} -c copy $part1Path");
+
+      final part1Session = await FFmpegKit.execute(FfmpegCommand
+          .cutAudioFromZeroTo
+          .replaceFirst("filePath", convertedMp3Path)
+          .replaceFirst("endTime", event.splitAt)
+          .replaceFirst("tempFilePath", part1Path));
+
       if (!ReturnCode.isSuccess(await part1Session.getReturnCode())) {
         final failStackTrace = await part1Session.getFailStackTrace();
         throw Exception('FFmpeg Error (Part 1): $failStackTrace');
@@ -90,8 +98,13 @@ class AudioSplitScreenBloc
       }
 
       // Create Part 2
-      final part2Session = await FFmpegKit.execute(
-          "-i $convertedMp3Path -ss ${event.splitAt} -c copy $part2Path");
+
+      final part2Session = await FFmpegKit.execute(FfmpegCommand
+          .cutAudioFromTime
+          .replaceFirst("filePath", convertedMp3Path)
+          .replaceFirst("startTime", event.splitAt)
+          .replaceFirst("tempFilePath", part2Path));
+
       if (!ReturnCode.isSuccess(await part2Session.getReturnCode())) {
         final failStackTrace = await part2Session.getFailStackTrace();
         throw Exception('FFmpeg Error (Part 2): $failStackTrace');
@@ -104,7 +117,7 @@ class AudioSplitScreenBloc
 
       audioSplitBlocStateModel =
           audioSplitBlocStateModel.copyWith(isLoading: false);
-      emit( Completed(no: 0, dateTime: DateTime.now()));
+      emit(Completed(no: 0, dateTime: DateTime.now()));
     } catch (e, stackTrace) {
       print('Error: $e, StackTrace: $stackTrace');
 
@@ -125,7 +138,8 @@ class AudioSplitScreenBloc
     try {
       final position = CommonMethods.parseDuration(splitAt);
 
-      if (position < Duration.zero || position > audioSplitBlocStateModel.totalDuration) {
+      if (position < Duration.zero ||
+          position > audioSplitBlocStateModel.totalDuration) {
         return (false, "Duration is out of range.");
       }
 
@@ -143,7 +157,7 @@ class AudioSplitScreenBloc
         filePath: part1Path.replaceAll('"', ''));
 
     if (savedPart1Path != null) {
-      emit( Completed(no: 1, dateTime: DateTime.now()));
+      emit(Completed(no: 1, dateTime: DateTime.now()));
     } else {
       emit(Error(
           error: "Please Save File",
@@ -160,7 +174,7 @@ class AudioSplitScreenBloc
         filePath: part2Path.replaceAll('"', ''));
 
     if (savedPart1Path != null) {
-      emit( Completed(no: 2, dateTime: DateTime.now()));
+      emit(Completed(no: 2, dateTime: DateTime.now()));
     } else {
       emit(Error(
           error: "Please Save File",
@@ -170,11 +184,11 @@ class AudioSplitScreenBloc
   }
 
   /// Reset
-  void _onReset(Reset event, Emitter<AudioSplitScreenState> emit){
+  void _onReset(Reset event, Emitter<AudioSplitScreenState> emit) {
     audioSplitBlocStateModel = const AudioSplitBlocStateModel();
     CommonMethods.cleanupTempFiles();
-    emit(AudioSplitScreenState(audioSplitBlocStateModel: audioSplitBlocStateModel));
-
+    emit(AudioSplitScreenState(
+        audioSplitBlocStateModel: audioSplitBlocStateModel));
   }
 
   @override
@@ -182,6 +196,5 @@ class AudioSplitScreenBloc
     // TODO: implement close
     CommonMethods.cleanupTempFiles();
     return super.close();
-
   }
 }
