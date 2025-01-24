@@ -28,24 +28,6 @@ class AudioConvert extends PageRouteInfo<void> {
   );
 }
 
-/// generated route for
-/// [AudioCutMergeScreen]
-class AudioCutMerge extends PageRouteInfo<void> {
-  const AudioCutMerge({List<PageRouteInfo>? children})
-      : super(
-          AudioCutMerge.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AudioCutMerge';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AudioCutMergeScreen();
-    },
-  );
-}
 
 /// generated route for
 /// [AudioCutScreen]
